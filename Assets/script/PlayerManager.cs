@@ -57,6 +57,8 @@ namespace SG
         {
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
+            inputHandler.rt_input = false;
+            inputHandler.rb_input = false;
             isSprint = inputHandler.b_input;
 
         }

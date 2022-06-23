@@ -14,15 +14,25 @@ namespace SG
         public float mouseY;
 
         public bool b_input;
+        public bool rb_input;
+        public bool rt_input;
         public bool rollFlag;
         public float rollInputTimer;
         public bool sprintFlag;
-        
+        PlayerAttacker playerAttacker;
+        PlayerInventory playerInventory;
+
+
 
         PlayerControl inputActions;
 
         Vector2 movementInput;
         Vector2 cameraInput;
+        private void Awake()
+        {
+            playerAttacker = GetComponent<PlayerAttacker>();
+            playerInventory = GetComponent<PlayerInventory>();
+        }
 
         public void OnEnable()
         {
@@ -45,6 +55,7 @@ namespace SG
         {
             Moveinput(delta);
             handleRollInput(delta);
+            AttackInput(delta);
         }
         public void Moveinput(float delta)//why is the delta necessary there?
         {
@@ -79,6 +90,21 @@ namespace SG
                 rollInputTimer = 0;
             }
 
+        }
+        private void AttackInput(float delta)
+        {
+            inputActions.PlayerActions.RB.performed += i => rb_input = true;
+            inputActions.PlayerActions.RT.performed += i => rt_input = true;
+            if (rb_input)
+
+            {
+                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            }
+            if (rt_input)
+
+            {
+                playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
         }
     }
 
