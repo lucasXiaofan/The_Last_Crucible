@@ -12,9 +12,11 @@ namespace SG
         public bool CanRotate;
         public InputHandler inputHandler;
         public playerLocalMotion playerLocalMotion;
+        PlayerManager playerManager;
 
-        public void Initialize() 
+        public void Initialize()
         {
+            playerManager = GetComponentInParent<PlayerManager>();
             anim = GetComponent<Animator>();
             inputHandler = GetComponentInParent<InputHandler>();
             playerLocalMotion = GetComponentInParent<playerLocalMotion>();
@@ -22,25 +24,25 @@ namespace SG
             horizontal = Animator.StringToHash("Horizontal");
         }
 
-        public void  updateAnimatorValues(float verticalMovement,float horizontalMovement,bool isSprinting)
+        public void updateAnimatorValues(float verticalMovement, float horizontalMovement, bool isSprinting)
         {
-            
-            #region  Vertical
-            float vi =0.0f;
 
-            if(verticalMovement >0 && verticalMovement <0.55f)
+            #region  Vertical
+            float vi = 0.0f;
+
+            if (verticalMovement > 0 && verticalMovement < 0.55f)
             {
-                vi= 0.5f;
+                vi = 0.5f;
             }
             else if (verticalMovement > 0.55f)
             {
-                vi=1;
+                vi = 1;
             }
-            else if (verticalMovement < 0 && verticalMovement >-0.55f)
+            else if (verticalMovement < 0 && verticalMovement > -0.55f)
             {
                 vi = -0.5f;
             }
-            else if (verticalMovement <-0.55f)
+            else if (verticalMovement < -0.55f)
             {
                 vi = -1;
             }
@@ -51,22 +53,22 @@ namespace SG
 
             #endregion
 
-            
+
             #region  Horizontal
             float h = 0.0f;
-            if(horizontalMovement >0 && horizontalMovement <0.55f)
+            if (horizontalMovement > 0 && horizontalMovement < 0.55f)
             {
-                h= 0.5f;
+                h = 0.5f;
             }
             else if (horizontalMovement > 0.55f)
             {
-                h=1;
+                h = 1;
             }
-            else if (horizontalMovement < 0 && horizontalMovement >-0.55f)
+            else if (horizontalMovement < 0 && horizontalMovement > -0.55f)
             {
                 h = -0.5f;
             }
-            else if (horizontalMovement <-0.55f)
+            else if (horizontalMovement < -0.55f)
             {
                 h = -1;
             }
@@ -78,19 +80,19 @@ namespace SG
             #endregion
             if (isSprinting)
             {
-                vi =2;
+                vi = 2;
                 h = horizontalMovement;
             }
-            anim.SetFloat(vertical,vi,0.1f,Time.deltaTime);
-            anim.SetFloat(horizontal,h,0.1f,Time.deltaTime);
+            anim.SetFloat(vertical, vi, 0.1f, Time.deltaTime);
+            anim.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
         }
-        public void PlayerTargetAnimation(string targetAmin,bool Interacted)
+        public void PlayerTargetAnimation(string targetAmin, bool Interacted)
         {
             //print("call this animation function");
             //print("call this animation function");
             anim.applyRootMotion = Interacted;//applyrootmotion what is rootmotion
-            anim.SetBool("Interacted",Interacted);
-            anim.CrossFade(targetAmin,0.2f);
+            anim.SetBool("Interacted", Interacted);
+            anim.CrossFade(targetAmin, 0.2f);
         }
         public void CanRotateF()
         {
@@ -102,15 +104,15 @@ namespace SG
         }
         private void OnAnimatorMove()
         {
-            if (inputHandler.Interacted == false)
+            if (playerManager.Interacted == false)
             {
                 return;
             }
             float delta = Time.deltaTime;
             playerLocalMotion.rigidbody.drag = 0;
             Vector3 deltaPosition = anim.deltaPosition;
-            deltaPosition.y=0;
-            Vector3 velocity = deltaPosition/delta;
+            deltaPosition.y = 0;
+            Vector3 velocity = deltaPosition / delta;
             playerLocalMotion.rigidbody.velocity = velocity;
 
         }

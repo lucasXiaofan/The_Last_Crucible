@@ -10,6 +10,7 @@ namespace SG
     {
         Transform cameraObject;
         InputHandler inputhandler;
+        PlayerManager playerManager;
         Vector3 moveDirection;
         [HideInInspector]
         public Transform myTransfrom;
@@ -20,14 +21,15 @@ namespace SG
 
         [Header("Stats")]
         [SerializeField]
-        float movementSpeed =5f;
+        float movementSpeed = 5f;
         [SerializeField]
-        float rotationSpeed =10f;
+        float rotationSpeed = 10f;
         [SerializeField]
         float sprintSpeed = 8f;
-        public bool isSprint;
-        private void Start() 
+
+        private void Start()
         {
+            playerManager = GetComponent<PlayerManager>();
             rigidbody = GetComponent<Rigidbody>();
             inputhandler = GetComponent<InputHandler>();
             animatorHandler = GetComponentInChildren<AnimatorHandler>();
@@ -35,16 +37,7 @@ namespace SG
             myTransfrom = transform;
             animatorHandler.Initialize();
         }
-        private void Update()
-        {
-            float delta = Time.deltaTime;
-            isSprint = inputhandler.b_input;
-            inputhandler.TickInput(delta);
-            HandleMovement(delta);
-            handleRollingAndSprinting(delta);
 
-
-        }
 
         #region Movement
         Vector3 nV;
@@ -55,8 +48,8 @@ namespace SG
             Vector3 targetDir = Vector3.zero;
             float moveOverride = inputhandler.moveAmount;
 
-            targetDir = cameraObject.forward*inputhandler.vertical;// Q1 what is targetDir do?
-            targetDir += cameraObject.right*inputhandler.horizontal;
+            targetDir = cameraObject.forward * inputhandler.vertical;// Q1 what is targetDir do?
+            targetDir += cameraObject.right * inputhandler.horizontal;
 
             targetDir.Normalize();//Q2what does normalize do? A: make the vector (x,y)/magnitude, 
             //magnitude 1
@@ -65,25 +58,25 @@ namespace SG
                 targetDir = myTransfrom.forward;
             float rs = rotationSpeed;
             Quaternion tr = Quaternion.LookRotation(targetDir);
-            Quaternion targetRotation = Quaternion.Slerp(myTransfrom.rotation,tr,rs*delta);
+            Quaternion targetRotation = Quaternion.Slerp(myTransfrom.rotation, tr, rs * delta);
             myTransfrom.rotation = targetRotation;
 
         }
         public void HandleMovement(float delta)
         {
-            if(inputhandler.rollFlag)
+            if (inputhandler.rollFlag)
                 return;
-            moveDirection = cameraObject.forward*inputhandler.vertical;
-            moveDirection += cameraObject.right*inputhandler.horizontal;
+            moveDirection = cameraObject.forward * inputhandler.vertical;
+            moveDirection += cameraObject.right * inputhandler.horizontal;
             moveDirection.Normalize();
-            moveDirection.y =0;
+            moveDirection.y = 0;
 
             float speed = movementSpeed;
-            
-            if(inputhandler.sprintFlag)
+
+            if (inputhandler.sprintFlag)
             {
                 speed = sprintSpeed;
-                isSprint = true;
+                playerManager.isSprint = true;
                 moveDirection *= speed;
             }
             else
@@ -91,32 +84,32 @@ namespace SG
                 moveDirection *= speed;
             }
 
-            Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection,nV);
+            Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, nV);
             rigidbody.velocity = projectedVelocity;
 
-            animatorHandler.updateAnimatorValues(inputhandler.moveAmount,0,isSprint);
+            animatorHandler.updateAnimatorValues(inputhandler.moveAmount, 0, playerManager.isSprint);
             if (animatorHandler.CanRotate)
             {
                 HandleRoataion(delta);
             }
 
         }
-        
-        public void handleRollingAndSprinting(float delta) 
+
+        public void handleRollingAndSprinting(float delta)
         {
-            if(animatorHandler.anim.GetBool("Interacted"))
+            if (animatorHandler.anim.GetBool("Interacted"))
             {
-                
+
                 return;
             }
             if (inputhandler.rollFlag)
             {
-                
-                moveDirection = cameraObject.forward*inputhandler.vertical;
-                moveDirection += cameraObject.right*inputhandler.horizontal;
-                if (inputhandler.moveAmount >0)
+
+                moveDirection = cameraObject.forward * inputhandler.vertical;
+                moveDirection += cameraObject.right * inputhandler.horizontal;
+                if (inputhandler.moveAmount > 0)
                 {
-                    animatorHandler.PlayerTargetAnimation("roll",true);
+                    animatorHandler.PlayerTargetAnimation("roll", true);
                     moveDirection.y = 0;
                     Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
                     myTransfrom.rotation = rollRotation;
@@ -126,12 +119,12 @@ namespace SG
                     animatorHandler.PlayerTargetAnimation("StepBack", true);
                 }
             }
-            
-            
-                
-            
+
+
+
+
         }
         #endregion
-        
+
     }
 }
