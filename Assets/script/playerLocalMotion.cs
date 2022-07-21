@@ -50,7 +50,7 @@ namespace SG
 
             targetDir = cameraObject.forward * inputhandler.vertical;// Q1 what is targetDir do?
             targetDir += cameraObject.right * inputhandler.horizontal;
-
+            print("mytransform.right is: " + myTransfrom.right + " CameraTransform.right is: " + cameraObject.right);
             targetDir.Normalize();//Q2what does normalize do? A: make the vector (x,y)/magnitude, 
             //magnitude 1
             targetDir.y = 0; //Q3 why making vector3.y to zero?
@@ -84,8 +84,8 @@ namespace SG
                 moveDirection *= speed;
             }
 
-            Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, nV);
-            rigidbody.velocity = projectedVelocity;
+            //Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, nV);
+            rigidbody.velocity = moveDirection;
 
             animatorHandler.updateAnimatorValues(inputhandler.moveAmount, 0, playerManager.isSprint);
             if (animatorHandler.CanRotate)
