@@ -14,6 +14,7 @@ namespace DP
 
         private LayerMask ignoreLayers;
         private Vector3 cameraTransformPoistion;
+        private float targetPosition;// for camera collision
 
         public float rotationSpeed = 0.1f;
         public float pivotSpeed = 0.03f;
@@ -26,7 +27,11 @@ namespace DP
         public float maximumPivot = 35f;
         public float minimumPivot = -35f;
 
-        public Vector3 CameraVelocity;
+        //camera collision
+        public float miniOffet = 0.2f;
+        public float CollisionSphereRadius = 0.2f;
+
+        private Vector3 CameraVelocity = Vector3.zero;
 
         private void Awake()
         {
@@ -39,8 +44,9 @@ namespace DP
         }
         public void FollowTarget(float delta)
         {
-            Vector3 targetP = Vector3.Lerp(myTransform.position, targetTransform.position, followSpeed / delta);
+            Vector3 targetP = Vector3.SmoothDamp(myTransform.position, targetTransform.position, ref CameraVelocity, delta / followSpeed);
             myTransform.position = targetP;
+            HandleCollision(delta);
 
         }
         public void CameraRotation(float delta, float mouseX, float mouseY)
@@ -57,6 +63,30 @@ namespace DP
             rotationH.x = pivotAngle;
             Quaternion pivotDirection = Quaternion.Euler(rotationH);
             pivotTransform.localRotation = pivotDirection;
+
+        }
+        private void HandleCollision(float delta)
+        {
+            targetPosition = defaultPositon;
+            Vector3 dir = cameraTransform.position - pivotTransform.localPosition;
+            dir.Normalize();
+            RaycastHit hit;
+
+            if (Physics.SphereCast(pivotTransform.position, CollisionSphereRadius,
+                dir, out hit, Mathf.Abs(targetPosition), ignoreLayers))
+            {
+                float distance = Vector3.Distance(pivotTransform.position, hit.point);
+                targetPosition = -(distance - miniOffet);
+
+            }
+            if (Mathf.Abs(targetPosition) < miniOffet)
+            {
+                targetPosition = -miniOffet;
+            }
+            float DampVelocity = 0f;
+
+            cameraTransformPoistion.z = Mathf.SmoothDamp(cameraTransform.localPosition.z, targetPosition, ref DampVelocity, delta / 0.2f);
+            cameraTransform.localPosition = cameraTransformPoistion;
 
         }
 
