@@ -13,6 +13,11 @@ namespace DP
         public float moveAmount;
         public float vertical;
         public float horizontal;
+        public bool roll_b_input;
+        public bool rollFlag;
+        
+        public bool sprintFlag;
+        float holdCounter;
 
         Vector2 moveInput;
         Vector2 cameraInput;
@@ -27,20 +32,7 @@ namespace DP
             }
             inputActions.Enable();
         }
-        private void Awake()
-        {
-            cameraControl = DP_CameraControl.singleton;
-        }
-        private void FixedUpdate()
-        {
-            float delta = Time.deltaTime;
-            if (cameraControl != null)
-            {
-                cameraControl.FollowTarget(delta);
-                cameraControl.CameraRotation(delta, mouseX, mouseY);
-            }
-
-        }
+        
         private void OnDisable()
         {
             inputActions.Disable();
@@ -48,6 +40,7 @@ namespace DP
         public void TickInput(float delta)
         {
             MoveInputControl(delta);
+            HandleRollingInput(delta);
         }
         private void MoveInputControl(float delta)
         {
@@ -58,6 +51,33 @@ namespace DP
             mouseY = cameraInput.y;
 
 
+        }
+        private void HandleRollingInput(float delta)
+        {
+            roll_b_input = UnityEngine.InputSystem.Keyboard.current.leftShiftKey.isPressed;
+            //|| UnityEngine.InputSystem.Gamepad.current.buttonEast.isPressed;
+            if (roll_b_input)
+            {
+                holdCounter += delta;
+                if (moveAmount > 0)
+                {
+                    sprintFlag = true;
+                }
+                else
+                {
+                    rollFlag = true;
+                }
+
+            }
+            else
+            {
+                if (holdCounter > 0 && holdCounter < 0.5f)
+                {
+                    rollFlag = true;
+                    sprintFlag = false;
+                }
+                holdCounter = 0;
+            }
         }
 
     }

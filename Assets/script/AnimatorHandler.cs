@@ -14,6 +14,8 @@ namespace SG
         public playerLocalMotion playerLocalMotion;
         PlayerManager playerManager;
 
+
+
         public void Initialize()
         {
             playerManager = GetComponentInParent<PlayerManager>();

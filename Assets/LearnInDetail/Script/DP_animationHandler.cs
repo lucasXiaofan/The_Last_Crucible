@@ -11,14 +11,22 @@ namespace DP
         int horizontal;
         public bool canRotate;
 
+
+        DP_inputHandler inputHandler;
+        DP_playerLomotion playerLomotion;
+        DP_PlayerManager playerManager;
+
         public void initialize()
         {
+            inputHandler = GetComponentInParent<DP_inputHandler>();
+            playerLomotion = GetComponentInParent<DP_playerLomotion>();
+            playerManager = GetComponentInParent<DP_PlayerManager>();
             anim = GetComponent<Animator>();
             vertical = Animator.StringToHash("Vertical");
             horizontal = Animator.StringToHash("Horizontal");
 
         }
-        public void HandleAnimatorFloat(float ver, float hori)
+        public void HandleAnimatorFloat(float ver, float hori, bool isSprint)
         {
             #region vertical
             float v = 0;
@@ -67,9 +75,21 @@ namespace DP
                 h = 0;
             }
             #endregion
+
+            if (isSprint)
+            {
+                v = 2;
+                h = hori;
+            }
             anim.SetFloat(vertical, v, 0.1f, Time.deltaTime);
             anim.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
 
+        }
+        public void ApplyTargetAnimation(string animationName, bool isInteracting)
+        {
+            anim.applyRootMotion = isInteracting;
+            anim.SetBool("isInteracting", isInteracting);
+            anim.CrossFade(animationName, 0.2f);
         }
         public void DoRotate()
         {
@@ -79,6 +99,16 @@ namespace DP
         {
             canRotate = false;
         }
-
+        private void OnAnimatorMove()
+        {
+            if (playerManager.isInteracting == false)
+                return;
+            float delta = Time.deltaTime;
+            Vector3 deltaPosition = anim.deltaPosition;
+            deltaPosition.y = 0;
+            Vector3 velocity = deltaPosition / delta;
+            playerLomotion.playerRigidBody.drag = 0;
+            playerLomotion.playerRigidBody.velocity = velocity;
+        }
     }
 }
