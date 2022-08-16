@@ -34,9 +34,5 @@ namespace DP
                 animationHandler.ApplyTargetAnimation("dead", true);
             }
         }
-
-
-
-
     }
 }
