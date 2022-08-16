@@ -8,19 +8,31 @@ namespace DP
     {
         DP_PlayerControl inputActions;
         DP_CameraControl cameraControl;
+        PlayerAttacker playerAttacker;
+        DP_PlayerInventory playerInventory;
+        DP_PlayerManager playerManager;
         public float mouseX;
         public float mouseY;
         public float moveAmount;
         public float vertical;
         public float horizontal;
+
+        //player flags:
         public bool roll_b_input;
+        public bool rb_input;
+        public bool rt_input;
         public bool rollFlag;
-        
         public bool sprintFlag;
         float holdCounter;
 
         Vector2 moveInput;
         Vector2 cameraInput;
+        private void Awake()
+        {
+            playerAttacker = GetComponent<PlayerAttacker>();
+            playerInventory = GetComponent<DP_PlayerInventory>();
+            playerManager = GetComponent<DP_PlayerManager>();
+        }
 
         private void OnEnable()
         {
@@ -32,7 +44,7 @@ namespace DP
             }
             inputActions.Enable();
         }
-        
+
         private void OnDisable()
         {
             inputActions.Disable();
@@ -41,6 +53,7 @@ namespace DP
         {
             MoveInputControl(delta);
             HandleRollingInput(delta);
+            HandleAttack(delta);
         }
         private void MoveInputControl(float delta)
         {
@@ -79,7 +92,21 @@ namespace DP
                 holdCounter = 0;
             }
         }
-
+        private void HandleAttack(float delta)
+        {
+            inputActions.PlayerAction.RB.performed += i => rb_input = true;
+            inputActions.PlayerAction.RT.performed += i => rt_input = true;
+            if (playerManager.isInteracting)
+                return;
+            if (rb_input)
+            {
+                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            }
+            if (rt_input)
+            {
+                playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
+        }
     }
 
 

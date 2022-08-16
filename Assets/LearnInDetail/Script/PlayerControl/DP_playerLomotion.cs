@@ -165,7 +165,7 @@ namespace DP
                     }
                     else
                     {
-                        animationHandler.ApplyTargetAnimation("LocalMotion", false);
+                        animationHandler.ApplyTargetAnimation("Empty", false);
                         fallingTimer = 0;
                     }
                     playerManager.isInAir = false;
@@ -194,7 +194,7 @@ namespace DP
             {
                 if (playerManager.isInteracting || inputHandler.moveAmount > 0)
                 {
-                    playerTransform.position = Vector3.Lerp(playerTransform.position, targetPosition, delta);
+                    playerTransform.position = Vector3.Lerp(playerTransform.position, targetPosition, delta / 0.1f);
                 }
                 else
                 {

@@ -15,7 +15,7 @@ namespace DP
         }
         private void Start()
         {
-            weaponSlotManager.LoadWeaponOnSlot(leftWeapon, true);
+            //weaponSlotManager.LoadWeaponOnSlot(leftWeapon, true);
             weaponSlotManager.LoadWeaponOnSlot(rightWeapon, false);
         }
     }

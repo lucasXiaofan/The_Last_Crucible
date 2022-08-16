@@ -18,7 +18,7 @@ namespace DP
 
         private void Awake()
         {
-            cameraControl = DP_CameraControl.singleton;
+            cameraControl = FindObjectOfType<DP_CameraControl>();
         }
 
         void Start()
@@ -55,6 +55,8 @@ namespace DP
         {
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
+            inputHandler.rb_input = false;
+            inputHandler.rt_input = false;
             isSprinting = inputHandler.roll_b_input;
             if (isInAir)
             {

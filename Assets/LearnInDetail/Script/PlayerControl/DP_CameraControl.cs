@@ -40,6 +40,7 @@ namespace DP
             ignoreLayers = ~(1 >> 8 | 1 >> 9 | 1 >> 10);
             Application.targetFrameRate = 60;
             defaultPositon = cameraTransform.localPosition.z;
+            targetTransform = FindObjectOfType<DP_PlayerManager>().transform;
 
         }
         public void FollowTarget(float delta)

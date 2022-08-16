@@ -8,6 +8,9 @@ namespace DP
     {
         public GameObject modelPrefab;
         public bool isArmed;
+        [Header("One handed attack animations")]
+        public string Oh_Light_Attack_1;
+        public string Oh_Heavy_Attack_1;
 
     }
 }
