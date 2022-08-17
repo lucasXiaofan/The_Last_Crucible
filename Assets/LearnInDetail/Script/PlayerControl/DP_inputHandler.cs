@@ -23,6 +23,7 @@ namespace DP
         public bool rt_input;
         public bool rollFlag;
         public bool sprintFlag;
+        public bool comboFlag;
         float holdCounter;
 
         Vector2 moveInput;
@@ -100,7 +101,16 @@ namespace DP
                 return;
             if (rb_input)
             {
-                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                if (playerManager.canDoCombo)
+                {
+                    comboFlag = true;
+                    playerAttacker.HandleCombo(playerInventory.rightWeapon);
+                    comboFlag = false;
+                }
+                else
+                {
+                    playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                }
             }
             if (rt_input)
             {

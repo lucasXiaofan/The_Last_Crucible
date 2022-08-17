@@ -15,6 +15,7 @@ namespace DP
         public bool isSprinting;
         public bool isInAir;
         public bool isGrounded;
+        public bool canDoCombo;
 
         private void Awake()
         {
@@ -44,6 +45,7 @@ namespace DP
         {
             float delta = Time.deltaTime;
 
+            canDoCombo = animator.GetBool("canDoCombo");
             isInteracting = animator.GetBool("isInteracting");
             inputHandler.TickInput(delta);
             playerLomotion.HandleMovement(delta);

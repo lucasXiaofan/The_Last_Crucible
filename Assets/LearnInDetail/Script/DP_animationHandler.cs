@@ -110,5 +110,15 @@ namespace DP
             playerLomotion.playerRigidBody.drag = 0;
             playerLomotion.playerRigidBody.velocity = velocity;
         }
+        public void enableCombo()
+        {
+            anim.SetBool("canDoCombo", true);
+            anim.SetBool("isInteracting", false);
+        }
+        public void disableCombo()
+        {
+            anim.SetBool("canDoCombo", false);
+            //anim.SetBool("isInteracting", true);
+        }
     }
 }
