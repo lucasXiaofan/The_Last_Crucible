@@ -155,7 +155,7 @@ MeshCollider:
   m_GameObject: {fileID: 5932090143262653074}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -185,4 +185,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79461c1080e033b499176ce6f3f8269a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponDamage: 30
+  currentWeaponDamage: 50

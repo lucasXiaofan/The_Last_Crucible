@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9e5de1bb4f628743af49c6fdba31b08, type: 3}
-  m_Name: Sword
+  m_Name: LongSword
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 0}
   itemName: 
-  modelPrefab: {fileID: 2183084245892037488, guid: 68c77b100464ef040916f826717c702a,
+  modelPrefab: {fileID: 9196642897294066402, guid: 67a841a2eec74e445a3970c096d39fa7,
     type: 3}
   isArmed: 0
-  Right_arm_idle: Right_arm_singleHand_idle
-  Left_arm_idle: Left_arm_singleHand_idle
+  Right_arm_idle: 
+  Left_arm_idle: 
   Oh_Light_Attack_1: oh_light_attack_01
   Oh_Light_Attack_2: oh_light_attack_02
   Oh_Heavy_Attack_1: oh_heavy_attack_01

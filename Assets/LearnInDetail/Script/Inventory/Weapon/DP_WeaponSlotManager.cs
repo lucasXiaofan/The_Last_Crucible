@@ -10,8 +10,10 @@ namespace DP
         DP_WeaponSlot RightWeaponSlot;
         DP_DamageCollider leftDamageCollider;
         DP_DamageCollider rightDamageCollider;
+        Animator animator;
         private void Awake()
         {
+            animator = GetComponent<Animator>();
             DP_WeaponSlot[] weaponSlots = GetComponentsInChildren<DP_WeaponSlot>();
             foreach (DP_WeaponSlot weaponSlot in weaponSlots)
             {
@@ -31,11 +33,27 @@ namespace DP
             {
                 leftWeaponSlot.UploadWeapon(weaponItem);
                 LoadLeftWeaponCollider();
+                if (weaponItem != null)
+                {
+                    animator.CrossFade(weaponItem.Left_arm_idle, 0.2f);
+                }
+                else
+                {
+                    animator.CrossFade("Left_arm_empty", 0.2f);
+                }
             }
             else
             {
                 RightWeaponSlot.UploadWeapon(weaponItem);
                 LoadRightWeaponCollider();
+                if (weaponItem != null)
+                {
+                    animator.CrossFade(weaponItem.Right_arm_idle, 0.2f);
+                }
+                else
+                {
+                    animator.CrossFade("Right_arm_empty", 0.2f);
+                }
             }
         }
 

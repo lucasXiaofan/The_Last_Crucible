@@ -21,6 +21,11 @@ namespace DP
         public bool roll_b_input;
         public bool rb_input;
         public bool rt_input;
+        public bool d_pad_down;
+        public bool d_pad_up;
+        public bool d_pad_left;
+        public bool d_pad_right;
+
         public bool rollFlag;
         public bool sprintFlag;
         public bool comboFlag;
@@ -55,6 +60,7 @@ namespace DP
             MoveInputControl(delta);
             HandleRollingInput(delta);
             HandleAttack(delta);
+            HandleQuickSlot();
         }
         private void MoveInputControl(float delta)
         {
@@ -115,6 +121,19 @@ namespace DP
             if (rt_input)
             {
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
+        }
+        private void HandleQuickSlot()
+        {
+            inputActions.PlayerQuickSlot.DPadRight.performed += i => d_pad_right = true;
+            inputActions.PlayerQuickSlot.DPadLeft.performed += i => d_pad_left = true;
+            if (d_pad_left)
+            {
+                playerInventory.ChangeLeftWeaponInSlot();
+            }
+            if (d_pad_right)
+            {
+                playerInventory.ChangeRightWeaponInSlot();
             }
         }
     }
