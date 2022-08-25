@@ -13,6 +13,8 @@ namespace DP
         public DP_WeaponItem[] rightHandSlots = new DP_WeaponItem[1];
         public DP_WeaponItem[] leftHandSlots = new DP_WeaponItem[1];
 
+        public List<DP_WeaponItem> weaponInventory;
+
         private int currentLeftWeaponIndex = -1;
         private int currentRightWeaponIndex = -1;
 
@@ -25,6 +27,8 @@ namespace DP
         {
             rightWeapon = unarmedWeapon;
             leftWeapon = unarmedWeapon;
+            weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, false);
+            weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, true);
 
         }
         public void ChangeRightWeaponInSlot()
@@ -34,7 +38,7 @@ namespace DP
             {
                 currentRightWeaponIndex = -1;
                 rightWeapon = unarmedWeapon;
-                weaponSlotManager.LoadWeaponOnSlot(rightWeapon, false);
+                weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, false);
 
             }
             else if (rightHandSlots[currentRightWeaponIndex] != null)
@@ -54,7 +58,7 @@ namespace DP
             {
                 currentLeftWeaponIndex = -1;
                 leftWeapon = unarmedWeapon;
-                weaponSlotManager.LoadWeaponOnSlot(leftWeapon, true);
+                weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, true);
 
             }
             else if (leftHandSlots[currentLeftWeaponIndex] != null)

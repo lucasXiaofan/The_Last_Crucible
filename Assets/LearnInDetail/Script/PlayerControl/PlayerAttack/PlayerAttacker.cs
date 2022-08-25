@@ -9,9 +9,11 @@ namespace DP
         // Start is called before the first frame update
         DP_animationHandler animationHandler;
         DP_inputHandler inputHandler;
+        DP_WeaponSlotManager weaponSlotManager;
         public string lastAttack;
         void Start()
         {
+            weaponSlotManager = GetComponentInChildren<DP_WeaponSlotManager>();
             animationHandler = GetComponentInChildren<DP_animationHandler>();
             inputHandler = GetComponent<DP_inputHandler>();
         }
@@ -24,17 +26,23 @@ namespace DP
                 {
                     animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_2, true);
                 }
+                if (lastAttack == weaponItem.Oh_Heavy_Attack_1)
+                {
+                    animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_2, true);
+                }
             }
         }
 
         public void HandleLightAttack(DP_WeaponItem weaponItem)
         {
+            weaponSlotManager.attackingWeapon = weaponItem;
             animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_1, true);
             lastAttack = weaponItem.Oh_Light_Attack_1;
         }
 
         public void HandleHeavyAttack(DP_WeaponItem weaponItem)
         {
+            weaponSlotManager.attackingWeapon = weaponItem;
             animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_1, true);
             lastAttack = weaponItem.Oh_Heavy_Attack_1;
         }

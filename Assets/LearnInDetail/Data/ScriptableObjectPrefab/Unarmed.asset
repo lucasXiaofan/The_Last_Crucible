@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e5de1bb4f628743af49c6fdba31b08, type: 3}
   m_Name: Unarmed
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   itemName: 
-  modelPrefab: {fileID: 869680845407724926, guid: 38a696207ca48434b864d5e6fdfe84ba,
+  modelPrefab: {fileID: 8804752697055397053, guid: 38a696207ca48434b864d5e6fdfe84ba,
     type: 3}
   isArmed: 0
-  Right_arm_idle: Right_arm_empty
-  Left_arm_idle: Left_arm_empty
+  Right_arm_idle: 
+  Left_arm_idle: 
   Oh_Light_Attack_1: oh_light_attack_01
   Oh_Light_Attack_2: oh_light_attack_02
   Oh_Heavy_Attack_1: oh_heavy_attack_01
   Oh_Heavy_Attack_2: oh_heavy_attack_02
+  baseStamina: 10
+  lightAttackStaminaMultiplier: 1
+  heavyAttackStaminaMultiplier: 2

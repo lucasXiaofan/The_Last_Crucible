@@ -11,9 +11,14 @@ namespace DP
         DP_DamageCollider leftDamageCollider;
         DP_DamageCollider rightDamageCollider;
         Animator animator;
+        DP_QuickSlotUI quickSlotUI;
+        DP_PlayerStats playerStats;
+        public DP_WeaponItem attackingWeapon;
         private void Awake()
         {
+            playerStats = GetComponentInParent<DP_PlayerStats>();
             animator = GetComponent<Animator>();
+            quickSlotUI = FindObjectOfType<DP_QuickSlotUI>();
             DP_WeaponSlot[] weaponSlots = GetComponentsInChildren<DP_WeaponSlot>();
             foreach (DP_WeaponSlot weaponSlot in weaponSlots)
             {
@@ -33,6 +38,7 @@ namespace DP
             {
                 leftWeaponSlot.UploadWeapon(weaponItem);
                 LoadLeftWeaponCollider();
+                quickSlotUI.IconHandler(true, weaponItem);
                 if (weaponItem != null)
                 {
                     animator.CrossFade(weaponItem.Left_arm_idle, 0.2f);
@@ -44,6 +50,7 @@ namespace DP
             }
             else
             {
+                quickSlotUI.IconHandler(false, weaponItem);
                 RightWeaponSlot.UploadWeapon(weaponItem);
                 LoadRightWeaponCollider();
                 if (weaponItem != null)
@@ -83,6 +90,15 @@ namespace DP
             rightDamageCollider.DisableDamage();
         }
         #endregion
-
+        #region Handle weapon stamina cost
+        public void DrainStaminaLightAttack()
+        {
+            playerStats.TakeStaminaDamage(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.lightAttackStaminaMultiplier));
+        }
+        public void DrainStaminaHeavyAttack()
+        {
+            playerStats.TakeStaminaDamage(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.heavyAttackStaminaMultiplier));
+        }
+        #endregion
     }
 }

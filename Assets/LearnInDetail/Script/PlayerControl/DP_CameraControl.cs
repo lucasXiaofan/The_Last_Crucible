@@ -12,7 +12,7 @@ namespace DP
         public Transform targetTransform;
         public static DP_CameraControl singleton;
 
-        private LayerMask ignoreLayers;
+        public LayerMask ignoreLayers;
         private Vector3 cameraTransformPoistion;
         private float targetPosition;// for camera collision
 

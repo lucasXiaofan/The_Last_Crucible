@@ -21,5 +21,9 @@ namespace DP
         {
             playerHealthBar.value = currentHealth;
         }
+        public bool alive()
+        {
+            return playerHealthBar.value > 0;
+        }
     }
 }

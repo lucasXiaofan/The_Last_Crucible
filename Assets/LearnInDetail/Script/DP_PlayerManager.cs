@@ -51,23 +51,52 @@ namespace DP
             playerLomotion.HandleMovement(delta);
             playerLomotion.HandleRollingAndSprint(delta);
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
+            CheckForInteractableObject();
+
         }
 
         private void LateUpdate()
         {
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
-            inputHandler.rb_input = false;
-            inputHandler.rt_input = false;
+            // inputHandler.rb_input = false;
+            // inputHandler.rt_input = false;
             inputHandler.d_pad_down = false;
             inputHandler.d_pad_up = false;
             inputHandler.d_pad_left = false;
             inputHandler.d_pad_right = false;
+
             isSprinting = inputHandler.roll_b_input;
             if (isInAir)
             {
                 playerLomotion.fallingTimer += Time.deltaTime;
             }
         }
+        public void CheckForInteractableObject()
+        {
+            RaycastHit hit;
+            print(inputHandler.a_input);
+            if (Physics.SphereCast(transform.position, 0.4f, transform.forward, out hit, 1f, cameraControl.ignoreLayers))
+            {
+                print("touched");
+                if (hit.collider.tag == "pickUpItem")
+                {
+                    print("is pick up item");
+                    DP_PickItem pickItem = hit.collider.GetComponent<DP_PickItem>();
+                    if (pickItem != null)
+                    {
+                        print("not null " + inputHandler.a_input);
+                        string interactString = pickItem.ItemName;
+                        if (inputHandler.a_input)
+                        {
+                            print("interacted");
+                            hit.collider.GetComponent<DP_PickItem>().Interact(this);
+                        }
+                    }
+                }
+            }
+            inputHandler.a_input = false;
+        }
+
     }
 }

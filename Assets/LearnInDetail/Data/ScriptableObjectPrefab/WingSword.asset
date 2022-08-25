@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e5de1bb4f628743af49c6fdba31b08, type: 3}
   m_Name: WingSword
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 4851519388168e14b89f7253ab7f613d, type: 3}
   itemName: 
   modelPrefab: {fileID: 3372226331553963491, guid: 00db3ccedcf856440b56faef8efcb9a6,
     type: 3}
@@ -23,3 +23,6 @@ MonoBehaviour:
   Oh_Light_Attack_2: oh_light_attack_02
   Oh_Heavy_Attack_1: oh_heavy_attack_01
   Oh_Heavy_Attack_2: oh_heavy_attack_02
+  baseStamina: 25
+  lightAttackStaminaMultiplier: 1
+  heavyAttackStaminaMultiplier: 2

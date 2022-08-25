@@ -16,6 +16,10 @@ namespace DP
         public string Oh_Light_Attack_2;
         public string Oh_Heavy_Attack_1;
         public string Oh_Heavy_Attack_2;
+        [Header("Stamina")]
+        public int baseStamina;
+        public int lightAttackStaminaMultiplier;
+        public int heavyAttackStaminaMultiplier;
 
     }
 }

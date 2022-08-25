@@ -244,6 +244,15 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pick Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""71e5a8ad-7037-4091-8909-08601ee97729"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -345,6 +354,28 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                     ""action"": ""D Pad Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa4f939d-1ca7-4400-ad22-d62bfcf895a7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pick Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""529bd703-0c3f-46f9-b468-7dde29977d80"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pick Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -366,6 +397,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         m_PlayerQuickSlot_DPadDown = m_PlayerQuickSlot.FindAction("D Pad Down", throwIfNotFound: true);
         m_PlayerQuickSlot_DPadLeft = m_PlayerQuickSlot.FindAction("D Pad Left", throwIfNotFound: true);
         m_PlayerQuickSlot_DPadRight = m_PlayerQuickSlot.FindAction("D Pad Right", throwIfNotFound: true);
+        m_PlayerQuickSlot_PickUp = m_PlayerQuickSlot.FindAction("Pick Up", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -519,6 +551,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerQuickSlot_DPadDown;
     private readonly InputAction m_PlayerQuickSlot_DPadLeft;
     private readonly InputAction m_PlayerQuickSlot_DPadRight;
+    private readonly InputAction m_PlayerQuickSlot_PickUp;
     public struct PlayerQuickSlotActions
     {
         private @DP_PlayerControl m_Wrapper;
@@ -527,6 +560,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         public InputAction @DPadDown => m_Wrapper.m_PlayerQuickSlot_DPadDown;
         public InputAction @DPadLeft => m_Wrapper.m_PlayerQuickSlot_DPadLeft;
         public InputAction @DPadRight => m_Wrapper.m_PlayerQuickSlot_DPadRight;
+        public InputAction @PickUp => m_Wrapper.m_PlayerQuickSlot_PickUp;
         public InputActionMap Get() { return m_Wrapper.m_PlayerQuickSlot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -548,6 +582,9 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                 @DPadRight.started -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnDPadRight;
                 @DPadRight.performed -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnDPadRight;
                 @DPadRight.canceled -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnDPadRight;
+                @PickUp.started -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnPickUp;
+                @PickUp.performed -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnPickUp;
+                @PickUp.canceled -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnPickUp;
             }
             m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface = instance;
             if (instance != null)
@@ -564,6 +601,9 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                 @DPadRight.started += instance.OnDPadRight;
                 @DPadRight.performed += instance.OnDPadRight;
                 @DPadRight.canceled += instance.OnDPadRight;
+                @PickUp.started += instance.OnPickUp;
+                @PickUp.performed += instance.OnPickUp;
+                @PickUp.canceled += instance.OnPickUp;
             }
         }
     }
@@ -585,5 +625,6 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         void OnDPadDown(InputAction.CallbackContext context);
         void OnDPadLeft(InputAction.CallbackContext context);
         void OnDPadRight(InputAction.CallbackContext context);
+        void OnPickUp(InputAction.CallbackContext context);
     }
 }

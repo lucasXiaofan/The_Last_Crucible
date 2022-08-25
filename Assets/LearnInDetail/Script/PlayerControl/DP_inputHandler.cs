@@ -19,6 +19,7 @@ namespace DP
 
         //player flags:
         public bool roll_b_input;
+        public bool a_input; //item pick up
         public bool rb_input;
         public bool rt_input;
         public bool d_pad_down;
@@ -31,6 +32,8 @@ namespace DP
         public bool comboFlag;
         float holdCounter;
 
+        //stamina bar
+        public DP_PlayerHealthBar StaminaStatus;
         Vector2 moveInput;
         Vector2 cameraInput;
         private void Awake()
@@ -61,6 +64,7 @@ namespace DP
             HandleRollingInput(delta);
             HandleAttack(delta);
             HandleQuickSlot();
+            HandleItemPickUp();
         }
         private void MoveInputControl(float delta)
         {
@@ -105,7 +109,7 @@ namespace DP
             inputActions.PlayerAction.RT.performed += i => rt_input = true;
             if (playerManager.isInteracting)
                 return;
-            if (rb_input)
+            if (rb_input && StaminaStatus.alive())
             {
                 if (playerManager.canDoCombo)
                 {
@@ -118,7 +122,7 @@ namespace DP
                     playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
                 }
             }
-            if (rt_input)
+            if (rt_input && StaminaStatus.alive())
             {
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
@@ -135,6 +139,11 @@ namespace DP
             {
                 playerInventory.ChangeRightWeaponInSlot();
             }
+        }
+        private void HandleItemPickUp()
+        {
+            inputActions.PlayerQuickSlot.PickUp.performed += i => a_input = true;
+
         }
     }
 
