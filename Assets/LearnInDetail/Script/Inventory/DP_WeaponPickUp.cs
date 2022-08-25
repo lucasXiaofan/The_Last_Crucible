@@ -22,6 +22,9 @@ namespace DP
             animationHandler = playerManager.GetComponentInChildren<DP_animationHandler>();
             inventory = playerManager.GetComponent<DP_PlayerInventory>();
 
+            playerManager.itemTextObject.SetActive(true);
+            playerManager.textUI.itemText.text = weapon.itemName;
+            playerManager.textUI.itemIcon.sprite = weapon.itemIcon;
             playerLomotion.playerRigidBody.velocity = Vector3.zero;
             animationHandler.ApplyTargetAnimation("pickUp", true);
             inventory.weaponInventory.Add(weapon);

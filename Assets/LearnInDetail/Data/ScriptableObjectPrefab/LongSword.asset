@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LongSword
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: 0fe098c0999641848a6ef2fe53232a7d, type: 3}
-  itemName: 
+  itemName: Great Sword
   modelPrefab: {fileID: 9196642897294066402, guid: 67a841a2eec74e445a3970c096d39fa7,
     type: 3}
   isArmed: 0

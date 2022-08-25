@@ -10,6 +10,10 @@ namespace DP
         DP_CameraControl cameraControl;
         DP_animationHandler animationHandler;
         Animator animator;
+        public DP_AlertTextUI textUI;
+        public GameObject alertTextObject;
+        public GameObject itemTextObject;
+
         [Header("Player Status")]
         public bool isInteracting;
         public bool isSprinting;
@@ -25,10 +29,12 @@ namespace DP
         void Start()
         {
             playerLomotion = GetComponent<DP_playerLomotion>();
-
+            textUI = FindObjectOfType<DP_AlertTextUI>();
             animationHandler = GetComponent<DP_animationHandler>();
             inputHandler = GetComponent<DP_inputHandler>();
             animator = GetComponentInChildren<Animator>();
+            itemTextObject.SetActive(false);
+
         }
         private void FixedUpdate()
         {
@@ -75,28 +81,43 @@ namespace DP
         public void CheckForInteractableObject()
         {
             RaycastHit hit;
-            print(inputHandler.a_input);
+
             if (Physics.SphereCast(transform.position, 0.4f, transform.forward, out hit, 1f, cameraControl.ignoreLayers))
             {
-                print("touched");
+
                 if (hit.collider.tag == "pickUpItem")
                 {
-                    print("is pick up item");
+
                     DP_PickItem pickItem = hit.collider.GetComponent<DP_PickItem>();
                     if (pickItem != null)
                     {
-                        print("not null " + inputHandler.a_input);
+
                         string interactString = pickItem.ItemName;
+                        textUI.interactableText.text = interactString;
+                        alertTextObject.SetActive(true);
                         if (inputHandler.a_input)
                         {
-                            print("interacted");
+
                             hit.collider.GetComponent<DP_PickItem>().Interact(this);
                         }
                     }
                 }
             }
+
+            else
+            {
+                if (alertTextObject != null)
+                {
+                    alertTextObject.SetActive(false);
+                }
+                if (itemTextObject != null && inputHandler.a_input)
+                {
+                    itemTextObject.SetActive(false);
+                }
+            }
             inputHandler.a_input = false;
         }
+
 
     }
 }
