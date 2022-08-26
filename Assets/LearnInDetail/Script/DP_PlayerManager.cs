@@ -53,10 +53,12 @@ namespace DP
 
             canDoCombo = animator.GetBool("canDoCombo");
             isInteracting = animator.GetBool("isInteracting");
+            animator.SetBool("IsInAir", isInAir);
             inputHandler.TickInput(delta);
             playerLomotion.HandleMovement(delta);
             playerLomotion.HandleRollingAndSprint(delta);
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
+            playerLomotion.HandlePlayerJump();
             CheckForInteractableObject();
 
         }
@@ -71,6 +73,7 @@ namespace DP
             inputHandler.d_pad_up = false;
             inputHandler.d_pad_left = false;
             inputHandler.d_pad_right = false;
+            inputHandler.jump_input = false;
 
             isSprinting = inputHandler.roll_b_input;
             if (isInAir)

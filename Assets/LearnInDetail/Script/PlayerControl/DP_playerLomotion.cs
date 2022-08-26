@@ -203,6 +203,38 @@ namespace DP
             }
         }
 
+        public void HandlePlayerJump()
+        {
+            if (playerManager.isInteracting)
+            {
+                return;
+            }
+            if (inputHandler.jump_input)
+            {
+                MoveDirection = cameraPos.forward * inputHandler.vertical;
+                MoveDirection += cameraPos.right * inputHandler.horizontal;
+
+                if (inputHandler.rb_input)
+                {
+                    animationHandler.ApplyTargetAnimation("jumpAttack", true);
+                }
+                // else if (inputHandler.moveAmount > 0)
+                // {
+                //     animationHandler.ApplyTargetAnimation("jumpForward", true);
+                // }
+                // else
+                // {
+
+                // }
+                animationHandler.ApplyTargetAnimation("jump", true);
+
+
+
+                Quaternion rotation = Quaternion.LookRotation(MoveDirection);
+                playerTransform.rotation = rotation;
+                playerRigidBody.velocity = MoveDirection * moveSpeed;
+            }
+        }
         #endregion
     }
 }

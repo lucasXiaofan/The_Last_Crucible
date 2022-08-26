@@ -19,6 +19,7 @@ namespace DP
 
         //player flags:
         public bool roll_b_input;
+        public bool jump_input;
         public bool a_input; //item pick up
         public bool rb_input;
         public bool rt_input;
@@ -65,6 +66,7 @@ namespace DP
             HandleAttack(delta);
             HandleQuickSlot();
             HandleItemPickUp();
+            HandleJump();
         }
         private void MoveInputControl(float delta)
         {
@@ -144,6 +146,10 @@ namespace DP
         {
             inputActions.PlayerQuickSlot.PickUp.performed += i => a_input = true;
 
+        }
+        private void HandleJump()
+        {
+            inputActions.PlayerAction.Jump.performed += i => jump_input = true;
         }
     }
 
