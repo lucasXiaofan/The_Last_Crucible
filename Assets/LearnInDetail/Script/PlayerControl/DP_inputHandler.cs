@@ -11,6 +11,7 @@ namespace DP
         PlayerAttacker playerAttacker;
         DP_PlayerInventory playerInventory;
         DP_PlayerManager playerManager;
+        DP_UIManager uIManager;
         public float mouseX;
         public float mouseY;
         public float moveAmount;
@@ -21,6 +22,7 @@ namespace DP
         public bool roll_b_input;
         public bool jump_input;
         public bool a_input; //item pick up
+        public bool menu_input;
         public bool rb_input;
         public bool rt_input;
         public bool d_pad_down;
@@ -31,6 +33,7 @@ namespace DP
         public bool rollFlag;
         public bool sprintFlag;
         public bool comboFlag;
+        public bool menuFlag;
         float holdCounter;
 
         //stamina bar
@@ -39,6 +42,7 @@ namespace DP
         Vector2 cameraInput;
         private void Awake()
         {
+            uIManager = FindObjectOfType<DP_UIManager>();
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory = GetComponent<DP_PlayerInventory>();
             playerManager = GetComponent<DP_PlayerManager>();
@@ -67,6 +71,7 @@ namespace DP
             HandleQuickSlot();
             HandleItemPickUp();
             HandleJump();
+            HandleOpenAndCloseMenuUI();
         }
         private void MoveInputControl(float delta)
         {
@@ -144,12 +149,26 @@ namespace DP
         }
         private void HandleItemPickUp()
         {
+
             inputActions.PlayerQuickSlot.PickUp.performed += i => a_input = true;
 
         }
         private void HandleJump()
         {
             inputActions.PlayerAction.Jump.performed += i => jump_input = true;
+        }
+        private void HandleOpenAndCloseMenuUI()
+        {
+            inputActions.PlayerQuickSlot.OpenMenu.performed += i => menu_input = true;
+            print(menu_input);
+            if (menu_input)
+            {
+                menuFlag = !menuFlag;
+                uIManager.TurnOnorOffUI(menuFlag);
+            }
+
+
+
         }
     }
 

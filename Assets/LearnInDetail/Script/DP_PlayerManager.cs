@@ -57,14 +57,20 @@ namespace DP
             inputHandler.TickInput(delta);
             playerLomotion.HandleMovement(delta);
             playerLomotion.HandleRollingAndSprint(delta);
+            playerLomotion.whyDoesRigidBodyaddForceNotFuckingWork(delta);
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
-            playerLomotion.HandlePlayerJump();
+            playerLomotion.HandlePlayerJump(delta, playerLomotion.MoveDirection);
+
+
+
             CheckForInteractableObject();
 
         }
 
         private void LateUpdate()
         {
+            float delta = Time.deltaTime;
+
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
             // inputHandler.rb_input = false;
@@ -74,6 +80,9 @@ namespace DP
             inputHandler.d_pad_left = false;
             inputHandler.d_pad_right = false;
             inputHandler.jump_input = false;
+            inputHandler.menu_input = false;
+            playerLomotion.jumping = false;
+
 
             isSprinting = inputHandler.roll_b_input;
             if (isInAir)

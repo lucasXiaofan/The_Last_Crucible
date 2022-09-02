@@ -5,18 +5,21 @@ namespace DP
 {
     public class DP_playerLomotion : MonoBehaviour
     {
-        Transform cameraPos;
-        Transform playerTransform;
+        public Transform cameraPos;
+        public Transform playerTransform;
         DP_inputHandler inputHandler;
         Vector3 targetDirection;
         public Vector3 MoveDirection;
         Vector3 normalVector;
         public Rigidbody playerRigidBody;
+        public CapsuleCollider playerCollider;
         DP_animationHandler animationHandler;
         DP_PlayerManager playerManager;
-        float moveSpeed = 5f;
+        public float moveSpeed = 5f;
         float rotatingSpeed = 5f;
         public float sprintSpeed = 8f;
+        public bool jumping;
+        public float jumpDistance = 3f;
 
         [Header("Handle Falling")]
         [SerializeField]
@@ -37,6 +40,7 @@ namespace DP
             playerTransform = transform;
             playerManager = GetComponent<DP_PlayerManager>();
             playerRigidBody = GetComponent<Rigidbody>();
+            playerCollider = GetComponent<CapsuleCollider>();
             inputHandler = GetComponent<DP_inputHandler>();
             animationHandler = GetComponentInChildren<DP_animationHandler>();
             animationHandler.initialize();
@@ -60,7 +64,7 @@ namespace DP
             MoveDirection += cameraPos.right * inputHandler.horizontal;
             MoveDirection.Normalize();
 
-            MoveDirection.y = 0;
+            //MoveDirection.y = 0;
             //I am not using ProjectOnPlane here
             if (inputHandler.sprintFlag)
             {
@@ -120,6 +124,7 @@ namespace DP
 
         public void HandleFalling(float delta, Vector3 moveDirection)
         {
+
             //things to consider
             //1. determine isINair 
             // 2. isGrounded
@@ -202,15 +207,22 @@ namespace DP
                 }
             }
         }
-
-        public void HandlePlayerJump()
+        public void whyDoesRigidBodyaddForceNotFuckingWork(float delta)
         {
+
+        }
+        public void HandlePlayerJump(float delta, Vector3 moveDirection)
+        {
+            //HandleFalling(delta, moveDirection);
             if (playerManager.isInteracting)
             {
                 return;
             }
-            if (inputHandler.jump_input)
+            if (inputHandler.jump_input && playerManager.isGrounded)
             {
+                playerManager.isInAir = true;
+                playerManager.isGrounded = false;
+                jumping = true;
                 MoveDirection = cameraPos.forward * inputHandler.vertical;
                 MoveDirection += cameraPos.right * inputHandler.horizontal;
 
@@ -218,22 +230,23 @@ namespace DP
                 {
                     animationHandler.ApplyTargetAnimation("jumpAttack", true);
                 }
-                // else if (inputHandler.moveAmount > 0)
-                // {
-                //     animationHandler.ApplyTargetAnimation("jumpForward", true);
-                // }
-                // else
-                // {
 
-                // }
-                animationHandler.ApplyTargetAnimation("jump", true);
+                animationHandler.ApplyTargetAnimation("jump", false);
+
 
 
 
                 Quaternion rotation = Quaternion.LookRotation(MoveDirection);
                 playerTransform.rotation = rotation;
-                playerRigidBody.velocity = MoveDirection * moveSpeed;
+                Vector3 tp = playerTransform.position;
+                playerRigidBody.AddForce(Vector3.up * fallingSpeed);
+                // tp.y = playerTransform.position.y + jumpDistance;
+                // playerTransform.position = Vector3.Lerp(playerTransform.position, tp, Time.deltaTime);
+
+                // I don't fucking know why the addforce is not fucking working holy shit 
+                //playerRigidBody.AddForce(-Vector3.down * fallingSpeed);
             }
+
         }
         #endregion
     }
