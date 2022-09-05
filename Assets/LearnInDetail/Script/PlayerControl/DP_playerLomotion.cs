@@ -165,7 +165,7 @@ namespace DP
                 {
                     if (fallingTimer > 0.5f)
                     {
-                        Debug.Log("you've been falling for: " + fallingTimer);
+                        //Debug.Log("you've been falling for: " + fallingTimer);
                         animationHandler.ApplyTargetAnimation("land", true);
                     }
                     else

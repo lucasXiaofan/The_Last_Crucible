@@ -160,11 +160,21 @@ namespace DP
         private void HandleOpenAndCloseMenuUI()
         {
             inputActions.PlayerQuickSlot.OpenMenu.performed += i => menu_input = true;
-            print(menu_input);
+            //print(menu_input);
             if (menu_input)
             {
                 menuFlag = !menuFlag;
                 uIManager.TurnOnorOffUI(menuFlag);
+                uIManager.hudWindows.SetActive(!menuFlag);
+                if (menuFlag)
+                {
+
+                    uIManager.UpdateUI();
+                }
+                else if (!menuFlag)
+                {
+                    uIManager.weaponWindow.SetActive(false);
+                }
             }
 
 
