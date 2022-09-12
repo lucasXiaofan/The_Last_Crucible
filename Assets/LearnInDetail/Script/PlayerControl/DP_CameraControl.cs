@@ -33,6 +33,13 @@ namespace DP
 
         private Vector3 CameraVelocity = Vector3.zero;
 
+        //for lock on 
+        float maximumTargetDistance = 30f;
+        List<DP_Character> availableTarget = new List<DP_Character>();
+        public Transform nearestLockTransform;
+        public Transform currentLockOnTransform;
+        DP_inputHandler inputHandler;
+
         private void Awake()
         {
             myTransform = transform;
@@ -41,6 +48,7 @@ namespace DP
             Application.targetFrameRate = 60;
             defaultPositon = cameraTransform.localPosition.z;
             targetTransform = FindObjectOfType<DP_PlayerManager>().transform;
+            inputHandler = FindObjectOfType<DP_inputHandler>();
 
         }
         public void FollowTarget(float delta)
@@ -52,18 +60,40 @@ namespace DP
         }
         public void CameraRotation(float delta, float mouseX, float mouseY)
         {
-            rotateAngle += (mouseX * rotationSpeed) / delta;
-            Vector3 rotationH = Vector3.zero;
-            rotationH.y = rotateAngle;
-            Quaternion Lookdirection = Quaternion.Euler(rotationH);
-            myTransform.rotation = Lookdirection;
+            if (inputHandler.lockOnFlag == false && currentLockOnTransform == null)
+            {
+                rotateAngle += (mouseX * rotationSpeed) / delta;
+                Vector3 rotationH = Vector3.zero;
+                rotationH.y = rotateAngle;
+                Quaternion Lookdirection = Quaternion.Euler(rotationH);
+                myTransform.rotation = Lookdirection;
 
-            pivotAngle -= (mouseY * pivotSpeed) / delta;
-            pivotAngle = Mathf.Clamp(pivotAngle, minimumPivot, maximumPivot);
-            rotationH = Vector3.zero;
-            rotationH.x = pivotAngle;
-            Quaternion pivotDirection = Quaternion.Euler(rotationH);
-            pivotTransform.localRotation = pivotDirection;
+                pivotAngle -= (mouseY * pivotSpeed) / delta;
+                pivotAngle = Mathf.Clamp(pivotAngle, minimumPivot, maximumPivot);
+                rotationH = Vector3.zero;
+                rotationH.x = pivotAngle;
+                Quaternion pivotDirection = Quaternion.Euler(rotationH);
+                pivotTransform.localRotation = pivotDirection;
+            }
+            else
+            {
+                float velocity = 0;
+                Vector3 dir = currentLockOnTransform.position - cameraTransform.position;
+                dir.Normalize();
+                dir.y = 0;
+                Quaternion targetRotation = Quaternion.LookRotation(dir);
+                transform.rotation = targetRotation;
+
+                dir = currentLockOnTransform.position - pivotTransform.position;
+                dir.Normalize();
+                targetRotation = Quaternion.LookRotation(dir);
+                // I don't understand the eularAngle?? what is the difference between eular angle 
+                //and the Rotation
+                // this will be really wonky pivotTransform.localRotation = targetRotation;
+                Vector3 eularAngle = targetRotation.eulerAngles;
+                eularAngle.y = 0;
+                pivotTransform.localEulerAngles = eularAngle;
+            }
 
         }
         private void HandleCollision(float delta)
@@ -91,6 +121,47 @@ namespace DP
 
         }
 
+        public void HandleLockOn()
+        {
+            float shortestDistace = Mathf.Infinity;
+            Collider[] characters = Physics.OverlapSphere(targetTransform.position, maximumTargetDistance - 5);
+            for (int i = 0; i < characters.Length; i++)
+            {
+                DP_Character character = characters[i].GetComponent<DP_Character>();
+                if (character != null)
+                {
+                    Vector3 LockOnDirection = character.transform.position - targetTransform.position;
+                    float distanceFromTarget = Vector3.Distance(character.transform.position, targetTransform.position);
+                    float targetAngle = Vector3.Angle(character.transform.position, cameraTransform.forward);
+
+                    if (character.transform.root != targetTransform.root
+                    && distanceFromTarget < maximumTargetDistance
+                    && targetAngle < 50f && targetAngle > -50f)
+                    {
+                        availableTarget.Add(character);
+                    }
+                }
+            }
+            for (int i = 0; i < availableTarget.Count; i++)
+            {
+                float distance = Vector3.Distance(targetTransform.position, availableTarget[i].LockOnTransform.position);
+                if (distance < shortestDistace)
+                {
+                    shortestDistace = distance;
+                    nearestLockTransform = availableTarget[i].LockOnTransform;
+                }
+            }
+        }
+        public void ClearLockOn()
+        {
+            availableTarget.Clear();
+            nearestLockTransform = null;
+            currentLockOnTransform = null;
+
+        }
     }
 }
+
+
+
 

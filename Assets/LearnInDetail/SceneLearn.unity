@@ -1347,6 +1347,7 @@ GameObject:
   - component: {fileID: 272172031}
   - component: {fileID: 272172032}
   - component: {fileID: 272172029}
+  - component: {fileID: 272172033}
   m_Layer: 0
   m_Name: EnemyPlaceHolder
   m_TagString: Enemy
@@ -1383,6 +1384,7 @@ Transform:
   m_Children:
   - {fileID: 1187550769}
   - {fileID: 1686238932}
+  - {fileID: 745403483}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1416,6 +1418,19 @@ CapsuleCollider:
   m_Height: 1.868475
   m_Direction: 1
   m_Center: {x: 0, y: 0.99129534, z: 0}
+--- !u!114 &272172033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272172028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33a68636da10734b9a382c89eefcf7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LockOnTransform: {fileID: 745403483}
 --- !u!1 &308320936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2329,6 +2344,8 @@ MonoBehaviour:
   minimumPivot: -35
   miniOffet: 0.2
   CollisionSphereRadius: 0.2
+  nearestLockTransform: {fileID: 0}
+  currentLockOnTransform: {fileID: 0}
 --- !u!1 &732988629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2500,6 +2517,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740021458}
   m_CullTransparentMesh: 1
+--- !u!1 &745403482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 745403483}
+  m_Layer: 0
+  m_Name: LockOnTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &745403483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745403482}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 272172030}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &753807637
 GameObject:
   m_ObjectHideFlags: 0
@@ -5862,6 +5909,36 @@ MonoBehaviour:
   RES2Selected: 1
   LES1Selected: 0
   LES2Selected: 0
+--- !u!1 &1537584426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1537584427}
+  m_Layer: 10
+  m_Name: LockOnTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1537584427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537584426}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2142653660}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1560036596
 GameObject:
   m_ObjectHideFlags: 0
@@ -7371,10 +7448,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142653659}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.91, y: -0.1, z: 9.57}
+  m_LocalPosition: {x: 4.91, y: -0.61, z: 9.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 667851822}
+  - {fileID: 1537584427}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7396,7 +7474,7 @@ MonoBehaviour:
   playerRigidBody: {fileID: 0}
   playerCollider: {fileID: 0}
   moveSpeed: 5
-  sprintSpeed: 8
+  sprintSpeed: 10
   jumping: 0
   jumpDistance: 3
   startPointOfRayCast: 0.5
@@ -7412,7 +7490,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2142653659}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.3
   m_Height: 1.5
   m_Direction: 1
@@ -7430,7 +7508,7 @@ Rigidbody:
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &2142653664
@@ -7460,10 +7538,12 @@ MonoBehaviour:
   d_pad_up: 0
   d_pad_left: 0
   d_pad_right: 0
+  lock_on_input: 0
   rollFlag: 0
   sprintFlag: 0
   comboFlag: 0
   menuFlag: 0
+  lockOnFlag: 0
   StaminaStatus: {fileID: 1804960624}
 --- !u!114 &2142653665
 MonoBehaviour:
@@ -7477,6 +7557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea593876004138418a0e20e93785edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LockOnTransform: {fileID: 1537584427}
   textUI: {fileID: 0}
   alertTextObject: {fileID: 1304639077}
   itemTextObject: {fileID: 2012604632}

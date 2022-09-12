@@ -29,23 +29,27 @@ namespace DP
         public bool d_pad_up;
         public bool d_pad_left;
         public bool d_pad_right;
+        public bool lock_on_input;
 
         public bool rollFlag;
         public bool sprintFlag;
         public bool comboFlag;
         public bool menuFlag;
+        public bool lockOnFlag;
         float holdCounter;
 
         //stamina bar
         public DP_PlayerHealthBar StaminaStatus;
         Vector2 moveInput;
         Vector2 cameraInput;
+
         private void Awake()
         {
             uIManager = FindObjectOfType<DP_UIManager>();
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory = GetComponent<DP_PlayerInventory>();
             playerManager = GetComponent<DP_PlayerManager>();
+            cameraControl = FindObjectOfType<DP_CameraControl>();
         }
 
         private void OnEnable()
@@ -55,6 +59,14 @@ namespace DP
                 inputActions = new DP_PlayerControl();
                 inputActions.PlayerMovement.Movement.performed += inputActions => moveInput = inputActions.ReadValue<Vector2>();
                 inputActions.PlayerMovement.Camera.performed += inputActions => cameraInput = inputActions.ReadValue<Vector2>();
+                inputActions.PlayerAction.Jump.performed += i => jump_input = true;
+                inputActions.PlayerQuickSlot.DPadRight.performed += i => d_pad_right = true;
+                inputActions.PlayerQuickSlot.DPadLeft.performed += i => d_pad_left = true;
+                inputActions.PlayerAction.RB.performed += i => rb_input = true;
+                inputActions.PlayerAction.RT.performed += i => rt_input = true;
+                inputActions.PlayerQuickSlot.PickUp.performed += i => a_input = true;
+                inputActions.PlayerQuickSlot.OpenMenu.performed += i => menu_input = true;
+                inputActions.PlayerMovement.LockOnTarget.performed += i => lock_on_input = true;
             }
             inputActions.Enable();
         }
@@ -69,9 +81,8 @@ namespace DP
             HandleRollingInput(delta);
             HandleAttack(delta);
             HandleQuickSlot();
-            HandleItemPickUp();
-            HandleJump();
             HandleOpenAndCloseMenuUI();
+            HandleLockOnInput();
         }
         private void MoveInputControl(float delta)
         {
@@ -80,19 +91,18 @@ namespace DP
             moveAmount = Mathf.Clamp01(Mathf.Abs(vertical) + Mathf.Abs(horizontal));
             mouseX = cameraInput.x;
             mouseY = cameraInput.y;
-
-
         }
         private void HandleRollingInput(float delta)
         {
             roll_b_input = UnityEngine.InputSystem.Keyboard.current.leftShiftKey.isPressed;
             //|| UnityEngine.InputSystem.Gamepad.current.buttonEast.isPressed;
+            sprintFlag = roll_b_input;
             if (roll_b_input)
             {
                 holdCounter += delta;
                 if (moveAmount > 0)
                 {
-                    sprintFlag = true;
+
                 }
                 else
                 {
@@ -112,8 +122,7 @@ namespace DP
         }
         private void HandleAttack(float delta)
         {
-            inputActions.PlayerAction.RB.performed += i => rb_input = true;
-            inputActions.PlayerAction.RT.performed += i => rt_input = true;
+
             if (playerManager.isInteracting)
                 return;
             if (rb_input && StaminaStatus.alive())
@@ -136,8 +145,7 @@ namespace DP
         }
         private void HandleQuickSlot()
         {
-            inputActions.PlayerQuickSlot.DPadRight.performed += i => d_pad_right = true;
-            inputActions.PlayerQuickSlot.DPadLeft.performed += i => d_pad_left = true;
+
             if (d_pad_left)
             {
                 playerInventory.ChangeLeftWeaponInSlot();
@@ -147,19 +155,9 @@ namespace DP
                 playerInventory.ChangeRightWeaponInSlot();
             }
         }
-        private void HandleItemPickUp()
-        {
-
-            inputActions.PlayerQuickSlot.PickUp.performed += i => a_input = true;
-
-        }
-        private void HandleJump()
-        {
-            inputActions.PlayerAction.Jump.performed += i => jump_input = true;
-        }
         private void HandleOpenAndCloseMenuUI()
         {
-            inputActions.PlayerQuickSlot.OpenMenu.performed += i => menu_input = true;
+
             //print(menu_input);
             if (menu_input)
             {
@@ -179,6 +177,30 @@ namespace DP
 
 
 
+        }
+
+        private void HandleLockOnInput()
+        {
+            if (lock_on_input && lockOnFlag == false)
+            {
+                print("lock ON");
+                //cameraControl.ClearLockOn();
+                lock_on_input = false;
+
+                cameraControl.HandleLockOn();
+                if (cameraControl.nearestLockTransform != null)
+                {
+                    cameraControl.currentLockOnTransform = cameraControl.nearestLockTransform;
+                    lockOnFlag = true;
+                }
+            }
+            else if (lock_on_input && lockOnFlag)
+            {
+                print("lock Off");
+                lock_on_input = false;
+                lockOnFlag = false;
+                cameraControl.ClearLockOn();
+            }
         }
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace DP
 {
-    public class DP_PlayerManager : MonoBehaviour
+    public class DP_PlayerManager : DP_Character
     {
         DP_inputHandler inputHandler;
         DP_playerLomotion playerLomotion;
@@ -36,16 +36,7 @@ namespace DP
             itemTextObject.SetActive(false);
 
         }
-        private void FixedUpdate()
-        {
-            float delta = Time.deltaTime;
-            if (cameraControl != null)
-            {
-                cameraControl.FollowTarget(delta);
-                cameraControl.CameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
-            }
 
-        }
         // Update is called once per frame
         void Update()
         {
@@ -55,16 +46,17 @@ namespace DP
             isInteracting = animator.GetBool("isInteracting");
             animator.SetBool("IsInAir", isInAir);
             inputHandler.TickInput(delta);
-            playerLomotion.HandleMovement(delta);
             playerLomotion.HandleRollingAndSprint(delta);
+            CheckForInteractableObject();
+
+        }
+        private void FixedUpdate()
+        {
+            float delta = Time.deltaTime;
+            playerLomotion.HandleMovement(delta);
             playerLomotion.whyDoesRigidBodyaddForceNotFuckingWork(delta);
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
             playerLomotion.HandlePlayerJump(delta, playerLomotion.MoveDirection);
-
-
-
-            CheckForInteractableObject();
-
         }
 
         private void LateUpdate()
@@ -72,7 +64,7 @@ namespace DP
             float delta = Time.deltaTime;
 
             inputHandler.rollFlag = false;
-            inputHandler.sprintFlag = false;
+            //inputHandler.sprintFlag = false;
             // inputHandler.rb_input = false;
             // inputHandler.rt_input = false;
             inputHandler.d_pad_down = false;
@@ -82,6 +74,13 @@ namespace DP
             inputHandler.jump_input = false;
             inputHandler.menu_input = false;
             playerLomotion.jumping = false;
+            if (cameraControl != null)
+            {
+                cameraControl.FollowTarget(delta);
+                cameraControl.CameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
+            }
+
+
 
 
             isSprinting = inputHandler.roll_b_input;

@@ -17,7 +17,7 @@ namespace DP
         DP_PlayerManager playerManager;
         public float moveSpeed = 5f;
         float rotatingSpeed = 5f;
-        public float sprintSpeed = 8f;
+        public float sprintSpeed = 10f;
         public bool jumping;
         public float jumpDistance = 3f;
 
@@ -70,6 +70,10 @@ namespace DP
             {
                 moveSpeed = sprintSpeed;
                 playerManager.isSprinting = true;
+            }
+            else
+            {
+                moveSpeed = 5f;
             }
             animationHandler.HandleAnimatorFloat(inputHandler.moveAmount, 0, playerManager.isSprinting);
             MoveDirection *= moveSpeed;
