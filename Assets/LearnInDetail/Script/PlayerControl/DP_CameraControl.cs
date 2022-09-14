@@ -92,6 +92,7 @@ namespace DP
                 // this will be really wonky pivotTransform.localRotation = targetRotation;
                 Vector3 eularAngle = targetRotation.eulerAngles;
                 eularAngle.y = 0;
+                eularAngle.z = 0;
                 pivotTransform.localEulerAngles = eularAngle;
             }
 
@@ -132,8 +133,8 @@ namespace DP
                 {
                     Vector3 LockOnDirection = character.transform.position - targetTransform.position;
                     float distanceFromTarget = Vector3.Distance(character.transform.position, targetTransform.position);
-                    float targetAngle = Vector3.Angle(character.transform.position, cameraTransform.forward);
-
+                    float targetAngle = Vector3.Angle(LockOnDirection, cameraTransform.forward);
+                    Debug.DrawRay(cameraTransform.position, cameraTransform.forward, Color.red, 0.1f);
                     if (character.transform.root != targetTransform.root
                     && distanceFromTarget < maximumTargetDistance
                     && targetAngle < 50f && targetAngle > -50f)

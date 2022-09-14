@@ -65,8 +65,8 @@ namespace DP
 
             inputHandler.rollFlag = false;
             //inputHandler.sprintFlag = false;
-            // inputHandler.rb_input = false;
-            // inputHandler.rt_input = false;
+            inputHandler.rb_input = false;
+            inputHandler.rt_input = false; ///I don't know why enable them will disable the collider
             inputHandler.d_pad_down = false;
             inputHandler.d_pad_up = false;
             inputHandler.d_pad_left = false;

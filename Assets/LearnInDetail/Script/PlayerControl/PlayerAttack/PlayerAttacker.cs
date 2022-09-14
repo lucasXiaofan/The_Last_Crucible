@@ -10,9 +10,13 @@ namespace DP
         DP_animationHandler animationHandler;
         DP_inputHandler inputHandler;
         DP_WeaponSlotManager weaponSlotManager;
+        DP_playerLomotion playerLomotion;
+        DP_CameraControl cameraControl;
         public string lastAttack;
         void Start()
         {
+            cameraControl = FindObjectOfType<DP_CameraControl>();
+            playerLomotion = GetComponent<DP_playerLomotion>();
             weaponSlotManager = GetComponentInChildren<DP_WeaponSlotManager>();
             animationHandler = GetComponentInChildren<DP_animationHandler>();
             inputHandler = GetComponent<DP_inputHandler>();
@@ -35,16 +39,37 @@ namespace DP
 
         public void HandleLightAttack(DP_WeaponItem weaponItem)
         {
+
+
             weaponSlotManager.attackingWeapon = weaponItem;
             animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_1, true);
             lastAttack = weaponItem.Oh_Light_Attack_1;
+            HandleRotationWhileAttack();
         }
+        public void HandleRotationWhileAttack()
+        {
+            Vector3 moveDir = playerLomotion.cameraPos.forward * inputHandler.vertical;
+            moveDir += playerLomotion.cameraPos.right * inputHandler.horizontal;
+            if (inputHandler.lockOnFlag)
+            {
+                Vector3 dir = cameraControl.currentLockOnTransform.position - cameraControl.cameraTransform.position;
+                dir.Normalize();
+                dir.y = 0;
+                Quaternion targetRotation = Quaternion.LookRotation(dir);
+                playerLomotion.playerTransform.rotation = targetRotation;
+            }
+            else
+            {
+                playerLomotion.playerTransform.rotation = Quaternion.LookRotation(moveDir);
+            }
 
+        }
         public void HandleHeavyAttack(DP_WeaponItem weaponItem)
         {
             weaponSlotManager.attackingWeapon = weaponItem;
             animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_1, true);
             lastAttack = weaponItem.Oh_Heavy_Attack_1;
+            HandleRotationWhileAttack();
         }
 
 

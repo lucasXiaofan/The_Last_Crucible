@@ -23,9 +23,10 @@ namespace DP
         }
         public void DisableDamage()
         {
+            print("this doesn't cause the loop");
             damageCollider.enabled = false;
-            inputHandler.rb_input = false;
-            inputHandler.rt_input = false;
+            // inputHandler.rb_input = false;
+            // inputHandler.rt_input = false;
         }
         private void OnTriggerEnter(Collider other)
         {
@@ -35,14 +36,15 @@ namespace DP
                 DP_PlayerStats playerStats = other.GetComponent<DP_PlayerStats>();
                 if (playerStats != null)
                 {
-                    if (inputHandler.rb_input)
-                    {
-                        playerStats.TakeDamage(currentWeaponDamage);
-                    }
-                    else if (inputHandler.rt_input)
-                    {
-                        playerStats.TakeDamage(currentWeaponDamage * 2);
-                    }
+                    playerStats.TakeDamage(currentWeaponDamage);
+                    // if (inputHandler.rb_input)
+                    // {
+                    //     playerStats.TakeDamage(currentWeaponDamage);
+                    // }
+                    // else if (inputHandler.rt_input)
+                    // {
+                    //     playerStats.TakeDamage(currentWeaponDamage * 2);
+                    // }
 
                 }
             }
@@ -51,14 +53,15 @@ namespace DP
                 DP_EnemyStats enemyStats = other.GetComponent<DP_EnemyStats>();
                 if (enemyStats != null)
                 {
-                    if (inputHandler.rb_input)
-                    {
-                        enemyStats.TakeDamage(currentWeaponDamage);
-                    }
-                    else if (inputHandler.rt_input)
-                    {
-                        enemyStats.TakeDamage(currentWeaponDamage * 2);
-                    }
+                    enemyStats.TakeDamage(currentWeaponDamage);
+                    // if (inputHandler.rb_input)
+                    // {
+
+                    // }
+                    // else if (inputHandler.rt_input)
+                    // {
+                    //     enemyStats.TakeDamage(currentWeaponDamage * 2);
+                    // }
                 }
             }
 

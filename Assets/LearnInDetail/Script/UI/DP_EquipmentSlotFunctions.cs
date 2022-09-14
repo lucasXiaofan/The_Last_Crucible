@@ -19,11 +19,11 @@ namespace DP
 
             for (int i = 0; i < equipmentArray.Length; i++)
             {
-                print("called loadequipment");
-                print(equipmentArray[i].RES1Selected);
+
+
                 if (equipmentArray[i].RES1Selected)
                 {
-                    print("should upload right hand weapon");
+
                     equipmentArray[i].EquipItem(inventory.rightHandSlots[0]);
                 }
                 if (equipmentArray[i].RES2Selected)

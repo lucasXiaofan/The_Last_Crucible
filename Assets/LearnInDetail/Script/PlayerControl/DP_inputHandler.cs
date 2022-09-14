@@ -140,6 +140,7 @@ namespace DP
             }
             if (rt_input && StaminaStatus.alive())
             {
+                print("Looping");
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
         }
@@ -183,7 +184,7 @@ namespace DP
         {
             if (lock_on_input && lockOnFlag == false)
             {
-                print("lock ON");
+
                 //cameraControl.ClearLockOn();
                 lock_on_input = false;
 
@@ -196,7 +197,7 @@ namespace DP
             }
             else if (lock_on_input && lockOnFlag)
             {
-                print("lock Off");
+
                 lock_on_input = false;
                 lockOnFlag = false;
                 cameraControl.ClearLockOn();
