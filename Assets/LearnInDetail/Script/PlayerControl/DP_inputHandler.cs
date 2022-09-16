@@ -30,6 +30,8 @@ namespace DP
         public bool d_pad_left;
         public bool d_pad_right;
         public bool lock_on_input;
+        public bool lock_left_input;
+        public bool lock_right_input;
 
         public bool rollFlag;
         public bool sprintFlag;
@@ -67,6 +69,9 @@ namespace DP
                 inputActions.PlayerQuickSlot.PickUp.performed += i => a_input = true;
                 inputActions.PlayerQuickSlot.OpenMenu.performed += i => menu_input = true;
                 inputActions.PlayerMovement.LockOnTarget.performed += i => lock_on_input = true;
+                inputActions.PlayerMovement.LockOnLeft.performed += i => lock_left_input = true;
+                inputActions.PlayerMovement.LockOnRight.performed += i => lock_right_input = true;
+
             }
             inputActions.Enable();
         }
@@ -182,12 +187,12 @@ namespace DP
 
         private void HandleLockOnInput()
         {
+
             if (lock_on_input && lockOnFlag == false)
             {
 
                 //cameraControl.ClearLockOn();
                 lock_on_input = false;
-
                 cameraControl.HandleLockOn();
                 if (cameraControl.nearestLockTransform != null)
                 {
@@ -201,6 +206,28 @@ namespace DP
                 lock_on_input = false;
                 lockOnFlag = false;
                 cameraControl.ClearLockOn();
+            }
+            if (lockOnFlag && lock_left_input)
+            {
+                print("called left");
+                lock_left_input = false;
+
+                cameraControl.HandleLockOn();
+                if (cameraControl.leftLockOnTarget != null)
+                {
+                    cameraControl.currentLockOnTransform = cameraControl.leftLockOnTarget;
+                }
+            }
+            else if (lockOnFlag && lock_right_input)
+            {
+                print("called right");
+                lock_right_input = false;
+
+                cameraControl.HandleLockOn();
+                if (cameraControl.rightLockOnTarget != null)
+                {
+                    cameraControl.currentLockOnTransform = cameraControl.rightLockOnTarget;
+                }
             }
         }
     }

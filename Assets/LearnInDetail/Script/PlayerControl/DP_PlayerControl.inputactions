@@ -31,6 +31,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LockOnLeft",
+                    "type": "Button",
+                    "id": "b21f85b2-44f8-4187-899a-f5e2b8d27bf3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LockOnRight",
+                    "type": "Value",
+                    "id": "64fca2de-dfdc-4b37-9587-ec7525ad08fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -119,6 +137,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "LockOnTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cffe0d41-62d9-43d6-9f3e-c380efe7e8fa",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockOnLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d94afd6-807d-4c95-a094-8367ab1526cb",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockOnRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

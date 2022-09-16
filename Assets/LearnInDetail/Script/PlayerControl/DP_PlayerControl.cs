@@ -53,6 +53,24 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockOnLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""b21f85b2-44f8-4187-899a-f5e2b8d27bf3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LockOnRight"",
+                    ""type"": ""Value"",
+                    ""id"": ""64fca2de-dfdc-4b37-9587-ec7525ad08fe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -141,6 +159,28 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LockOnTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cffe0d41-62d9-43d6-9f3e-c380efe7e8fa"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOnLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d94afd6-807d-4c95-a094-8367ab1526cb"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOnRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -458,6 +498,8 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         m_PlayerMovement_Movement = m_PlayerMovement.FindAction("Movement", throwIfNotFound: true);
         m_PlayerMovement_Camera = m_PlayerMovement.FindAction("Camera", throwIfNotFound: true);
         m_PlayerMovement_LockOnTarget = m_PlayerMovement.FindAction("LockOnTarget", throwIfNotFound: true);
+        m_PlayerMovement_LockOnLeft = m_PlayerMovement.FindAction("LockOnLeft", throwIfNotFound: true);
+        m_PlayerMovement_LockOnRight = m_PlayerMovement.FindAction("LockOnRight", throwIfNotFound: true);
         // Player Action
         m_PlayerAction = asset.FindActionMap("Player Action", throwIfNotFound: true);
         m_PlayerAction_Roll = m_PlayerAction.FindAction("Roll", throwIfNotFound: true);
@@ -534,6 +576,8 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_Movement;
     private readonly InputAction m_PlayerMovement_Camera;
     private readonly InputAction m_PlayerMovement_LockOnTarget;
+    private readonly InputAction m_PlayerMovement_LockOnLeft;
+    private readonly InputAction m_PlayerMovement_LockOnRight;
     public struct PlayerMovementActions
     {
         private @DP_PlayerControl m_Wrapper;
@@ -541,6 +585,8 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_PlayerMovement_Movement;
         public InputAction @Camera => m_Wrapper.m_PlayerMovement_Camera;
         public InputAction @LockOnTarget => m_Wrapper.m_PlayerMovement_LockOnTarget;
+        public InputAction @LockOnLeft => m_Wrapper.m_PlayerMovement_LockOnLeft;
+        public InputAction @LockOnRight => m_Wrapper.m_PlayerMovement_LockOnRight;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -559,6 +605,12 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                 @LockOnTarget.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnLockOnTarget;
                 @LockOnTarget.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnLockOnTarget;
                 @LockOnTarget.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnLockOnTarget;
+                @LockOnLeft.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnLockOnLeft;
+                @LockOnLeft.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnLockOnLeft;
+                @LockOnLeft.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnLockOnLeft;
+                @LockOnRight.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnLockOnRight;
+                @LockOnRight.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnLockOnRight;
+                @LockOnRight.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnLockOnRight;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -572,6 +624,12 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                 @LockOnTarget.started += instance.OnLockOnTarget;
                 @LockOnTarget.performed += instance.OnLockOnTarget;
                 @LockOnTarget.canceled += instance.OnLockOnTarget;
+                @LockOnLeft.started += instance.OnLockOnLeft;
+                @LockOnLeft.performed += instance.OnLockOnLeft;
+                @LockOnLeft.canceled += instance.OnLockOnLeft;
+                @LockOnRight.started += instance.OnLockOnRight;
+                @LockOnRight.performed += instance.OnLockOnRight;
+                @LockOnRight.canceled += instance.OnLockOnRight;
             }
         }
     }
@@ -711,6 +769,8 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnCamera(InputAction.CallbackContext context);
         void OnLockOnTarget(InputAction.CallbackContext context);
+        void OnLockOnLeft(InputAction.CallbackContext context);
+        void OnLockOnRight(InputAction.CallbackContext context);
     }
     public interface IPlayerActionActions
     {
