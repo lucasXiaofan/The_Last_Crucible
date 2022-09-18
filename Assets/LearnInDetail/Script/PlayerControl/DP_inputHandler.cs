@@ -209,7 +209,6 @@ namespace DP
             }
             if (lockOnFlag && lock_left_input)
             {
-                print("called left");
                 lock_left_input = false;
 
                 cameraControl.HandleLockOn();
@@ -218,9 +217,8 @@ namespace DP
                     cameraControl.currentLockOnTransform = cameraControl.leftLockOnTarget;
                 }
             }
-            else if (lockOnFlag && lock_right_input)
+            if (lockOnFlag && lock_right_input)
             {
-                print("called right");
                 lock_right_input = false;
 
                 cameraControl.HandleLockOn();

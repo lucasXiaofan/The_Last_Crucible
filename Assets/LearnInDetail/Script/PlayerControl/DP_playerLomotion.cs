@@ -15,6 +15,7 @@ namespace DP
         public CapsuleCollider playerCollider;
         DP_animationHandler animationHandler;
         DP_PlayerManager playerManager;
+        DP_CameraControl cameraControl;
         public float moveSpeed = 5f;
         float rotatingSpeed = 5f;
         public float sprintSpeed = 10f;
@@ -43,6 +44,7 @@ namespace DP
             playerCollider = GetComponent<CapsuleCollider>();
             inputHandler = GetComponent<DP_inputHandler>();
             animationHandler = GetComponentInChildren<DP_animationHandler>();
+            cameraControl = FindObjectOfType<DP_CameraControl>();
             animationHandler.initialize();
             playerManager.isGrounded = true;
             ignoreLayer = ~(1 << 8 | 1 << 11);
@@ -75,7 +77,14 @@ namespace DP
             {
                 moveSpeed = 5f;
             }
-            animationHandler.HandleAnimatorFloat(inputHandler.moveAmount, 0, playerManager.isSprinting);
+            if (inputHandler.lockOnFlag)
+            {
+                animationHandler.HandleAnimatorFloat(inputHandler.vertical, inputHandler.horizontal, playerManager.isSprinting);
+            }
+            else
+            {
+                animationHandler.HandleAnimatorFloat(inputHandler.moveAmount, 0, playerManager.isSprinting);
+            }
             MoveDirection *= moveSpeed;
 
             Vector3 projectVelocity = Vector3.ProjectOnPlane(MoveDirection, normalVector);
@@ -91,18 +100,51 @@ namespace DP
         public void HandleRotation(float delta)
         {
             //targetDirection = Vector3.zero;
-            targetDirection = cameraPos.forward * inputHandler.vertical;
-            targetDirection += cameraPos.right * inputHandler.horizontal;
-            targetDirection.Normalize();
-            targetDirection.y = 0;
-            if (targetDirection == Vector3.zero)
+            if (inputHandler.lockOnFlag)
             {
-                targetDirection = playerTransform.forward;
-            }
-            Quaternion tR = Quaternion.LookRotation(targetDirection);
-            Quaternion targetRotation = Quaternion.Slerp(playerTransform.rotation, tR, rotatingSpeed * delta);
+                if (inputHandler.sprintFlag == false && inputHandler.rollFlag == false)
+                {
+                    Vector3 rotateDirection = MoveDirection;
+                    rotateDirection = cameraControl.currentLockOnTransform.position - playerTransform.position;
+                    rotateDirection.Normalize();
+                    rotateDirection.y = 0;
+                    Quaternion tr = Quaternion.LookRotation(rotateDirection);
+                    Quaternion trBetter = Quaternion.Slerp(playerTransform.rotation, tr, rotatingSpeed * Time.deltaTime);
+                    playerTransform.rotation = trBetter;
+                }
+                else
+                {
 
-            playerTransform.rotation = targetRotation;
+
+                    targetDirection = cameraPos.forward * inputHandler.vertical;
+                    targetDirection += cameraPos.right * inputHandler.horizontal;
+                    targetDirection.Normalize();
+                    targetDirection.y = 0;
+                    if (targetDirection == Vector3.zero)
+                    {
+                        targetDirection = playerTransform.forward;
+                    }
+                    Quaternion tR_lockon = Quaternion.LookRotation(targetDirection);
+                    Quaternion targetRotation_lockOn = Quaternion.Slerp(playerTransform.rotation, tR_lockon, rotatingSpeed * delta);
+                    playerTransform.rotation = targetRotation_lockOn;
+                }
+
+            }
+            else
+            {
+                targetDirection = cameraPos.forward * inputHandler.vertical;
+                targetDirection += cameraPos.right * inputHandler.horizontal;
+                targetDirection.Normalize();
+                targetDirection.y = 0;
+                if (targetDirection == Vector3.zero)
+                {
+                    targetDirection = playerTransform.forward;
+                }
+                Quaternion tR = Quaternion.LookRotation(targetDirection);
+                Quaternion targetRotation = Quaternion.Slerp(playerTransform.rotation, tR, rotatingSpeed * delta);
+
+                playerTransform.rotation = targetRotation;
+            }
         }
         public void HandleRollingAndSprint(float delta)
         {
@@ -135,7 +177,7 @@ namespace DP
             // 3. during falling play animation and disallow other interaction
             // 4. land
 
-            //playerManager.isGrounded = false;//???why?
+            playerManager.isGrounded = true;//???why?
             RaycastHit hit;
             Vector3 origin = playerTransform.position;
             origin.y += startPointOfRayCast;
@@ -179,6 +221,7 @@ namespace DP
                     }
                     playerManager.isInAir = false;
                 }
+                playerTransform.position = targetPosition;
             }
             else
             {
@@ -199,22 +242,19 @@ namespace DP
                     playerManager.isInAir = true;
                 }
             }
-            if (playerManager.isGrounded)
-            {
-                if (playerManager.isInteracting || inputHandler.moveAmount > 0)
-                {
-                    playerTransform.position = Vector3.Lerp(playerTransform.position, targetPosition, delta / 0.1f);
-                }
-                else
-                {
-                    playerTransform.position = targetPosition;
-                }
-            }
+            // if (playerManager.isGrounded)
+            // {
+            //     if (playerManager.isInteracting || inputHandler.moveAmount > 0)
+            //     {
+            //         playerTransform.position = Vector3.Lerp(playerTransform.position, targetPosition, delta / 0.1f);
+            //     }
+            //     else
+            //     {
+            //         playerTransform.position = targetPosition;
+            //     }
+            // }
         }
-        public void whyDoesRigidBodyaddForceNotFuckingWork(float delta)
-        {
 
-        }
         public void HandlePlayerJump(float delta, Vector3 moveDirection)
         {
             //HandleFalling(delta, moveDirection);

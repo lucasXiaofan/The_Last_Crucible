@@ -54,7 +54,6 @@ namespace DP
         {
             float delta = Time.deltaTime;
             playerLomotion.HandleMovement(delta);
-            playerLomotion.whyDoesRigidBodyaddForceNotFuckingWork(delta);
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
             playerLomotion.HandlePlayerJump(delta, playerLomotion.MoveDirection);
         }

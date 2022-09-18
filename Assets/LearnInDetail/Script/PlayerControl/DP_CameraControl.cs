@@ -161,22 +161,25 @@ namespace DP
                 {
                     shortestDistace = distance;
                     nearestLockTransform = availableTarget[i].LockOnTransform;
-                    if (inputHandler.lockOnFlag)
-                    {
 
-                        Vector3 RelativeEnemyPosition = currentLockOnTransform.InverseTransformPoint(availableTarget[i].transform.position);
-                        var distanceToLeft = currentLockOnTransform.position.x - availableTarget[i].transform.position.x;
-                        var distanceToRight = currentLockOnTransform.position.x + availableTarget[i].transform.position.x;
-                        if (RelativeEnemyPosition.x > 0 && distanceToLeft < shortestDistanceFromLeft)
-                        {
-                            shortestDistanceFromLeft = distanceToLeft;
-                            leftLockOnTarget = availableTarget[i].transform;
-                        }
-                        if (RelativeEnemyPosition.x > 0 && distanceToRight < shortestDistanceFromRight)
-                        {
-                            shortestDistanceFromRight = distanceToRight;
-                            rightLockOnTarget = availableTarget[i].transform;
-                        }
+                }
+                if (inputHandler.lockOnFlag)
+                {
+
+                    Vector3 RelativeEnemyPosition = currentLockOnTransform.InverseTransformPoint(availableTarget[i].transform.position);
+                    var distanceToLeft = currentLockOnTransform.position.x + availableTarget[i].transform.position.x;
+                    var distanceToRight = currentLockOnTransform.position.x - availableTarget[i].transform.position.x;
+                    //float distanceToLeft = Vector3.Distance(currentLockOnTransform.position, availableTarget[i].transform.position);
+
+                    if (RelativeEnemyPosition.x > 0 && distanceToLeft < shortestDistanceFromLeft)
+                    {
+                        shortestDistanceFromLeft = distanceToLeft;
+                        leftLockOnTarget = availableTarget[i].LockOnTransform;
+                    }
+                    if (RelativeEnemyPosition.x < 0 && distanceToRight < shortestDistanceFromRight)
+                    {
+                        shortestDistanceFromRight = distanceToRight;
+                        rightLockOnTarget = availableTarget[i].LockOnTransform;
                     }
                 }
             }

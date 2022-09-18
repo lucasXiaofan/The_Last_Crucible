@@ -56,6 +56,7 @@ namespace DP
                 dir.Normalize();
                 dir.y = 0;
                 Quaternion targetRotation = Quaternion.LookRotation(dir);
+                //Quaternion tr = Quaternion.Slerp(playerLomotion.playerTransform.rotation, targetRotation, 15f * Time.deltaTime);
                 playerLomotion.playerTransform.rotation = targetRotation;
             }
             else
