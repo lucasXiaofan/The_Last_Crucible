@@ -66,7 +66,7 @@ namespace DP
             MoveDirection += cameraPos.right * inputHandler.horizontal;
             MoveDirection.Normalize();
 
-            //MoveDirection.y = 0;
+            MoveDirection.y = 0;
             //I am not using ProjectOnPlane here
             if (inputHandler.sprintFlag)
             {
@@ -102,20 +102,22 @@ namespace DP
             //targetDirection = Vector3.zero;
             if (inputHandler.lockOnFlag)
             {
+                print("player body control");
                 if (inputHandler.sprintFlag == false && inputHandler.rollFlag == false)
                 {
+                    print("player body control, none springflag");
                     Vector3 rotateDirection = MoveDirection;
-                    rotateDirection = cameraControl.currentLockOnTransform.LockOnTransform.position - playerTransform.position;
+                    rotateDirection = cameraControl.currentLockOnTransform.LockOnTransform.position - cameraControl.cameraTransform.position;
                     rotateDirection.Normalize();
                     rotateDirection.y = 0;
+
                     Quaternion tr = Quaternion.LookRotation(rotateDirection);
                     Quaternion trBetter = Quaternion.Slerp(playerTransform.rotation, tr, rotatingSpeed * Time.deltaTime);
                     playerTransform.rotation = trBetter;
                 }
                 else
                 {
-
-
+                    print("else");
                     targetDirection = cameraPos.forward * inputHandler.vertical;
                     targetDirection += cameraPos.right * inputHandler.horizontal;
                     targetDirection.Normalize();
@@ -190,7 +192,8 @@ namespace DP
             {
                 playerRigidBody.AddForce(-Vector3.up * fallingSpeed);
                 //add a kick off force below
-                playerRigidBody.AddForce(moveDirection * fallingSpeed / 7f);
+                Vector3 kickDir = moveDirection;
+                playerRigidBody.AddForce(kickDir * fallingSpeed / 3.5f);
             }
 
             Vector3 dir = moveDirection;
@@ -205,6 +208,7 @@ namespace DP
                 // normalVector = hit.normal;
                 // Vector3 tp = hit.point;
                 // targetPosition.y = tp.y;
+                playerRigidBody.AddForce(transform.up * (-20 * 2 * Time.deltaTime), ForceMode.VelocityChange);
                 playerManager.isGrounded = true;
                 if (playerManager.isInAir)
                 {
@@ -253,18 +257,17 @@ namespace DP
 
             if (pressJump && playerManager.isGrounded)
             {
-                print("jump");
-
-
                 playerManager.isGrounded = false;
                 jumping = true;
-                animationHandler.ApplyTargetAnimation("jump", true);
+                animationHandler.ApplyTargetAnimation("jump", false);
                 if (inputHandler.moveAmount > 0)
                 {
                     MoveDirection = cameraPos.forward * inputHandler.vertical;
                     MoveDirection += cameraPos.right * inputHandler.horizontal;
 
                     Quaternion rotation = Quaternion.LookRotation(MoveDirection);
+                    rotation.x = 0;
+
                     playerTransform.rotation = rotation;
                 }
                 // var vel = playerRigidBody.velocity;

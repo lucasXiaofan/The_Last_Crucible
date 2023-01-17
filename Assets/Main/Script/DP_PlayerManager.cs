@@ -52,16 +52,12 @@ namespace DP
             playerLomotion.HandlePlayerJump(inputHandler.jump_input);
 
 
-
-
         }
         private void FixedUpdate()
         {
             float delta = Time.deltaTime;
-
             playerLomotion.HandleMovement(delta);
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
-
         }
 
         private void LateUpdate()

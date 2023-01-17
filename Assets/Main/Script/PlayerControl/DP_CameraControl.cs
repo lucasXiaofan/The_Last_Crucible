@@ -79,7 +79,7 @@ namespace DP
             }
             else
             {
-                float velocity = 0;
+
                 Vector3 dir = currentLockOnTransform.LockOnTransform.position - cameraTransform.position;
                 dir.Normalize();
                 dir.y = 0;
@@ -102,7 +102,7 @@ namespace DP
         private void HandleCollision(float delta)
         {
             targetPosition = defaultPositon;
-            Vector3 dir = cameraTransform.position - pivotTransform.localPosition;
+            Vector3 dir = cameraTransform.position - pivotTransform.position;
             dir.Normalize();
             RaycastHit hit;
 
@@ -113,6 +113,7 @@ namespace DP
                 targetPosition = -(distance - miniOffet);
 
             }
+
             if (Mathf.Abs(targetPosition) < miniOffet)
             {
                 targetPosition = -miniOffet;
@@ -155,7 +156,7 @@ namespace DP
             }
             for (int i = 0; i < availableTarget.Count; i++)
             {
-                print(availableTarget.Count);
+
                 float distance = Vector3.Distance(targetTransform.position, availableTarget[i].LockOnTransform.position);
                 if (distance < shortestDistace)
                 {
