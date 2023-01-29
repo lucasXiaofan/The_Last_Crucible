@@ -27,6 +27,8 @@ namespace DP
         float startPointOfRayCast = 0.5f;
         [SerializeField]
         float minimumDistanceToFall = 1f;
+        float groundMaxDistance = 0.5f;
+        float groundMinDistance = 0.25f;
         [SerializeField]
         float rayCastOffset = 0.2f;
         LayerMask ignoreLayer;
@@ -168,6 +170,43 @@ namespace DP
                     animationHandler.ApplyTargetAnimation("backStep", true);
                 }
             }
+        }
+
+        public bool PlayerisGrounded()
+        {
+            if (CheckGroundDistance() <= groundMinDistance)
+            {
+
+            }
+            return false;
+        }
+        public float CheckGroundDistance()
+        {
+            // radius of the SphereCast
+
+            RaycastHit groundHit;
+            float colliderHeight = 2f;
+
+            float radius = 0.3f * 0.9f;
+            var dist = 10f;
+            // ray for RayCast
+            Ray ray2 = new Ray(transform.position + new Vector3(0, colliderHeight / 2, 0), Vector3.down);
+            // raycast for check the ground distance
+            if (Physics.Raycast(ray2, out groundHit, (colliderHeight / 2) + dist, ignoreLayer) && !groundHit.collider.isTrigger)
+                dist = transform.position.y - groundHit.point.y;
+            // sphere cast around the base of the capsule to check the ground distance
+            if (dist >= groundMinDistance)
+            {
+                Vector3 pos = transform.position + Vector3.up * (radius);
+                Ray ray = new Ray(pos, -Vector3.up);
+                if (Physics.SphereCast(ray, radius, out groundHit, radius + groundMaxDistance, ignoreLayer) && !groundHit.collider.isTrigger)
+                {
+                    Physics.Linecast(groundHit.point + (Vector3.up * 0.1f), groundHit.point + Vector3.down * 0.15f, out groundHit, ignoreLayer);
+                    float newDist = transform.position.y - groundHit.point.y;
+                    if (dist > newDist) dist = newDist;
+                }
+            }
+            return dist;
         }
         public void HandleFalling(float delta, Vector3 moveDirection)
         {
