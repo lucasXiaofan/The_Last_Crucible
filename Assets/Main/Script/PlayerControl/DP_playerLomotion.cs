@@ -19,7 +19,7 @@ namespace DP
         public float moveSpeed = 5f;
         float rotatingSpeed = 5f;
         public float sprintSpeed = 10f;
-        public bool jumping;
+        
         public float jumpDistance = 3f;
 
         [Header("Handle Falling")]
@@ -32,8 +32,11 @@ namespace DP
         [SerializeField]
         float rayCastOffset = 0.2f;
         LayerMask ignoreLayer;
-        float fallingSpeed = 200f;
+        float fallingSpeed = 100f;
         public float fallingTimer;
+
+        [Header("Handle Jumping")]
+        bool isJumping;
 
 
 
@@ -172,13 +175,12 @@ namespace DP
             }
         }
 
-        public bool PlayerisGrounded()
+        public void PlayerisGrounded()
         {
-            if (CheckGroundDistance() <= groundMinDistance)
-            {
-
-            }
-            return false;
+            float groundDistance = CheckGroundDistance();
+            
+            playerManager.isGrounded = groundDistance<= minimumDistanceToFall;
+            
         }
         public float CheckGroundDistance()
         {
@@ -211,14 +213,8 @@ namespace DP
         public void HandleFalling(float delta, Vector3 moveDirection)
         {
 
-            //things to consider
-            //1. determine isINair 
-            // 2. isGrounded
-            // 3. during falling play animation and disallow other interaction
-            // 4. land
-
-            playerManager.isGrounded = true;//???why?
-            RaycastHit hit;
+            
+            // RaycastHit hit;
             Vector3 origin = playerTransform.position;
             origin.y += startPointOfRayCast;
 
@@ -227,28 +223,22 @@ namespace DP
                 moveDirection = Vector3.zero;
             }
 
-            if (playerManager.isInAir)
-            {
-                playerRigidBody.AddForce(-Vector3.up * fallingSpeed);
-                //add a kick off force below
-                Vector3 kickDir = moveDirection;
-                playerRigidBody.AddForce(kickDir * fallingSpeed / 3.5f);
-            }
+            
+            
 
-            Vector3 dir = moveDirection;
-            dir.Normalize();
-            origin += dir * rayCastOffset; // why times offset, what will happen if not times offset?
-            Vector3 targetPosition = playerTransform.position;
+            // Vector3 dir = moveDirection;
+            // dir.Normalize();
+            // origin += dir * rayCastOffset; // why times offset, what will happen if not times offset?
+            // Vector3 targetPosition = playerTransform.position;
 
             Debug.DrawRay(origin, -Vector3.up * minimumDistanceToFall, Color.red, 0.1f, false);
+            //playerRigidBody.AddForce(-Vector3.up * fallingSpeed);
+            playerRigidBody.AddForce(transform.up * (-20 * 2 * Time.deltaTime), ForceMode.VelocityChange);
 
-            if (Physics.Raycast(origin, -Vector3.up, out hit, 2f, ignoreLayer))
+            if (playerManager.isGrounded)
             {
-                // normalVector = hit.normal;
-                // Vector3 tp = hit.point;
-                // targetPosition.y = tp.y;
                 playerRigidBody.AddForce(transform.up * (-20 * 2 * Time.deltaTime), ForceMode.VelocityChange);
-                playerManager.isGrounded = true;
+
                 if (playerManager.isInAir)
                 {
                     if (fallingTimer > 0.5f)
@@ -263,14 +253,12 @@ namespace DP
                     }
                     playerManager.isInAir = false;
                 }
-                // playerTransform.position = targetPosition;
+
             }
             else
             {
-                if (playerManager.isGrounded)
-                {
-                    playerManager.isGrounded = false;
-                }
+                
+                
                 if (playerManager.isInAir == false)
                 {
                     if (playerManager.isInteracting == false)
@@ -283,7 +271,59 @@ namespace DP
                     playerRigidBody.velocity = normalVel * (moveSpeed / 2);//why using the positive normalvel??
                     playerManager.isInAir = true;
                 }
+
             }
+            if (playerManager.isInAir)
+                {
+                    playerRigidBody.AddForce(-Vector3.up * fallingSpeed);
+                    // //add a kick off force below
+                    Vector3 kickDir = moveDirection;
+                    playerRigidBody.AddForce(kickDir * fallingSpeed / 3.5f);
+                }
+
+            // delete
+            // if (Physics.Raycast(origin, -Vector3.up, out hit, 2f, ignoreLayer))
+            // {
+            //     // normalVector = hit.normal;
+            //     // Vector3 tp = hit.point;
+            //     // targetPosition.y = tp.y;
+            //     playerRigidBody.AddForce(transform.up * (-20 * 2 * Time.deltaTime), ForceMode.VelocityChange);
+            //     playerManager.isGrounded = true;
+            //     if (playerManager.isInAir)
+            //     {
+            //         if (fallingTimer > 0.5f)
+            //         {
+            //             //Debug.Log("you've been falling for: " + fallingTimer);
+            //             animationHandler.ApplyTargetAnimation("land", true);
+            //         }
+            //         else
+            //         {
+            //             animationHandler.ApplyTargetAnimation("Empty", false);
+            //             fallingTimer = 0;
+            //         }
+            //         playerManager.isInAir = false;
+            //     }
+            //     // playerTransform.position = targetPosition;
+            // }
+            // else
+            // {
+            //     if (playerManager.isGrounded)
+            //     {
+            //         playerManager.isGrounded = false;
+            //     }
+            //     if (playerManager.isInAir == false)
+            //     {
+            //         if (playerManager.isInteracting == false)
+            //         {
+            //             animationHandler.ApplyTargetAnimation("fall", true);
+            //         }
+
+            //         Vector3 normalVel = playerRigidBody.velocity;
+            //         normalVel.Normalize();
+            //         playerRigidBody.velocity = normalVel * (moveSpeed / 2);//why using the positive normalvel??
+            //         playerManager.isInAir = true;
+            //     }
+            // }
 
         }
         public void HandlePlayerJump(bool pressJump)
@@ -297,7 +337,7 @@ namespace DP
             if (pressJump && playerManager.isGrounded)
             {
                 playerManager.isGrounded = false;
-                jumping = true;
+                
                 animationHandler.ApplyTargetAnimation("jump", false);
                 if (inputHandler.moveAmount > 0)
                 {
@@ -312,7 +352,7 @@ namespace DP
                 // var vel = playerRigidBody.velocity;
                 // vel.y = 40f;
                 // playerRigidBody.velocity = vel;
-                playerRigidBody.AddForce(Vector3.up * 20, ForceMode.VelocityChange);
+                playerRigidBody.AddForce(Vector3.up * 40, ForceMode.VelocityChange);
 
 
 
