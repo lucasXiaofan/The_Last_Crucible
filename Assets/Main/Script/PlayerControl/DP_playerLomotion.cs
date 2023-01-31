@@ -28,7 +28,7 @@ namespace DP
         [SerializeField]
         float minimumDistanceToFall = 1f;
         float groundMaxDistance = 0.5f;
-        float groundMinDistance = 0.25f;
+        float groundMinDistance = 0.01f;
         [SerializeField]
         float rayCastOffset = 0.2f;
         LayerMask ignoreLayer;
@@ -164,13 +164,13 @@ namespace DP
                 if (inputHandler.moveAmount > 0)
                 {
                     MoveDirection.y = 0;
-                    animationHandler.ApplyTargetAnimation("Roll", true);
+                    animationHandler.ApplyTargetAnimation("Roll", true, false);
                     Quaternion dir = Quaternion.LookRotation(MoveDirection);
                     playerTransform.rotation = dir;
                 }
                 else
                 {
-                    animationHandler.ApplyTargetAnimation("backStep", true);
+                    animationHandler.ApplyTargetAnimation("backStep", true, false);
                 }
             }
         }
@@ -178,8 +178,15 @@ namespace DP
         public void PlayerisGrounded()
         {
             float groundDistance = CheckGroundDistance();
-            
-            playerManager.isGrounded = groundDistance<= minimumDistanceToFall;
+            if (playerManager.isJumping)
+            {
+                playerManager.isGrounded =false;
+            }
+            else
+            {
+                playerManager.isGrounded = groundDistance<= minimumDistanceToFall;
+
+            }
             
         }
         public float CheckGroundDistance()
@@ -212,8 +219,11 @@ namespace DP
         }
         public void HandleFalling(float delta, Vector3 moveDirection)
         {
-
-            
+            playerRigidBody.AddForce(transform.up * (-20  * Time.deltaTime), ForceMode.VelocityChange);
+            if(playerManager.isJumping)
+            {
+                return;
+            }
             // RaycastHit hit;
             Vector3 origin = playerTransform.position;
             origin.y += startPointOfRayCast;
@@ -223,32 +233,24 @@ namespace DP
                 moveDirection = Vector3.zero;
             }
 
-            
-            
-
-            // Vector3 dir = moveDirection;
-            // dir.Normalize();
-            // origin += dir * rayCastOffset; // why times offset, what will happen if not times offset?
-            // Vector3 targetPosition = playerTransform.position;
-
             Debug.DrawRay(origin, -Vector3.up * minimumDistanceToFall, Color.red, 0.1f, false);
             //playerRigidBody.AddForce(-Vector3.up * fallingSpeed);
-            playerRigidBody.AddForce(transform.up * (-20 * 2 * Time.deltaTime), ForceMode.VelocityChange);
-
+            
+            
             if (playerManager.isGrounded)
             {
                 playerRigidBody.AddForce(transform.up * (-20 * 2 * Time.deltaTime), ForceMode.VelocityChange);
-
+                
                 if (playerManager.isInAir)
                 {
                     if (fallingTimer > 0.5f)
                     {
                         //Debug.Log("you've been falling for: " + fallingTimer);
-                        animationHandler.ApplyTargetAnimation("land", true);
+                        animationHandler.ApplyTargetAnimation("land", true, false);
                     }
                     else
                     {
-                        animationHandler.ApplyTargetAnimation("Empty", false);
+                        animationHandler.ApplyTargetAnimation("Empty", false, false);
                         fallingTimer = 0;
                     }
                     playerManager.isInAir = false;
@@ -261,9 +263,9 @@ namespace DP
                 
                 if (playerManager.isInAir == false)
                 {
-                    if (playerManager.isInteracting == false)
+                    if (playerManager.isInteracting == false)// && !playerManager.isJumping)
                     {
-                        animationHandler.ApplyTargetAnimation("fall", true);
+                        animationHandler.ApplyTargetAnimation("fall", true, false);
                     }
 
                     Vector3 normalVel = playerRigidBody.velocity;
@@ -275,55 +277,13 @@ namespace DP
             }
             if (playerManager.isInAir)
                 {
-                    playerRigidBody.AddForce(-Vector3.up * fallingSpeed);
+                    playerRigidBody.AddForce(-Vector3.up * fallingSpeed*2) ;
                     // //add a kick off force below
                     Vector3 kickDir = moveDirection;
-                    playerRigidBody.AddForce(kickDir * fallingSpeed / 3.5f);
+                    playerRigidBody.AddForce(kickDir * fallingSpeed / 3f);
                 }
 
-            // delete
-            // if (Physics.Raycast(origin, -Vector3.up, out hit, 2f, ignoreLayer))
-            // {
-            //     // normalVector = hit.normal;
-            //     // Vector3 tp = hit.point;
-            //     // targetPosition.y = tp.y;
-            //     playerRigidBody.AddForce(transform.up * (-20 * 2 * Time.deltaTime), ForceMode.VelocityChange);
-            //     playerManager.isGrounded = true;
-            //     if (playerManager.isInAir)
-            //     {
-            //         if (fallingTimer > 0.5f)
-            //         {
-            //             //Debug.Log("you've been falling for: " + fallingTimer);
-            //             animationHandler.ApplyTargetAnimation("land", true);
-            //         }
-            //         else
-            //         {
-            //             animationHandler.ApplyTargetAnimation("Empty", false);
-            //             fallingTimer = 0;
-            //         }
-            //         playerManager.isInAir = false;
-            //     }
-            //     // playerTransform.position = targetPosition;
-            // }
-            // else
-            // {
-            //     if (playerManager.isGrounded)
-            //     {
-            //         playerManager.isGrounded = false;
-            //     }
-            //     if (playerManager.isInAir == false)
-            //     {
-            //         if (playerManager.isInteracting == false)
-            //         {
-            //             animationHandler.ApplyTargetAnimation("fall", true);
-            //         }
-
-            //         Vector3 normalVel = playerRigidBody.velocity;
-            //         normalVel.Normalize();
-            //         playerRigidBody.velocity = normalVel * (moveSpeed / 2);//why using the positive normalvel??
-            //         playerManager.isInAir = true;
-            //     }
-            // }
+           
 
         }
         public void HandlePlayerJump(bool pressJump)
@@ -333,12 +293,13 @@ namespace DP
             {
                 return;
             }
+            
 
             if (pressJump && playerManager.isGrounded)
             {
                 playerManager.isGrounded = false;
                 
-                animationHandler.ApplyTargetAnimation("jump", false);
+                animationHandler.ApplyTargetAnimation("jump", false,true);
                 if (inputHandler.moveAmount > 0)
                 {
                     MoveDirection = cameraPos.forward * inputHandler.vertical;

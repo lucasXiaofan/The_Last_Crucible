@@ -85,10 +85,12 @@ namespace DP
             anim.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
 
         }
-        public void ApplyTargetAnimation(string animationName, bool isInteracting)
+        public void ApplyTargetAnimation(string animationName, bool isInteracting, bool isJumping)
         {
             anim.applyRootMotion = isInteracting;
+            anim.applyRootMotion = isJumping;
             anim.SetBool("isInteracting", isInteracting);
+            anim.SetBool("isJumping", isJumping);
             anim.CrossFade(animationName, 0.2f);
         }
         public void DoRotate()

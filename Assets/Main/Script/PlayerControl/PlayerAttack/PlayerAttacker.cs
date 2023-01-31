@@ -28,11 +28,11 @@ namespace DP
                 animationHandler.anim.SetBool("canDoCombo", false);
                 if (lastAttack == weaponItem.Oh_Light_Attack_1)
                 {
-                    animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_2, true);
+                    animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_2, true, false);
                 }
                 if (lastAttack == weaponItem.Oh_Heavy_Attack_1)
                 {
-                    animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_2, true);
+                    animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_2, true, false);
                 }
             }
         }
@@ -42,7 +42,7 @@ namespace DP
 
 
             weaponSlotManager.attackingWeapon = weaponItem;
-            animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_1, true);
+            animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_1, true, false);
             lastAttack = weaponItem.Oh_Light_Attack_1;
             HandleRotationWhileAttack();
         }
@@ -71,7 +71,7 @@ namespace DP
         public void HandleHeavyAttack(DP_WeaponItem weaponItem)
         {
             weaponSlotManager.attackingWeapon = weaponItem;
-            animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_1, true);
+            animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_1, true, false);
             lastAttack = weaponItem.Oh_Heavy_Attack_1;
             HandleRotationWhileAttack();
         }

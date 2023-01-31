@@ -43,10 +43,10 @@ namespace DP
         {
             currentHealth = currentHealth - damage;
             playerHealthBar.SetHeathBarValue(currentHealth);
-            animationHandler.ApplyTargetAnimation("playerHitReaction", true);
+            animationHandler.ApplyTargetAnimation("playerHitReaction", true, false);
             if (currentHealth <= 0)
             {
-                animationHandler.ApplyTargetAnimation("dead", true);
+                animationHandler.ApplyTargetAnimation("dead", true, false);
             }
         }
         public void TakeStaminaDamage(int damage)
