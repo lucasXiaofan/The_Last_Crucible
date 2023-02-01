@@ -112,6 +112,7 @@ namespace DP
             deltaPosition.y = 0;
 
 
+
             Vector3 velocity = deltaPosition / delta;
             playerLomotion.playerRigidBody.velocity = velocity;
 
@@ -124,7 +125,17 @@ namespace DP
         public void disableCombo()
         {
             anim.SetBool("canDoCombo", false);
-            //anim.SetBool("isInteracting", true);
+            anim.SetBool("isInteracting", true);
+        }
+
+        public void enableAirAttack()
+        {
+            anim.SetBool("canDoAirAttack", true);
+        }
+
+        public void disableAirAttack()
+        {
+            anim.SetBool("canDoAirAttack", false);
         }
     }
 }

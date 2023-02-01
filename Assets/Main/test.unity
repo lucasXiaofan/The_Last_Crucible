@@ -6526,7 +6526,7 @@ GameObject:
   - component: {fileID: 1273357708}
   - component: {fileID: 1273357707}
   - component: {fileID: 1273357706}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pickUpitem (1)
   m_TagString: pickUpItem
   m_Icon: {fileID: 0}
@@ -10096,7 +10096,7 @@ GameObject:
   - component: {fileID: 1784539187}
   - component: {fileID: 1784539186}
   - component: {fileID: 1784539185}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pickUpitem
   m_TagString: pickUpItem
   m_Icon: {fileID: 0}
@@ -10518,7 +10518,7 @@ GameObject:
   - component: {fileID: 1864862904}
   - component: {fileID: 1864862903}
   - component: {fileID: 1864862902}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pickUpitem (2)
   m_TagString: pickUpItem
   m_Icon: {fileID: 0}
@@ -12964,7 +12964,6 @@ MonoBehaviour:
   playerCollider: {fileID: 0}
   moveSpeed: 5
   sprintSpeed: 10
-  jumping: 0
   jumpDistance: 3
   startPointOfRayCast: 0.5
   minimumDistanceToFall: 1
@@ -13053,10 +13052,12 @@ MonoBehaviour:
   alertTextObject: {fileID: 1304639077}
   itemTextObject: {fileID: 2012604632}
   isInteracting: 0
+  isJumping: 0
   isSprinting: 0
   isInAir: 0
   isGrounded: 0
   canDoCombo: 0
+  canDoAirAttack: 0
 --- !u!114 &2142653666
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,15 +37,23 @@ namespace DP
             }
         }
 
+        public void HandleAirAttack(DP_WeaponItem weaponItem)
+        {
+            weaponSlotManager.attackingWeapon = weaponItem;
+            HandleRotationWhileAttack();
+            animationHandler.ApplyTargetAnimation("InAirAttack", true, false);
+
+        }
+
         public void HandleLightAttack(DP_WeaponItem weaponItem)
         {
-
-
             weaponSlotManager.attackingWeapon = weaponItem;
+            HandleRotationWhileAttack();
             animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_1, true, false);
             lastAttack = weaponItem.Oh_Light_Attack_1;
-            HandleRotationWhileAttack();
+
         }
+
         public void HandleRotationWhileAttack()
         {
             Vector3 moveDir = playerLomotion.cameraPos.forward * inputHandler.vertical;
@@ -63,6 +71,8 @@ namespace DP
             {
                 if (inputHandler.moveAmount > 0)
                 {
+
+                    moveDir.y = 0;
                     playerLomotion.playerTransform.rotation = Quaternion.LookRotation(moveDir);
                 }
             }

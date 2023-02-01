@@ -21,6 +21,7 @@ namespace DP
         public bool isInAir;
         public bool isGrounded;
         public bool canDoCombo;
+        public bool canDoAirAttack;
 
         private void Awake()
         {
@@ -43,7 +44,7 @@ namespace DP
         void Update()
         {
             float delta = Time.deltaTime;
-
+            canDoAirAttack = animator.GetBool("canDoAirAttack");
             canDoCombo = animator.GetBool("canDoCombo");
             isInteracting = animator.GetBool("isInteracting");
             isJumping = animator.GetBool("isJumping");
@@ -77,7 +78,7 @@ namespace DP
             inputHandler.d_pad_right = false;
             inputHandler.jump_input = false;
             inputHandler.menu_input = false;
-            
+
             if (cameraControl != null)
             {
                 cameraControl.FollowTarget(delta);
