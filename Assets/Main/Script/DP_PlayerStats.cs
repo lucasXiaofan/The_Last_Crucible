@@ -4,14 +4,12 @@ using UnityEngine;
 
 namespace DP
 {
-    public class DP_PlayerStats : MonoBehaviour
+    public class DP_PlayerStats : DP_CharacterStats
     {
         public DP_PlayerHealthBar playerHealthBar;
         public DP_PlayerHealthBar StaminaBar;
         DP_animationHandler animationHandler;
-        public int maximumHealth;
-        public int currentHealth;
-        public int healthLevel = 10;
+
 
         //stamina related
         public int maxStamina;

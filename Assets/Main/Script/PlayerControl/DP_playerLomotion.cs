@@ -107,7 +107,7 @@ namespace DP
             //targetDirection = Vector3.zero;
             if (inputHandler.lockOnFlag)
             {
-                print("player body control");
+
                 if (inputHandler.sprintFlag == false && inputHandler.rollFlag == false)
                 {
                     print("player body control, none springflag");

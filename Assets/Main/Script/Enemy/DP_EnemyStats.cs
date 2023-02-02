@@ -4,13 +4,11 @@ using UnityEngine;
 
 namespace DP
 {
-    public class DP_EnemyStats : MonoBehaviour
+    public class DP_EnemyStats : DP_CharacterStats
     {
         public DP_PlayerHealthBar playerHealthBar;
         Animator anim;
-        public int maximumHealth;
-        public int currentHealth;
-        public int healthLevel = 10;
+
         void Start()
         {
             anim = GetComponentInChildren<Animator>();
