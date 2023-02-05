@@ -286,7 +286,7 @@ namespace DP
         public void HandlePlayerJump(bool pressJump)
         {
             //HandleFalling(delta, moveDirection);
-            if (playerManager.isInteracting)
+            if (playerManager.isInteracting || playerManager.isJumping)
             {
                 return;
             }
