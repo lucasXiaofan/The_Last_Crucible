@@ -26,7 +26,7 @@ namespace DP
             playerManager.textUI.itemText.text = weapon.itemName;
             playerManager.textUI.itemIcon.sprite = weapon.itemIcon;
             playerLomotion.playerRigidBody.velocity = Vector3.zero;
-            animationHandler.ApplyTargetAnimation("pickUp", true);
+            animationHandler.ApplyTargetAnimation("pickUp", true, false);
             inventory.weaponInventory.Add(weapon);
             Destroy(gameObject);
 

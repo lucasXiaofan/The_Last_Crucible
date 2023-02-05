@@ -16,10 +16,12 @@ namespace DP
 
         [Header("Player Status")]
         public bool isInteracting;
+        public bool isJumping;
         public bool isSprinting;
         public bool isInAir;
         public bool isGrounded;
         public bool canDoCombo;
+        public bool canDoAirAttack;
 
         private void Awake()
         {
@@ -42,9 +44,10 @@ namespace DP
         void Update()
         {
             float delta = Time.deltaTime;
-
+            canDoAirAttack = animator.GetBool("canDoAirAttack");
             canDoCombo = animator.GetBool("canDoCombo");
             isInteracting = animator.GetBool("isInteracting");
+            isJumping = animator.GetBool("isJumping");
             animator.SetBool("IsInAir", isInAir);
             inputHandler.TickInput(delta);
             playerLomotion.HandleRollingAndSprint(delta);
@@ -56,6 +59,7 @@ namespace DP
         private void FixedUpdate()
         {
             float delta = Time.deltaTime;
+            playerLomotion.PlayerisGrounded();
             playerLomotion.HandleMovement(delta);
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
         }
@@ -74,7 +78,7 @@ namespace DP
             inputHandler.d_pad_right = false;
             inputHandler.jump_input = false;
             inputHandler.menu_input = false;
-            playerLomotion.jumping = false;
+
             if (cameraControl != null)
             {
                 cameraControl.FollowTarget(delta);

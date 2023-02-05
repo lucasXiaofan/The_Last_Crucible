@@ -28,24 +28,32 @@ namespace DP
                 animationHandler.anim.SetBool("canDoCombo", false);
                 if (lastAttack == weaponItem.Oh_Light_Attack_1)
                 {
-                    animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_2, true);
+                    animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_2, true, false);
                 }
                 if (lastAttack == weaponItem.Oh_Heavy_Attack_1)
                 {
-                    animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_2, true);
+                    animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_2, true, false);
                 }
             }
         }
 
+        public void HandleAirAttack(DP_WeaponItem weaponItem)
+        {
+            weaponSlotManager.attackingWeapon = weaponItem;
+            HandleRotationWhileAttack();
+            animationHandler.ApplyTargetAnimation("InAirAttack", true, false);
+
+        }
+
         public void HandleLightAttack(DP_WeaponItem weaponItem)
         {
-
-
             weaponSlotManager.attackingWeapon = weaponItem;
-            animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_1, true);
-            lastAttack = weaponItem.Oh_Light_Attack_1;
             HandleRotationWhileAttack();
+            animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_1, true, false);
+            lastAttack = weaponItem.Oh_Light_Attack_1;
+
         }
+
         public void HandleRotationWhileAttack()
         {
             Vector3 moveDir = playerLomotion.cameraPos.forward * inputHandler.vertical;
@@ -63,6 +71,8 @@ namespace DP
             {
                 if (inputHandler.moveAmount > 0)
                 {
+
+                    moveDir.y = 0;
                     playerLomotion.playerTransform.rotation = Quaternion.LookRotation(moveDir);
                 }
             }
@@ -71,7 +81,7 @@ namespace DP
         public void HandleHeavyAttack(DP_WeaponItem weaponItem)
         {
             weaponSlotManager.attackingWeapon = weaponItem;
-            animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_1, true);
+            animationHandler.ApplyTargetAnimation(weaponItem.Oh_Heavy_Attack_1, true, false);
             lastAttack = weaponItem.Oh_Heavy_Attack_1;
             HandleRotationWhileAttack();
         }

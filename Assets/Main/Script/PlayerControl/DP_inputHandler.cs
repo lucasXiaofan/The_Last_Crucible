@@ -131,24 +131,31 @@ namespace DP
 
             if (playerManager.isInteracting)
                 return;
-            if (rb_input && StaminaStatus.alive())
+            if (rb_input) //&& StaminaStatus.alive())
             {
-                if (playerManager.canDoCombo)
+                if (playerManager.canDoAirAttack)
+                {
+                    playerAttacker.HandleAirAttack(playerInventory.rightWeapon);
+                }
+                else if (playerManager.canDoCombo && !playerManager.isJumping)
                 {
                     comboFlag = true;
                     playerAttacker.HandleCombo(playerInventory.rightWeapon);
                     comboFlag = false;
                 }
-                else
+                else if (!playerManager.isJumping)
                 {
                     playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
                 }
+
             }
-            if (rt_input && StaminaStatus.alive())
+            if (rt_input) //&& StaminaStatus.alive())
             {
                 print("Looping");
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
+
+
         }
         private void HandleQuickSlot()
         {
