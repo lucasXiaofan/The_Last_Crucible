@@ -110,7 +110,6 @@ namespace DP
 
                 if (inputHandler.sprintFlag == false && inputHandler.rollFlag == false)
                 {
-                    print("player body control, none springflag");
                     Vector3 rotateDirection = MoveDirection;
                     rotateDirection = cameraControl.currentLockOnTransform.LockOnTransform.position - cameraControl.cameraTransform.position;
                     rotateDirection.Normalize();
