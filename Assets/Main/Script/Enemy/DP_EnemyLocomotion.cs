@@ -61,6 +61,11 @@ namespace DP
         }
         public void HandleMovement()
         {
+            if (enemyManger.isPreformingAction)
+            {
+                return;
+            }
+
             distanceFromtarget = Vector3.Distance(transform.position, currentTarget.transform.position);
             Vector3 targetDirection = currentTarget.transform.position - transform.position;
             float viewAbleAngle = Vector3.Angle(targetDirection, transform.forward);
