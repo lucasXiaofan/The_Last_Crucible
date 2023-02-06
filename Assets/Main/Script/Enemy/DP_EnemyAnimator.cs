@@ -13,15 +13,15 @@ namespace DP
             anim = GetComponent<Animator>();
             enemyLocomotion = GetComponentInParent<DP_EnemyLocomotion>();
         }
-        // private void OnAnimatorMove()
-        // {
-        //     float delta = Time.deltaTime;
-        //     enemyLocomotion.enemyRigidbody.drag = 0;
-        //     Vector3 deltaPosition = anim.deltaPosition;
-        //     deltaPosition.y = 0;
-        //     Vector3 velocity = deltaPosition / delta;
-        //     enemyLocomotion.enemyRigidbody.velocity = velocity;
-        // }
+        private void OnAnimatorMove()
+        {
+            float delta = Time.deltaTime;
+            enemyLocomotion.enemyRigidbody.drag = 0;
+            Vector3 deltaPosition = anim.deltaPosition;
+            deltaPosition.y = 0;
+            // Vector3 velocity = deltaPosition / delta;
+            // enemyLocomotion.enemyRigidbody.velocity = velocity * 10;
+        }
 
         // Update is called once per frame
         void Update()

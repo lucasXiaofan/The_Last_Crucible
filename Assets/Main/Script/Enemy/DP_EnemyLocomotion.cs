@@ -61,6 +61,11 @@ namespace DP
         }
         public void HandleMovement()
         {
+            if (enemyManger.isPreformingAction)
+            {
+                return;
+            }
+
             distanceFromtarget = Vector3.Distance(transform.position, currentTarget.transform.position);
             Vector3 targetDirection = currentTarget.transform.position - transform.position;
             float viewAbleAngle = Vector3.Angle(targetDirection, transform.forward);
@@ -73,7 +78,10 @@ namespace DP
             {
                 if (distanceFromtarget > stoppingDistance)
                 {
+                    navMeshAgent.enabled = true;
                     enemyAnimator.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
+                    navMeshAgent.SetDestination(currentTarget.transform.position);
+                    enemyRigidbody.velocity = navMeshAgent.velocity;
                 }
                 else
                 {
@@ -81,8 +89,8 @@ namespace DP
                 }
             }
             HandleRotationTowardsTarget();
-            navMeshAgent.transform.localPosition = Vector3.zero;
-            navMeshAgent.transform.localRotation = Quaternion.identity;
+            // navMeshAgent.transform.localPosition = Vector3.zero;
+            // navMeshAgent.transform.localRotation = Quaternion.identity;
         }
         private void HandleRotationTowardsTarget()
         {
@@ -97,7 +105,7 @@ namespace DP
                     direction = transform.forward;
                 }
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, RotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, RotationSpeed / Time.deltaTime);
             }
             else
             {
@@ -105,8 +113,7 @@ namespace DP
                 Vector3 targetVelocity = enemyRigidbody.velocity;
 
                 navMeshAgent.enabled = true;
-                navMeshAgent.SetDestination(currentTarget.transform.position);
-                enemyRigidbody.velocity = targetVelocity;
+
                 transform.rotation = Quaternion.Slerp(transform.rotation, navMeshAgent.transform.rotation, RotationSpeed / Time.deltaTime);
             }
 

@@ -5,12 +5,12 @@ using UnityEngine;
 public class DP_emptyRest : StateMachineBehaviour
 {
     public string targetAnimation;
-    public string isJump;
+
     public bool status;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool(targetAnimation, status);
-        animator.SetBool(isJump, status);
+
     }
 
 
