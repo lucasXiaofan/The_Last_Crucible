@@ -8,6 +8,8 @@ namespace DP
     {
         DP_EnemyLocomotion enemyLocomotion;
         DP_EnemyAnimator enemyAnimator;
+        DP_EnemyStats enemyStats;
+        public DP_State currentState;
 
         public bool isPreformingAction;
         public DP_EnemyAttackActions[] enemyAttacksList;
@@ -23,6 +25,7 @@ namespace DP
         {
             enemyLocomotion = GetComponent<DP_EnemyLocomotion>();
             enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
+            enemyStats= GetComponent<DP_EnemyStats>();
         }
         private void Update()
         {
@@ -34,6 +37,24 @@ namespace DP
         private void FixedUpdate()
         {
             HandleCurrentAction();
+            EnemyStateMachine();
+        }
+
+        private void EnemyStateMachine()
+        {
+            if(currentState != null)
+            {
+                DP_State nextState = currentState.Tick(this,enemyStats,enemyAnimator);
+                if(nextState != null)
+                {
+                    SwitchToNextState(nextState);
+                }
+            
+            }
+        }
+        private void SwitchToNextState(DP_State state)
+        {
+            currentState = state;
         }
         private void HandleCurrentAction()
         {
