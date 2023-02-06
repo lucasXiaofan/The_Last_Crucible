@@ -122,7 +122,7 @@ namespace DP
                 }
                 else
                 {
-                    print("else");
+                   
                     targetDirection = cameraPos.forward * inputHandler.vertical;
                     targetDirection += cameraPos.right * inputHandler.horizontal;
                     targetDirection.Normalize();
@@ -228,18 +228,19 @@ namespace DP
             {
                 if (playerManager.isInAir)
                 {
-                    if (fallingTimer > 1f)
+                    if (fallingTimer > 2f)
                     {
-                        //Debug.Log("you've been falling for: " + fallingTimer);
+                        Debug.Log("you've been falling for: " + fallingTimer);
                         animationHandler.ApplyTargetAnimation("land", true, false);
                     }
                     else
                     {
                         animationHandler.ApplyTargetAnimation("Empty", false, false);
-                        fallingTimer = 0;
+                        
                     }
                     playerManager.isInAir = false;
                 }
+                fallingTimer = 0;
                 Vector3 targetPositon = transform.position;
                 Vector3 castOrigin = transform.position;
                 castOrigin.y += 0.5f;
@@ -253,7 +254,7 @@ namespace DP
             {
                 if (playerManager.isInAir == false)
                 {
-                    if (playerManager.isInteracting == false)// && !playerManager.isJumping)
+                    if (playerManager.isInteracting == false&& !playerManager.isJumping)
                     {
                         animationHandler.ApplyTargetAnimation("fall", true, false);
                     }
