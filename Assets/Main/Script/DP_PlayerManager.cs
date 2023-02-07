@@ -49,6 +49,7 @@ namespace DP
             isInteracting = animator.GetBool("isInteracting");
             isJumping = animator.GetBool("isJumping");
             animator.SetBool("IsInAir", isInAir);
+            animator.SetBool("isGrounded", isGrounded);
             inputHandler.TickInput(delta);
             playerLomotion.HandleRollingAndSprint(delta);
             CheckForInteractableObject();

@@ -21,11 +21,12 @@ namespace DP
         public float maxDetectionAngle = 60f;
         public float currentRecoveryTime = 0;
 
+
         private void Awake()
         {
             enemyLocomotion = GetComponent<DP_EnemyLocomotion>();
             enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
-            enemyStats= GetComponent<DP_EnemyStats>();
+            enemyStats = GetComponent<DP_EnemyStats>();
         }
         private void Update()
         {
@@ -36,50 +37,34 @@ namespace DP
 
         private void FixedUpdate()
         {
-            HandleCurrentAction();
+            // make sure the distance is always updated
+            if (!(enemyLocomotion.currentTarget == null))
+            {
+                enemyLocomotion.distanceFromtarget = Vector3.Distance(transform.position, enemyLocomotion.currentTarget.transform.position);
+            }
+
             EnemyStateMachine();
         }
 
         private void EnemyStateMachine()
         {
-            if(currentState != null)
+
+            if (currentState != null)
             {
-                DP_State nextState = currentState.Tick(this,enemyStats,enemyAnimator);
-                if(nextState != null)
+                DP_State nextState = currentState.Tick(this, enemyStats, enemyAnimator, enemyLocomotion);
+                if (nextState != null)
                 {
                     SwitchToNextState(nextState);
                 }
-            
+
             }
         }
         private void SwitchToNextState(DP_State state)
         {
             currentState = state;
         }
-        private void HandleCurrentAction()
-        {
-            if (enemyLocomotion.currentTarget != null)
-            {
-                enemyLocomotion.distanceFromtarget = Vector3.Distance(transform.position, enemyLocomotion.currentTarget.transform.position);
-            }
-
-            if (enemyLocomotion.currentTarget == null)
-            {
-                enemyLocomotion.HandleDetection();
-            }
-            else if (enemyLocomotion.distanceFromtarget > enemyLocomotion.stoppingDistance)
-            {
-                enemyLocomotion.HandleMovement();
-            }
-            else if (enemyLocomotion.distanceFromtarget <= enemyLocomotion.stoppingDistance)
-            {
-                AttackTarget();
-            }
 
 
-
-
-        }
         #region  Attacks
         private void HandleRoveryTimer()
         {
@@ -113,7 +98,6 @@ namespace DP
                 currentAttack = null; //to get new attack;
             }
         }
-
         public void SelectCurrentAttack()
         {
             if (currentAttack != null)

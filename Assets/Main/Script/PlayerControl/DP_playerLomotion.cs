@@ -20,24 +20,16 @@ namespace DP
         float rotatingSpeed = 5f;
         public float sprintSpeed = 10f;
 
-        public float jumpDistance = 3f;
-
         [Header("Handle Falling")]
-        [SerializeField]
-        float startPointOfRayCast = 0.5f;
         [SerializeField]
         float minimumDistanceToFall = 1f;
         float groundMaxDistance = 0.5f;
         float groundMinDistance = 0.7f;
         [SerializeField]
-        float rayCastOffset = 0.2f;
         LayerMask ignoreLayer;
         public LayerMask ground;
         float fallingSpeed = 100f;
         public float fallingTimer;
-
-        [Header("Handle Jumping")]
-        bool isJumping;
 
 
 
@@ -105,6 +97,7 @@ namespace DP
         }
         public void HandleRotation(float delta)
         {
+
             //targetDirection = Vector3.zero;
             if (inputHandler.lockOnFlag)
             {
@@ -122,7 +115,7 @@ namespace DP
                 }
                 else
                 {
-                   
+
                     targetDirection = cameraPos.forward * inputHandler.vertical;
                     targetDirection += cameraPos.right * inputHandler.horizontal;
                     targetDirection.Normalize();
@@ -176,13 +169,14 @@ namespace DP
         }
         public void PlayerisGrounded()
         {
-            float groundDistance = CheckGroundDistance();
+
             if (playerManager.isJumping)
             {
                 playerManager.isGrounded = false;
             }
             else
             {
+                float groundDistance = CheckGroundDistance();
                 playerManager.isGrounded = groundDistance <= groundMinDistance;
 
             }
@@ -218,7 +212,7 @@ namespace DP
         }
         public void HandleFalling(float delta, Vector3 moveDirection)
         {
-            
+
             if (playerManager.isJumping)
             {
                 return;
@@ -226,46 +220,31 @@ namespace DP
 
             if (playerManager.isGrounded)
             {
-                if (playerManager.isInAir)
-                {
-                    if (fallingTimer > 2f)
-                    {
-                        Debug.Log("you've been falling for: " + fallingTimer);
-                        animationHandler.ApplyTargetAnimation("land", true, false);
-                    }
-                    else
-                    {
-                        animationHandler.ApplyTargetAnimation("Empty", false, false);
-                        
-                    }
-                    playerManager.isInAir = false;
-                }
+
+                playerManager.isInAir = false;
                 fallingTimer = 0;
                 Vector3 targetPositon = transform.position;
                 Vector3 castOrigin = transform.position;
                 castOrigin.y += 0.5f;
                 RaycastHit hit;
-                Physics.SphereCast(castOrigin,0.25f,Vector3.down,out hit,ground);
+                Physics.SphereCast(castOrigin, 0.25f, Vector3.down, out hit, ground);
                 targetPositon.y = hit.point.y;
-                transform.position = Vector3.Lerp(transform.position, targetPositon,Time.deltaTime/0.15f);
+                transform.position = Vector3.Lerp(transform.position, targetPositon, Time.deltaTime / 0.15f);
+                HandleRollingAndSprint(Time.deltaTime);
 
             }
             else
             {
-                if (playerManager.isInAir == false)
+                if (playerManager.isInteracting == false && !playerManager.isJumping && fallingTimer > 0.3f)
                 {
-                    if (playerManager.isInteracting == false&& !playerManager.isJumping)
-                    {
-                        animationHandler.ApplyTargetAnimation("fall", true, false);
-                    }
-
-                    playerManager.isInAir = true;
+                    animationHandler.ApplyTargetAnimation("fall", true, false);
                 }
 
+                playerManager.isInAir = true;
             }
             if (playerManager.isInAir)
             {
-                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3 * (fallingTimer+1));
+                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3 * (fallingTimer + 1));
                 // //add a kick off force below
                 Vector3 kickDir = moveDirection;
                 playerRigidBody.AddForce(kickDir * fallingSpeed / 6f);

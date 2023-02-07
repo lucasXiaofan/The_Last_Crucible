@@ -129,7 +129,7 @@ namespace DP
         private void HandleAttack(float delta)
         {
 
-            if (playerManager.isInteracting)
+            if (playerManager.isInteracting && !playerManager.canDoCombo)
                 return;
             if (rb_input) //&& StaminaStatus.alive())
             {

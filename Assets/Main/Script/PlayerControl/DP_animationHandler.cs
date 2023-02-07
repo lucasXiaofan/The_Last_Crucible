@@ -113,12 +113,12 @@ namespace DP
         public void enableCombo()
         {
             anim.SetBool("canDoCombo", true);
-            anim.SetBool("isInteracting", false);
+            //anim.SetBool("isInteracting", false);
         }
         public void disableCombo()
         {
             anim.SetBool("canDoCombo", false);
-            anim.SetBool("isInteracting", true);
+            //anim.SetBool("isInteracting", true);
         }
 
         public void enableAirAttack()
