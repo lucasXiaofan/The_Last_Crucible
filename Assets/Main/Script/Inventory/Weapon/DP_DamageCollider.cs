@@ -28,8 +28,9 @@ namespace DP
             // inputHandler.rb_input = false;
             // inputHandler.rt_input = false;
         }
-        private void OnTriggerEnter(Collider other)
+        public void OnTriggerEnter(Collider other)
         {
+            print(other.tag);
             //print(inputHandler.rb_input + " " + inputHandler.rt_input);
             if (other.tag == "Player")
             {

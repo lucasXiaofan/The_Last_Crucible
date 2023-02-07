@@ -7,6 +7,7 @@ namespace DP
     public class DP_EnemyIdleState : DP_State
     {
         public DP_EnemyPursueState enemyPursueState;
+        
         public override DP_State Tick(DP_EnemyManger enemyManger,
                                     DP_EnemyStats enemyStats,
                                     DP_EnemyAnimator enemyAnimator,

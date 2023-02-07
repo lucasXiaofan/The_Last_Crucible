@@ -32,11 +32,11 @@ namespace DP
         void Start()
         {
             playerLomotion = GetComponent<DP_playerLomotion>();
-            textUI = FindObjectOfType<DP_AlertTextUI>();
+            // textUI = FindObjectOfType<DP_AlertTextUI>();
             animationHandler = GetComponent<DP_animationHandler>();
             inputHandler = GetComponent<DP_inputHandler>();
             animator = GetComponentInChildren<Animator>();
-            itemTextObject.SetActive(false);
+            // itemTextObject.SetActive(false);
 
         }
 

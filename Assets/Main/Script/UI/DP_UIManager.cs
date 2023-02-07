@@ -20,12 +20,12 @@ namespace DP
         DP_WeaponSlotInventory[] weaponSlotInventories;
         private void Awake()
         {
-            equipmentSlotFunctions = FindObjectOfType<DP_EquipmentSlotFunctions>();
+            //equipmentSlotFunctions = FindObjectOfType<DP_EquipmentSlotFunctions>();
         }
         private void Start()
         {
             weaponSlotInventories = GetComponentsInChildren<DP_WeaponSlotInventory>(true);//this is the key
-            equipmentSlotFunctions.LoadEquipmentIcon(playerInventory);
+            //equipmentSlotFunctions.LoadEquipmentIcon(playerInventory);
             //allows to get children that is not activate.
         }
         public void UpdateUI()

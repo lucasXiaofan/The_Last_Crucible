@@ -23,7 +23,7 @@ namespace DP
         [Header("Handle Falling")]
         [SerializeField]
         float minimumDistanceToFall = 1f;
-        float groundMaxDistance = 0.5f;
+        
         float groundMinDistance = 0.7f;
         [SerializeField]
         LayerMask ignoreLayer;
