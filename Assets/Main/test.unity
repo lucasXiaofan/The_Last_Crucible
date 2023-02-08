@@ -2144,6 +2144,10 @@ PrefabInstance:
       propertyPath: characterCollider
       value: 
       objectReference: {fileID: 2142653668}
+    - target: {fileID: 2138444514, guid: a9ed561d3c5f81640ad77acd133310d1, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 922177498201820604, guid: a9ed561d3c5f81640ad77acd133310d1,
         type: 3}
       propertyPath: m_AnchorMax.x
