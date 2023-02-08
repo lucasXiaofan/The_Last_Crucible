@@ -37,6 +37,11 @@ namespace DP{
         public void LoadWeaponsDamageCollider()
         {
                 rightHandCollider = rightHandSlot.currentWeapon.GetComponentInChildren<DP_DamageCollider>();
+                if(rightHandCollider!=null)
+                {
+                    disableCollider();
+                }
+                
                 print(rightHandSlot.currentWeapon);
         }
 
@@ -47,7 +52,7 @@ namespace DP{
         }
         public void disableCollider()
         {
-                rightHandCollider.DisableDamage();
+            rightHandCollider.DisableDamage();
         }
     }
 }

@@ -23,6 +23,9 @@ namespace DP
         public bool canDoCombo;
         public bool canDoAirAttack;
 
+        [Header("Combat settings")]
+        public Transform CriticalStabPoint;
+
         private void Awake()
         {
             cameraControl = FindObjectOfType<DP_CameraControl>();
@@ -110,8 +113,8 @@ namespace DP
                     {
 
                         string interactString = pickItem.ItemName;
-                        textUI.interactableText.text = interactString;
-                        alertTextObject.SetActive(true);
+//                        textUI.interactableText.text = interactString;
+//                        alertTextObject.SetActive(true);
                         if (inputHandler.a_input)
                         {
 

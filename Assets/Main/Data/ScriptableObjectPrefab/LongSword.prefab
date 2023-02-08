@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0.8257639, y: -0.13326035, z: 0.057635352, w: 0.54500824}
   m_LocalPosition: {x: 7.1, y: 4.9, z: 1.8}
   m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8509473079844752877}
   m_Father: {fileID: 8091877740545462866}
@@ -57,6 +58,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.6318653, y: 0.28659564, z: -0.58321226}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5148130211041675096}
   m_Father: {fileID: 0}
@@ -130,12 +132,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8509473079844593395}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8509473079844752877 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 496414, guid: e7196d0541b91bf4f8cab39924cb6d49,
-    type: 3}
-  m_PrefabInstance: {fileID: 8509473079844593395}
-  m_PrefabAsset: {fileID: 0}
 --- !u!65 &713092069368962425
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -144,7 +140,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8509473079844414721}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.17115505, y: 1.2682015, z: 0.051882725}
@@ -162,3 +158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeaponDamage: 45
+--- !u!4 &8509473079844752877 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 496414, guid: e7196d0541b91bf4f8cab39924cb6d49,
+    type: 3}
+  m_PrefabInstance: {fileID: 8509473079844593395}
+  m_PrefabAsset: {fileID: 0}

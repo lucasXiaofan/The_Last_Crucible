@@ -7,11 +7,12 @@ namespace DP
     public class DP_EnemyStats : DP_CharacterStats
     {
         public DP_PlayerHealthBar playerHealthBar;
-        Animator anim;
+        DP_EnemyAnimator enemyAnimator;
+        
 
         void Start()
         {
-            anim = GetComponentInChildren<Animator>();
+            enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
             maximumHealth = SetMaximumHealthLevel();
             currentHealth = maximumHealth;
             playerHealthBar.SetMaximumHeath(maximumHealth);
@@ -22,16 +23,20 @@ namespace DP
             return maximumHealth;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, bool normal)
         {
             currentHealth = currentHealth - damage;
             playerHealthBar.SetHeathBarValue(currentHealth);
-            anim.Play("getHit");
-
-            if (currentHealth <= 0)
+            if(normal)
             {
-                anim.Play("dead");
+                enemyAnimator.ApplyTargetAnimation("getHit",true,false);
+                if (currentHealth <= 0)
+                {
+                    enemyAnimator.ApplyTargetAnimation("dead",true,false);
+                }
             }
+            
+            
         }
 
     }
