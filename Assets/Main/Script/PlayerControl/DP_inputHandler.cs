@@ -133,7 +133,11 @@ namespace DP
                 return;
             if (rb_input) //&& StaminaStatus.alive())
             {
-                if (playerManager.canDoAirAttack)
+                if (playerAttacker.CanBackStab())
+                {
+                    playerAttacker.HandleBackStab();
+                }
+                else if (playerManager.canDoAirAttack)
                 {
                     playerAttacker.HandleAirAttack(playerInventory.rightWeapon);
                 }
@@ -151,7 +155,6 @@ namespace DP
             }
             if (rt_input) //&& StaminaStatus.alive())
             {
-                print("Looping");
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
 

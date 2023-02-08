@@ -9,12 +9,15 @@ namespace DP
         // Start is called before the first frame update
         DP_animationHandler animationHandler;
         DP_inputHandler inputHandler;
+        DP_PlayerManager playerManager;
         DP_WeaponSlotManager weaponSlotManager;
         DP_playerLomotion playerLomotion;
         DP_CameraControl cameraControl;
         public string lastAttack;
+        public LayerMask backStacbLayer;
         void Start()
         {
+            playerManager = GetComponent<DP_PlayerManager>();
             cameraControl = FindObjectOfType<DP_CameraControl>();
             playerLomotion = GetComponent<DP_playerLomotion>();
             weaponSlotManager = GetComponentInChildren<DP_WeaponSlotManager>();
@@ -37,14 +40,40 @@ namespace DP
             }
         }
 
+        public bool CanBackStab()
+        {
+            RaycastHit hit;
+            return (Physics.Raycast(playerManager.CriticalStabPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStacbLayer));
+        }
+        public void HandleBackStab()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(playerManager.CriticalStabPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStacbLayer))
+            {
+                DP_EnemyManger enemyManger = hit.transform.gameObject.GetComponentInParent<DP_EnemyManger>();
+                if (enemyManger!= null)
+                {
+                    playerManager.transform.position = enemyManger.BackStabPoint.position;
+                    //do rotation
+                    Vector3 RotationDirection = playerManager.transform.root.eulerAngles;
+                    RotationDirection = hit.transform.position - playerManager.transform.position;
+                    RotationDirection.y = 0;
+                    RotationDirection.Normalize();
+                    Quaternion tr = Quaternion.LookRotation(RotationDirection);
+                    playerManager.transform.rotation = Quaternion.Slerp(playerManager.transform.rotation,tr,Time.deltaTime*500);
+                    animationHandler.ApplyTargetAnimation("BackStab",true,false);
+                    enemyManger.GetComponentInChildren<DP_EnemyAnimator>().ApplyTargetAnimation("BackStabbed",true,false);
+                    enemyManger.GetComponent<DP_EnemyStats>().TakeDamage(200,false);
+                }
+            }
+
+        }
         public void HandleAirAttack(DP_WeaponItem weaponItem)
         {
             weaponSlotManager.attackingWeapon = weaponItem;
             HandleRotationWhileAttack();
             animationHandler.ApplyTargetAnimation("InAirAttack", true, false);
-
         }
-
         public void HandleLightAttack(DP_WeaponItem weaponItem)
         {
             weaponSlotManager.attackingWeapon = weaponItem;
@@ -53,7 +82,6 @@ namespace DP
             lastAttack = weaponItem.Oh_Light_Attack_1;
 
         }
-
         public void HandleRotationWhileAttack()
         {
             Vector3 moveDir = playerLomotion.cameraPos.forward * inputHandler.vertical;

@@ -21,6 +21,9 @@ namespace DP
         public float maxDetectionAngle = 60f;
         public float currentRecoveryTime = 0;
 
+        [Header("Combat Setting")]
+        public BoxCollider BackStabCollider;
+        public Transform BackStabPoint;
 
         private void Awake()
         {

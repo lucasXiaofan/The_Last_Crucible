@@ -20,7 +20,7 @@ namespace DP
             animationHandler = GetComponentInChildren<DP_animationHandler>();
             maximumHealth = SetMaximumHealthLevel();
             currentHealth = maximumHealth;
-            //playerHealthBar.SetMaximumHeath(maximumHealth);
+            playerHealthBar.SetMaximumHeath(maximumHealth);
 
             maxStamina = SetMaximumStaminaLevel();
             currentStamina = maxStamina;
@@ -40,7 +40,7 @@ namespace DP
         public void TakeDamage(int damage)
         {
             currentHealth = currentHealth - damage;
-//            playerHealthBar.SetHeathBarValue(currentHealth);
+            playerHealthBar.SetHeathBarValue(currentHealth);
             animationHandler.ApplyTargetAnimation("playerHitReaction", true, false);
             if (currentHealth <= 0)
             {
