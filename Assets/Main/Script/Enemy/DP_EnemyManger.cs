@@ -26,6 +26,7 @@ namespace DP
         public Transform BackStabPoint;
         public bool isDead;
         public CapsuleCollider body;
+    
 
         private void Awake()
         {
@@ -33,6 +34,7 @@ namespace DP
             enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
             enemyStats = GetComponent<DP_EnemyStats>();
             body = GetComponent<CapsuleCollider>();
+    
             
         }
         private void Update()
@@ -79,6 +81,7 @@ namespace DP
 
 
         #region  Attacks
+      
         private void HandleRoveryTimer()
         {
             if (currentRecoveryTime > 0)
@@ -95,6 +98,7 @@ namespace DP
         }
         public void AttackTarget()
         {
+
             if (isPreformingAction)
             {
                 return;
