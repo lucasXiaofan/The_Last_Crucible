@@ -130,5 +130,15 @@ namespace DP
         {
             anim.SetBool("canDoAirAttack", false);
         }
+
+        public void enableParry()
+        {
+            playerManager.isParrying = true;
+        }
+
+        public void disableParry()
+        {
+            playerManager.isParrying = false;
+        }
     }
 }

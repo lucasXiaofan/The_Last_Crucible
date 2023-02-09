@@ -54,5 +54,6 @@ namespace DP{
         {
             rightHandCollider.DisableDamage();
         }
+        
     }
 }

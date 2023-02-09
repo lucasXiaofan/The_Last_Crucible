@@ -24,22 +24,28 @@ namespace DP
         [Header("Combat Setting")]
         public BoxCollider BackStabCollider;
         public Transform BackStabPoint;
+        public bool isDead;
+        public CapsuleCollider body;
 
         private void Awake()
         {
             enemyLocomotion = GetComponent<DP_EnemyLocomotion>();
             enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
             enemyStats = GetComponent<DP_EnemyStats>();
+            body = GetComponent<CapsuleCollider>();
+            
         }
         private void Update()
         {
-
+            if (isDead) return;
+            
             isPreformingAction = enemyAnimator.anim.GetBool("isInteracting");
             HandleRoveryTimer();
         }
 
         private void FixedUpdate()
         {
+            if(isDead) return;
             // make sure the distance is always updated
             if (!(enemyLocomotion.currentTarget == null))
             {
@@ -47,6 +53,10 @@ namespace DP
             }
 
             EnemyStateMachine();
+        }
+        private void LateUpdate() {
+            
+            
         }
 
         private void EnemyStateMachine()

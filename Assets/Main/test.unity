@@ -2828,6 +2828,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zangard's Soldier Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 6646359404981029827, guid: 08e2df0345ceaef488ed067649b31224,
+        type: 3}
+      propertyPath: body
+      value: 
+      objectReference: {fileID: 946512515}
     - target: {fileID: 6646359404981029831, guid: 08e2df0345ceaef488ed067649b31224,
         type: 3}
       propertyPath: m_RootOrder

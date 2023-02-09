@@ -30,13 +30,25 @@ namespace DP
         }
         public void OnTriggerEnter(Collider other)
         {
-            print(other.tag);
-            //print(inputHandler.rb_input + " " + inputHandler.rt_input);
             if (other.tag == "Player")
             {
                 DP_PlayerStats playerStats = other.GetComponent<DP_PlayerStats>();
                 if (playerStats != null)
                 {
+                    DP_PlayerManager playerManager = other.GetComponent<DP_PlayerManager>();
+                    if(playerManager!= null)
+                    {
+                        if(playerManager.isParrying)
+                        {
+                            DP_EnemyAnimator enemyAnimator = GetComponentInParent<DP_EnemyAnimator>();
+                            if (enemyAnimator!=null)
+                            {
+                                enemyAnimator.anim.SetBool("Parryed",true);
+                                return;
+                            }
+                        }
+                    }
+
                     playerStats.TakeDamage(currentWeaponDamage);
 
                 }
