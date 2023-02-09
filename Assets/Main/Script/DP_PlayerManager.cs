@@ -23,6 +23,10 @@ namespace DP
         public bool canDoCombo;
         public bool canDoAirAttack;
 
+        [Header("Combat settings")]
+        public Transform CriticalStabPoint;
+        public bool isParrying = false;
+
         private void Awake()
         {
             cameraControl = FindObjectOfType<DP_CameraControl>();
@@ -32,11 +36,11 @@ namespace DP
         void Start()
         {
             playerLomotion = GetComponent<DP_playerLomotion>();
-            textUI = FindObjectOfType<DP_AlertTextUI>();
+            // textUI = FindObjectOfType<DP_AlertTextUI>();
             animationHandler = GetComponent<DP_animationHandler>();
             inputHandler = GetComponent<DP_inputHandler>();
             animator = GetComponentInChildren<Animator>();
-            itemTextObject.SetActive(false);
+            // itemTextObject.SetActive(false);
 
         }
 
@@ -49,12 +53,11 @@ namespace DP
             isInteracting = animator.GetBool("isInteracting");
             isJumping = animator.GetBool("isJumping");
             animator.SetBool("IsInAir", isInAir);
+            animator.SetBool("isGrounded", isGrounded);
             inputHandler.TickInput(delta);
             playerLomotion.HandleRollingAndSprint(delta);
             CheckForInteractableObject();
             playerLomotion.HandlePlayerJump(inputHandler.jump_input);
-
-
         }
         private void FixedUpdate()
         {
@@ -78,6 +81,7 @@ namespace DP
             inputHandler.d_pad_right = false;
             inputHandler.jump_input = false;
             inputHandler.menu_input = false;
+            inputHandler.parry_input = false;
 
             if (cameraControl != null)
             {
@@ -109,8 +113,8 @@ namespace DP
                     {
 
                         string interactString = pickItem.ItemName;
-                        textUI.interactableText.text = interactString;
-                        alertTextObject.SetActive(true);
+//                        textUI.interactableText.text = interactString;
+//                        alertTextObject.SetActive(true);
                         if (inputHandler.a_input)
                         {
 

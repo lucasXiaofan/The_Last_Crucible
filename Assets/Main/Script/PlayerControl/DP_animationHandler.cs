@@ -113,12 +113,12 @@ namespace DP
         public void enableCombo()
         {
             anim.SetBool("canDoCombo", true);
-            anim.SetBool("isInteracting", false);
+            //anim.SetBool("isInteracting", false);
         }
         public void disableCombo()
         {
             anim.SetBool("canDoCombo", false);
-            anim.SetBool("isInteracting", true);
+            //anim.SetBool("isInteracting", true);
         }
 
         public void enableAirAttack()
@@ -129,6 +129,16 @@ namespace DP
         public void disableAirAttack()
         {
             anim.SetBool("canDoAirAttack", false);
+        }
+
+        public void enableParry()
+        {
+            playerManager.isParrying = true;
+        }
+
+        public void disableParry()
+        {
+            playerManager.isParrying = false;
         }
     }
 }

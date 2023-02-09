@@ -8,11 +8,11 @@ namespace DP
     {
         DP_inputHandler inputHandler;
         public int currentWeaponDamage = 30;
-        Collider damageCollider;
+        BoxCollider damageCollider;
         private void Awake()
         {
             inputHandler = FindObjectOfType<DP_inputHandler>();
-            damageCollider = GetComponent<Collider>();
+            damageCollider = GetComponent<BoxCollider>();
             damageCollider.gameObject.SetActive(true);
             damageCollider.isTrigger = true;
             damageCollider.enabled = false;
@@ -28,23 +28,28 @@ namespace DP
             // inputHandler.rb_input = false;
             // inputHandler.rt_input = false;
         }
-        private void OnTriggerEnter(Collider other)
+        public void OnTriggerEnter(Collider other)
         {
-            //print(inputHandler.rb_input + " " + inputHandler.rt_input);
             if (other.tag == "Player")
             {
                 DP_PlayerStats playerStats = other.GetComponent<DP_PlayerStats>();
                 if (playerStats != null)
                 {
+                    DP_PlayerManager playerManager = other.GetComponent<DP_PlayerManager>();
+                    if(playerManager!= null)
+                    {
+                        if(playerManager.isParrying)
+                        {
+                            DP_EnemyAnimator enemyAnimator = GetComponentInParent<DP_EnemyAnimator>();
+                            if (enemyAnimator!=null)
+                            {
+                                enemyAnimator.anim.SetBool("Parryed",true);
+                                return;
+                            }
+                        }
+                    }
+
                     playerStats.TakeDamage(currentWeaponDamage);
-                    // if (inputHandler.rb_input)
-                    // {
-                    //     playerStats.TakeDamage(currentWeaponDamage);
-                    // }
-                    // else if (inputHandler.rt_input)
-                    // {
-                    //     playerStats.TakeDamage(currentWeaponDamage * 2);
-                    // }
 
                 }
             }
@@ -53,15 +58,7 @@ namespace DP
                 DP_EnemyStats enemyStats = other.GetComponent<DP_EnemyStats>();
                 if (enemyStats != null)
                 {
-                    enemyStats.TakeDamage(currentWeaponDamage);
-                    // if (inputHandler.rb_input)
-                    // {
-
-                    // }
-                    // else if (inputHandler.rt_input)
-                    // {
-                    //     enemyStats.TakeDamage(currentWeaponDamage * 2);
-                    // }
+                    enemyStats.TakeDamage(currentWeaponDamage,true);
                 }
             }
 

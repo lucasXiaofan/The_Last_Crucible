@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DP_EnemyAttackState : MonoBehaviour
+namespace DP
 {
-    // Start is called before the first frame update
-    void Start()
+    public class DP_EnemyAttackState : DP_State
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public DP_EnemyPursueState pursueState;
+        public override DP_State Tick(DP_EnemyManger enemyManger,
+                                    DP_EnemyStats enemyStats,
+                                    DP_EnemyAnimator enemyAnimator,
+                                    DP_EnemyLocomotion enemyLocomotion)
+        {
+            if (enemyLocomotion.distanceFromtarget > enemyLocomotion.stoppingDistance)
+            {
+                enemyAnimator.anim.SetFloat("Vertical", 0);
+                return pursueState;
+            }
+            enemyManger.AttackTarget();
+            return this;
+        }
     }
 }

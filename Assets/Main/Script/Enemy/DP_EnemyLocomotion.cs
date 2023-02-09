@@ -92,7 +92,7 @@ namespace DP
             // navMeshAgent.transform.localPosition = Vector3.zero;
             // navMeshAgent.transform.localRotation = Quaternion.identity;
         }
-        private void HandleRotationTowardsTarget()
+        public void HandleRotationTowardsTarget()
         {
             if (enemyManger.isPreformingAction)
             {
