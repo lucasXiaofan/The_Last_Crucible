@@ -12,21 +12,17 @@ namespace DP
         public Rigidbody enemyRigidbody;
         public LayerMask detectionLayer;
         public DP_CharacterStats currentTarget;
-        NavMeshAgent navMeshAgent;
+        public NavMeshAgent navMeshAgent;
         [Header("Enemy Movement")]
         public float distanceFromtarget;
         public float stoppingDistance = 1f;
         public float RotationSpeed = 15f;
 
-
-        [Header("Enemy Patrol")]
-        //New variables added:
+        // New variable
         public float detectionDistance = 10f;
-        //Define preset points for enemy to patrol between.
-        public GameObject[] patrolLocations = new GameObject[2];
-        private float distanceFromPatrolLocation;
-        private GameObject currentPatrolLocation;
-        private int patrolLocationIndex;
+
+
+        
 
 
         private void Awake()
@@ -131,91 +127,7 @@ namespace DP
             //rotate with pathfinding (navmesh)
         }
 
-        //New functions
-        public void HandlePatrolMovement()
-        {
-            if (enemyManger.isPreformingAction)
-            {
-                return;
-            }
-            //For each point, have the enemy travel to it.
-            //Once enemy reaches point, go to next one in list
-            //I THINK THERES NO NEED TO DEFINE WHEN TO STOP PATROLING? HANDLED IN SM
-
-            if (currentPatrolLocation == null)
-            {
-                patrolLocationIndex = 0;
-                currentPatrolLocation = patrolLocations[patrolLocationIndex];
-            }
-
-            distanceFromPatrolLocation = Vector3.Distance(transform.position, currentPatrolLocation.transform.position);
-            if (distanceFromPatrolLocation <= stoppingDistance)
-            {
-                //Reassign to next patrol location
-                //Handle end of array
-                if (patrolLocationIndex == (patrolLocations.Length - 1))
-                {
-                    patrolLocationIndex = 0;
-                }
-                else
-                {
-                    patrolLocationIndex += 1;
-                }
-
-                currentPatrolLocation = patrolLocations[patrolLocationIndex];
-            }
-
-            //Handle movement
-            distanceFromtarget = Vector3.Distance(transform.position, currentPatrolLocation.transform.position);
-            Vector3 targetDirection = currentPatrolLocation.transform.position - transform.position;
-            float viewAbleAngle = Vector3.Angle(targetDirection, transform.forward);
-            if (enemyManger.isPreformingAction)
-            {
-                enemyAnimator.anim.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
-                navMeshAgent.enabled = false;
-            }
-            else
-            {
-                if (distanceFromtarget > detectionDistance)
-                {
-                    navMeshAgent.enabled = true;
-                    enemyAnimator.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
-                    navMeshAgent.SetDestination(currentPatrolLocation.transform.position);
-                    enemyRigidbody.velocity = navMeshAgent.velocity;
-                }
-                else
-                {
-                    enemyAnimator.anim.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
-                }
-            }
-            HandleRotationTowardsPatrolLocation();
-        }
-
-        public void HandleRotationTowardsPatrolLocation()
-        {
-            if (enemyManger.isPreformingAction)
-            {
-                Vector3 direction = currentPatrolLocation.transform.position - transform.position;
-                direction.y = 0;
-                direction.Normalize();
-
-                if (direction == Vector3.zero)
-                {
-                    direction = transform.forward;
-                }
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, RotationSpeed / Time.deltaTime);
-            }
-            else
-            {
-                Vector3 relativeDirection = transform.InverseTransformDirection(navMeshAgent.desiredVelocity);
-                Vector3 targetVelocity = enemyRigidbody.velocity;
-
-                navMeshAgent.enabled = true;
-
-                transform.rotation = Quaternion.Slerp(transform.rotation, navMeshAgent.transform.rotation, RotationSpeed / Time.deltaTime);
-            }
-        }
+        
     }
 
 }
