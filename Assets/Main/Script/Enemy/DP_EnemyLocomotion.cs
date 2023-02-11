@@ -12,11 +12,18 @@ namespace DP
         public Rigidbody enemyRigidbody;
         public LayerMask detectionLayer;
         public DP_CharacterStats currentTarget;
-        NavMeshAgent navMeshAgent;
+        public NavMeshAgent navMeshAgent;
         [Header("Enemy Movement")]
         public float distanceFromtarget;
         public float stoppingDistance = 1f;
         public float RotationSpeed = 15f;
+
+        // New variable
+        public float detectionDistance = 10f;
+
+
+        
+
 
         private void Awake()
         {
@@ -119,6 +126,8 @@ namespace DP
 
             //rotate with pathfinding (navmesh)
         }
+
+        
     }
 
 }

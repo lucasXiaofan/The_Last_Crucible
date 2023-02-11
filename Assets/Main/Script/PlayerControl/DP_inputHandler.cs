@@ -8,6 +8,7 @@ namespace DP
     {
         DP_PlayerControl inputActions;
         DP_CameraControl cameraControl;
+        DP_animationHandler animationHandler;
         PlayerAttacker playerAttacker;
         DP_PlayerInventory playerInventory;
         DP_PlayerManager playerManager;
@@ -32,6 +33,7 @@ namespace DP
         public bool lock_on_input;
         public bool lock_left_input;
         public bool lock_right_input;
+        public bool parry_input;
 
         public bool rollFlag;
         public bool sprintFlag;
@@ -45,6 +47,9 @@ namespace DP
         Vector2 moveInput;
         Vector2 cameraInput;
 
+        // Handle Parry
+        private bool isRight = true;
+
         private void Awake()
         {
             uIManager = FindObjectOfType<DP_UIManager>();
@@ -52,6 +57,7 @@ namespace DP
             playerInventory = GetComponent<DP_PlayerInventory>();
             playerManager = GetComponent<DP_PlayerManager>();
             cameraControl = FindObjectOfType<DP_CameraControl>();
+            animationHandler = GetComponentInChildren<DP_animationHandler>();
         }
 
         private void OnEnable()
@@ -71,6 +77,7 @@ namespace DP
                 inputActions.PlayerMovement.LockOnTarget.performed += i => lock_on_input = true;
                 inputActions.PlayerMovement.LockOnLeft.performed += i => lock_left_input = true;
                 inputActions.PlayerMovement.LockOnRight.performed += i => lock_right_input = true;
+                inputActions.PlayerAction.Parry.performed += i => parry_input= true;
 
             }
             inputActions.Enable();
@@ -89,6 +96,23 @@ namespace DP
             HandleOpenAndCloseMenuUI();
             HandleLockOnInput();
             HandleJumpInput();
+            HandleParry();
+        }
+        private void HandleParry()
+        {
+            if (playerManager.isInteracting || playerManager.isJumping) return;
+            if(parry_input)
+            {
+                if(isRight)
+                {
+                    animationHandler.ApplyTargetAnimation("ParryR",true,false);
+                }
+                else
+                {
+                    animationHandler.ApplyTargetAnimation("ParryL",true,false);
+                }
+                isRight = !isRight;
+            }
         }
         private void MoveInputControl(float delta)
         {
@@ -114,7 +138,6 @@ namespace DP
                 {
                     rollFlag = true;
                 }
-
             }
             else
             {

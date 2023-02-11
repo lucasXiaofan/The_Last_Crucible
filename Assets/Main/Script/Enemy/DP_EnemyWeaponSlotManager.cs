@@ -47,12 +47,20 @@ namespace DP{
 
         public void openCollider()
         {
-            print("enabled");
-            rightHandCollider.EnableDamage();
+            if(rightHandCollider != null)
+            {
+                rightHandCollider.EnableDamage();
+            }
+            
         }
         public void disableCollider()
         {
-            rightHandCollider.DisableDamage();
+            if(rightHandCollider!=null)
+            {
+                rightHandCollider.DisableDamage();
+            }
+            
         }
+        
     }
 }

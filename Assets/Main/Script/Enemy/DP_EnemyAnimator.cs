@@ -22,6 +22,10 @@ namespace DP
             // Vector3 velocity = deltaPosition / delta;
             // enemyLocomotion.enemyRigidbody.velocity = velocity * 10;
         }
+        public void exitParryAnimation()
+        {
+            anim.SetBool("existParry",true);
+        }
 
         // Update is called once per frame
         void Update()

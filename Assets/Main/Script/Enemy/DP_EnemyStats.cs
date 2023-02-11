@@ -8,11 +8,13 @@ namespace DP
     {
         public DP_PlayerHealthBar playerHealthBar;
         DP_EnemyAnimator enemyAnimator;
+        DP_EnemyManger enemyManger;
         
 
         void Start()
         {
             enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
+            enemyManger = GetComponent<DP_EnemyManger>();
             maximumHealth = SetMaximumHealthLevel();
             currentHealth = maximumHealth;
             playerHealthBar.SetMaximumHeath(maximumHealth);
@@ -32,9 +34,17 @@ namespace DP
                 enemyAnimator.ApplyTargetAnimation("getHit",true,false);
                 if (currentHealth <= 0)
                 {
+                    enemyManger.isDead =true;
+                    print("enemy is dead!");
                     enemyAnimator.ApplyTargetAnimation("dead",true,false);
+                    
+
                 }
             }
+            if (currentHealth <= 0)
+                {
+                    enemyManger.isDead =true;
+                }
             
             
         }

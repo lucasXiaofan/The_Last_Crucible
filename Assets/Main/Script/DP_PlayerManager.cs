@@ -25,6 +25,7 @@ namespace DP
 
         [Header("Combat settings")]
         public Transform CriticalStabPoint;
+        public bool isParrying = false;
 
         private void Awake()
         {
@@ -57,8 +58,6 @@ namespace DP
             playerLomotion.HandleRollingAndSprint(delta);
             CheckForInteractableObject();
             playerLomotion.HandlePlayerJump(inputHandler.jump_input);
-
-
         }
         private void FixedUpdate()
         {
@@ -82,6 +81,7 @@ namespace DP
             inputHandler.d_pad_right = false;
             inputHandler.jump_input = false;
             inputHandler.menu_input = false;
+            inputHandler.parry_input = false;
 
             if (cameraControl != null)
             {
