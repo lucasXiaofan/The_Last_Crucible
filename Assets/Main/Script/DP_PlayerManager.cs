@@ -41,7 +41,8 @@ namespace DP
             inputHandler = GetComponent<DP_inputHandler>();
             animator = GetComponentInChildren<Animator>();
             // itemTextObject.SetActive(false);
-
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         // Update is called once per frame
@@ -58,6 +59,9 @@ namespace DP
             playerLomotion.HandleRollingAndSprint(delta);
             CheckForInteractableObject();
             playerLomotion.HandlePlayerJump(inputHandler.jump_input);
+
+            
+            // If escape key, Cursor.visible = true; CursorLockMode off
         }
         private void FixedUpdate()
         {
