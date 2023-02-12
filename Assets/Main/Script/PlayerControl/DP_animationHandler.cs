@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace DP
 {
-    public class DP_animationHandler : MonoBehaviour
+    public class DP_animationHandler : DP_ParentAnimation
     {
-        public Animator anim;
+
         int vertical;
         int horizontal;
         public bool canRotate;
@@ -85,14 +85,7 @@ namespace DP
             anim.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
 
         }
-        public void ApplyTargetAnimation(string animationName, bool isInteracting, bool isJumping)
-        {
-            anim.applyRootMotion = isInteracting;
-            anim.applyRootMotion = isJumping;
-            anim.SetBool("isInteracting", isInteracting);
-            anim.SetBool("isJumping", isJumping);
-            anim.CrossFade(animationName, 0.2f);
-        }
+
         public void DoRotate()
         {
             canRotate = true;
@@ -120,12 +113,12 @@ namespace DP
         public void enableCombo()
         {
             anim.SetBool("canDoCombo", true);
-            anim.SetBool("isInteracting", false);
+            //anim.SetBool("isInteracting", false);
         }
         public void disableCombo()
         {
             anim.SetBool("canDoCombo", false);
-            anim.SetBool("isInteracting", true);
+            //anim.SetBool("isInteracting", true);
         }
 
         public void enableAirAttack()
@@ -136,6 +129,16 @@ namespace DP
         public void disableAirAttack()
         {
             anim.SetBool("canDoAirAttack", false);
+        }
+
+        public void enableParry()
+        {
+            playerManager.isParrying = true;
+        }
+
+        public void disableParry()
+        {
+            playerManager.isParrying = false;
         }
     }
 }

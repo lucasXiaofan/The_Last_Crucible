@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e5de1bb4f628743af49c6fdba31b08, type: 3}
+  m_Name: Bow
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 0}
+  itemName: 
+  modelPrefab: {fileID: 1227739396210603779, guid: affe0475a03a61542ae8dbf20cae6927,
+    type: 3}
+  isArmed: 0
+  Right_arm_idle: 
+  Left_arm_idle: 
+  Oh_Light_Attack_1: 
+  Oh_Light_Attack_2: 
+  Oh_Heavy_Attack_1: 
+  Oh_Heavy_Attack_2: 
+  baseStamina: 0
+  lightAttackStaminaMultiplier: 0
+  heavyAttackStaminaMultiplier: 0

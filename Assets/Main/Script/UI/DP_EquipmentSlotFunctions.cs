@@ -23,7 +23,6 @@ namespace DP
 
                 if (equipmentArray[i].RES1Selected)
                 {
-
                     equipmentArray[i].EquipItem(inventory.rightHandSlots[0]);
                 }
                 if (equipmentArray[i].RES2Selected)

@@ -20,23 +20,16 @@ namespace DP
         float rotatingSpeed = 5f;
         public float sprintSpeed = 10f;
 
-        public float jumpDistance = 3f;
-
         [Header("Handle Falling")]
         [SerializeField]
-        float startPointOfRayCast = 0.5f;
-        [SerializeField]
         float minimumDistanceToFall = 1f;
-        float groundMaxDistance = 0.5f;
-        float groundMinDistance = 0.01f;
+        
+        float groundMinDistance = 0.7f;
         [SerializeField]
-        float rayCastOffset = 0.2f;
         LayerMask ignoreLayer;
+        public LayerMask ground;
         float fallingSpeed = 100f;
         public float fallingTimer;
-
-        [Header("Handle Jumping")]
-        bool isJumping;
 
 
 
@@ -104,13 +97,13 @@ namespace DP
         }
         public void HandleRotation(float delta)
         {
+
             //targetDirection = Vector3.zero;
             if (inputHandler.lockOnFlag)
             {
 
                 if (inputHandler.sprintFlag == false && inputHandler.rollFlag == false)
                 {
-                    print("player body control, none springflag");
                     Vector3 rotateDirection = MoveDirection;
                     rotateDirection = cameraControl.currentLockOnTransform.LockOnTransform.position - cameraControl.cameraTransform.position;
                     rotateDirection.Normalize();
@@ -122,7 +115,7 @@ namespace DP
                 }
                 else
                 {
-                    print("else");
+
                     targetDirection = cameraPos.forward * inputHandler.vertical;
                     targetDirection += cameraPos.right * inputHandler.horizontal;
                     targetDirection.Normalize();
@@ -176,14 +169,15 @@ namespace DP
         }
         public void PlayerisGrounded()
         {
-            float groundDistance = CheckGroundDistance();
+
             if (playerManager.isJumping)
             {
                 playerManager.isGrounded = false;
             }
             else
             {
-                playerManager.isGrounded = groundDistance <= minimumDistanceToFall;
+                float groundDistance = CheckGroundDistance();
+                playerManager.isGrounded = groundDistance <= groundMinDistance;
 
             }
 
@@ -200,16 +194,16 @@ namespace DP
             // ray for RayCast
             Ray ray2 = new Ray(transform.position + new Vector3(0, colliderHeight / 2, 0), Vector3.down);
             // raycast for check the ground distance
-            if (Physics.Raycast(ray2, out groundHit, (colliderHeight / 2) + dist, ignoreLayer) && !groundHit.collider.isTrigger)
+            if (Physics.Raycast(ray2, out groundHit, (colliderHeight / 2) + dist, ground) && !groundHit.collider.isTrigger)
                 dist = transform.position.y - groundHit.point.y;
             // sphere cast around the base of the capsule to check the ground distance
             if (dist >= groundMinDistance)
             {
                 Vector3 pos = transform.position + Vector3.up * (radius);
                 Ray ray = new Ray(pos, -Vector3.up);
-                if (Physics.SphereCast(ray, radius, out groundHit, radius + groundMaxDistance, ignoreLayer) && !groundHit.collider.isTrigger)
+                if (Physics.SphereCast(ray, radius, out groundHit, 0.5f, ground) && !groundHit.collider.isTrigger)
                 {
-                    Physics.Linecast(groundHit.point + (Vector3.up * 0.1f), groundHit.point + Vector3.down * 0.15f, out groundHit, ignoreLayer);
+                    // Physics.Linecast(groundHit.point + (Vector3.up * 0.1f), groundHit.point + Vector3.down * 0.15f, out groundHit, ignoreLayer);
                     float newDist = transform.position.y - groundHit.point.y;
                     if (dist > newDist) dist = newDist;
                 }
@@ -218,79 +212,52 @@ namespace DP
         }
         public void HandleFalling(float delta, Vector3 moveDirection)
         {
-            playerRigidBody.AddForce(transform.up * (-20 * Time.deltaTime), ForceMode.VelocityChange);
+
             if (playerManager.isJumping)
             {
                 return;
             }
-            // RaycastHit hit;
-            Vector3 origin = playerTransform.position;
-            origin.y += startPointOfRayCast;
-
-            if (Physics.Raycast(origin, transform.forward, 0.4f, ignoreLayer))
-            {
-                moveDirection = Vector3.zero;
-            }
-
-            Debug.DrawRay(origin, -Vector3.up * minimumDistanceToFall, Color.red, 0.1f, false);
-            //playerRigidBody.AddForce(-Vector3.up * fallingSpeed);
-
 
             if (playerManager.isGrounded)
             {
-                playerRigidBody.AddForce(transform.up * (-20 * 2 * Time.deltaTime), ForceMode.VelocityChange);
 
-                if (playerManager.isInAir)
-                {
-                    if (fallingTimer > 0.5f)
-                    {
-                        //Debug.Log("you've been falling for: " + fallingTimer);
-                        animationHandler.ApplyTargetAnimation("land", true, false);
-                    }
-                    else
-                    {
-                        animationHandler.ApplyTargetAnimation("Empty", false, false);
-                        fallingTimer = 0;
-                    }
-                    playerManager.isInAir = false;
-                }
+                playerManager.isInAir = false;
+                fallingTimer = 0;
+                Vector3 targetPositon = transform.position;
+                Vector3 castOrigin = transform.position;
+                castOrigin.y += 0.5f;
+                RaycastHit hit;
+                Physics.SphereCast(castOrigin, 0.25f, Vector3.down, out hit, ground);
+                targetPositon.y = hit.point.y;
+                transform.position = Vector3.Lerp(transform.position, targetPositon, Time.deltaTime / 0.15f);
+                HandleRollingAndSprint(Time.deltaTime);
 
             }
             else
             {
-
-
-                if (playerManager.isInAir == false)
+                if (playerManager.isInteracting == false && !playerManager.isJumping && fallingTimer > 0.3f)
                 {
-                    if (playerManager.isInteracting == false)// && !playerManager.isJumping)
-                    {
-                        animationHandler.ApplyTargetAnimation("fall", true, false);
-                    }
-
-                    Vector3 normalVel = playerRigidBody.velocity;
-                    normalVel.Normalize();
-                    playerRigidBody.velocity = normalVel * (moveSpeed / 2);//why using the positive normalvel??
-                    playerManager.isInAir = true;
+                    animationHandler.ApplyTargetAnimation("fall", true, false);
                 }
 
+                playerManager.isInAir = true;
             }
             if (playerManager.isInAir)
             {
-                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 2);
+                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3 * (fallingTimer + 1));
                 // //add a kick off force below
                 Vector3 kickDir = moveDirection;
-                playerRigidBody.AddForce(kickDir * fallingSpeed / 3f);
+                playerRigidBody.AddForce(kickDir * fallingSpeed / 6f);
             }
 
         }
         public void HandlePlayerJump(bool pressJump)
         {
             //HandleFalling(delta, moveDirection);
-            if (playerManager.isInteracting)
+            if (playerManager.isInteracting || playerManager.isJumping)
             {
                 return;
             }
-
 
             if (pressJump && playerManager.isGrounded)
             {

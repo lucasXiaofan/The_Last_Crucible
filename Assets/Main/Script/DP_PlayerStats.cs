@@ -24,7 +24,7 @@ namespace DP
 
             maxStamina = SetMaximumStaminaLevel();
             currentStamina = maxStamina;
-            StaminaBar.SetMaximumHeath(maxStamina);
+            //StaminaBar.SetMaximumHeath(maxStamina);
         }
         private int SetMaximumHealthLevel()
         {
@@ -50,7 +50,7 @@ namespace DP
         public void TakeStaminaDamage(int damage)
         {
             currentStamina -= damage;
-            StaminaBar.SetHeathBarValue(currentStamina);
+//            StaminaBar.SetHeathBarValue(currentStamina);
         }
     }
 }

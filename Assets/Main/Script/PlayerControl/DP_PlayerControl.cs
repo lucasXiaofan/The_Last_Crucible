@@ -225,6 +225,15 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""321360a1-be9a-4e8c-bfd7-509fc66509ce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -291,6 +300,17 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45c6debc-43d7-43ff-848c-af95c51577ea"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -506,6 +526,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         m_PlayerAction_RB = m_PlayerAction.FindAction("RB", throwIfNotFound: true);
         m_PlayerAction_RT = m_PlayerAction.FindAction("RT", throwIfNotFound: true);
         m_PlayerAction_Jump = m_PlayerAction.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerAction_Parry = m_PlayerAction.FindAction("Parry", throwIfNotFound: true);
         // Player Quick Slot
         m_PlayerQuickSlot = asset.FindActionMap("Player Quick Slot", throwIfNotFound: true);
         m_PlayerQuickSlot_DPadUp = m_PlayerQuickSlot.FindAction("D Pad Up", throwIfNotFound: true);
@@ -642,6 +663,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerAction_RB;
     private readonly InputAction m_PlayerAction_RT;
     private readonly InputAction m_PlayerAction_Jump;
+    private readonly InputAction m_PlayerAction_Parry;
     public struct PlayerActionActions
     {
         private @DP_PlayerControl m_Wrapper;
@@ -650,6 +672,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         public InputAction @RB => m_Wrapper.m_PlayerAction_RB;
         public InputAction @RT => m_Wrapper.m_PlayerAction_RT;
         public InputAction @Jump => m_Wrapper.m_PlayerAction_Jump;
+        public InputAction @Parry => m_Wrapper.m_PlayerAction_Parry;
         public InputActionMap Get() { return m_Wrapper.m_PlayerAction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -671,6 +694,9 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionActionsCallbackInterface.OnJump;
+                @Parry.started -= m_Wrapper.m_PlayerActionActionsCallbackInterface.OnParry;
+                @Parry.performed -= m_Wrapper.m_PlayerActionActionsCallbackInterface.OnParry;
+                @Parry.canceled -= m_Wrapper.m_PlayerActionActionsCallbackInterface.OnParry;
             }
             m_Wrapper.m_PlayerActionActionsCallbackInterface = instance;
             if (instance != null)
@@ -687,6 +713,9 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Parry.started += instance.OnParry;
+                @Parry.performed += instance.OnParry;
+                @Parry.canceled += instance.OnParry;
             }
         }
     }
@@ -778,6 +807,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         void OnRB(InputAction.CallbackContext context);
         void OnRT(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnParry(InputAction.CallbackContext context);
     }
     public interface IPlayerQuickSlotActions
     {
