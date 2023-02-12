@@ -18,7 +18,7 @@ namespace DP{
 
                 #region Rotation
                 Vector3 direction = enemyLocomotion.currentTarget.transform.position - enemyManger.transform.position;
-                // direction.y = 0;
+                direction.y = 0;
                 direction.Normalize();
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 enemyManger.transform.rotation = Quaternion.Slerp(enemyManger.transform.rotation,targetRotation,enemyLocomotion.RotationSpeed/Time.deltaTime);
