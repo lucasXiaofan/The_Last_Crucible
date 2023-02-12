@@ -69,7 +69,7 @@ namespace DP
             }
 
             //Handle movement
-            enemyLocomotion.distanceFromtarget = Vector3.Distance(transform.position, currentPatrolLocation.transform.position);
+            // float distanceFromPatrolPoint = Vector3.Distance(transform.position, currentPatrolLocation.transform.position);
             Vector3 targetDirection = currentPatrolLocation.transform.position - transform.position;
             float viewAbleAngle = Vector3.Angle(targetDirection, transform.forward);
             if (enemyManger.isPreformingAction)
@@ -79,17 +79,10 @@ namespace DP
             }
             else
             {
-                if (enemyLocomotion.distanceFromtarget > enemyLocomotion.detectionDistance)
-                {
-                    enemyLocomotion.navMeshAgent.enabled = true;
-                    enemyAnimator.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
-                    enemyLocomotion.navMeshAgent.SetDestination(currentPatrolLocation.transform.position);
-                    enemyLocomotion.enemyRigidbody.velocity = enemyLocomotion.navMeshAgent.velocity;
-                }
-                // else
-                // {
-                //     enemyAnimator.anim.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
-                // }
+                enemyLocomotion.navMeshAgent.enabled = true;
+                enemyAnimator.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
+                enemyLocomotion.navMeshAgent.SetDestination(currentPatrolLocation.transform.position);
+                enemyLocomotion.enemyRigidbody.velocity = enemyLocomotion.navMeshAgent.velocity;
             }
             HandleRotationTowardsPatrolLocation(enemyManger,enemyLocomotion);
         }
