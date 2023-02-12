@@ -26,9 +26,9 @@ namespace DP
         private void Start()
         {
             rightWeapon = unarmedWeapon;
-            leftWeapon = unarmedWeapon;
+            //leftWeapon = unarmedWeapon;
             weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, false);
-            weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, true);
+            //weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, true);
 
         }
         public void ChangeRightWeaponInSlot()
