@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace DP
 {
-    public class DP_WeaponPickUp : DP_PickItem
+    public class DP_ItemPickUp : DP_PickItem
     {
         public DP_WeaponItem weapon;
+        public DP_PickUpObjects objects;
         public override void Interact(DP_PlayerManager playerManager)
         {
             base.Interact(playerManager);
@@ -22,12 +23,23 @@ namespace DP
             animationHandler = playerManager.GetComponentInChildren<DP_animationHandler>();
             inventory = playerManager.GetComponent<DP_PlayerInventory>();
 
+
+            if (weapon != null)
+            {
+                playerManager.textUI.itemText.text = weapon.itemName;
+                playerManager.textUI.itemIcon.sprite = weapon.itemIcon;
+                inventory.weaponInventory.Add(weapon);
+            }
+            else if (objects != null)
+            {
+                playerManager.textUI.itemText.text = objects.itemName;
+                playerManager.textUI.itemIcon.sprite = objects.itemIcon;
+                inventory.objectsInventory.Add(objects);
+            }
+
             playerManager.itemTextObject.SetActive(true);
-            playerManager.textUI.itemText.text = weapon.itemName;
-            playerManager.textUI.itemIcon.sprite = weapon.itemIcon;
             playerLomotion.playerRigidBody.velocity = Vector3.zero;
             animationHandler.ApplyTargetAnimation("pickUp", true, false);
-            inventory.weaponInventory.Add(weapon);
             Destroy(gameObject);
 
         }

@@ -36,9 +36,17 @@ namespace DP
             maxStamina = staminaLevel * 10;
             return maxStamina;
         }
+        public bool PlayerIsDead()
+        {
+            return currentHealth <= 0;
+        }
 
         public void TakeDamage(int damage)
         {
+            if (PlayerIsDead())
+            {
+                return;
+            }
             currentHealth = currentHealth - damage;
             playerHealthBar.SetHeathBarValue(currentHealth);
             animationHandler.ApplyTargetAnimation("playerHitReaction", true, false);
@@ -50,7 +58,7 @@ namespace DP
         public void TakeStaminaDamage(int damage)
         {
             currentStamina -= damage;
-//            StaminaBar.SetHeathBarValue(currentStamina);
+            //            StaminaBar.SetHeathBarValue(currentStamina);
         }
     }
 }

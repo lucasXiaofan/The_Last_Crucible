@@ -19,12 +19,12 @@ namespace DP
             enemyLocomotion.enemyRigidbody.drag = 0;
             Vector3 deltaPosition = anim.deltaPosition;
             deltaPosition.y = 0;
-            // Vector3 velocity = deltaPosition / delta;
-            // enemyLocomotion.enemyRigidbody.velocity = velocity * 10;
+            Vector3 velocity = deltaPosition / delta;
+            enemyLocomotion.enemyRigidbody.velocity = velocity * 10;
         }
         public void exitParryAnimation()
         {
-            anim.SetBool("existParry",true);
+            anim.SetBool("existParry", true);
         }
 
         // Update is called once per frame

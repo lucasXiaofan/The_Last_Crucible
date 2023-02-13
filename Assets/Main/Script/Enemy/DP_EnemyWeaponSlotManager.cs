@@ -2,65 +2,66 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DP{
+namespace DP
+{
     public class DP_EnemyWeaponSlotManager : MonoBehaviour
     {
-        
+
         DP_WeaponSlot rightHandSlot;
         DP_DamageCollider rightHandCollider;
         public DP_WeaponItem rightHandWeapon;
         void Awake()
-       {
+        {
             DP_WeaponSlot[] weaponSlots = GetComponentsInChildren<DP_WeaponSlot>();
-            foreach(DP_WeaponSlot weaponSlot in weaponSlots)
+            foreach (DP_WeaponSlot weaponSlot in weaponSlots)
             {
-                if(weaponSlot.RightSlot)
+                if (weaponSlot.RightSlot)
                 {
                     rightHandSlot = weaponSlot;
                 }
             }
 
-       }
+        }
         void Start()
         {
-            if (rightHandWeapon!= null)
+            if (rightHandWeapon != null)
             {
                 LoadWeaponOnSlot(rightHandWeapon);
             }
         }
         public void LoadWeaponOnSlot(DP_WeaponItem weaponItem)
         {
-                rightHandSlot.UploadWeapon(weaponItem);
-                LoadWeaponsDamageCollider();
+            rightHandSlot.UploadWeapon(weaponItem);
+            LoadWeaponsDamageCollider();
         }
 
         public void LoadWeaponsDamageCollider()
         {
-                rightHandCollider = rightHandSlot.currentWeapon.GetComponentInChildren<DP_DamageCollider>();
-                if(rightHandCollider!=null)
-                {
-                    disableCollider();
-                }
-                
-                print(rightHandSlot.currentWeapon);
+            rightHandCollider = rightHandSlot.currentWeapon.GetComponentInChildren<DP_DamageCollider>();
+            if (rightHandCollider != null)
+            {
+                disableCollider();
+            }
+
+            //print(rightHandSlot.currentWeapon);
         }
 
         public void openCollider()
         {
-            if(rightHandCollider != null)
+            if (rightHandCollider != null)
             {
                 rightHandCollider.EnableDamage();
             }
-            
+
         }
         public void disableCollider()
         {
-            if(rightHandCollider!=null)
+            if (rightHandCollider != null)
             {
                 rightHandCollider.DisableDamage();
             }
-            
+
         }
-        
+
     }
 }
