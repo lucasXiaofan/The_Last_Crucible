@@ -5,17 +5,20 @@ namespace DP
 {
     public class DP_playerLomotion : MonoBehaviour
     {
+        DP_animationHandler animationHandler;
+        DP_PlayerManager playerManager;
+        DP_CameraControl cameraControl;
+        DP_PlayerStats playerStats;
+        DP_inputHandler inputHandler;
+
         public Transform cameraPos;
         public Transform playerTransform;
-        DP_inputHandler inputHandler;
         Vector3 targetDirection;
         public Vector3 MoveDirection;
         Vector3 normalVector;
         public Rigidbody playerRigidBody;
         public CapsuleCollider playerCollider;
-        DP_animationHandler animationHandler;
-        DP_PlayerManager playerManager;
-        DP_CameraControl cameraControl;
+
         public float moveSpeed = 5f;
         float rotatingSpeed = 5f;
         public float sprintSpeed = 10f;
@@ -23,7 +26,7 @@ namespace DP
         [Header("Handle Falling")]
         [SerializeField]
         float minimumDistanceToFall = 1f;
-        
+
         float groundMinDistance = 0.7f;
         [SerializeField]
         LayerMask ignoreLayer;
@@ -37,6 +40,7 @@ namespace DP
         {
             cameraPos = Camera.main.transform;
             playerTransform = transform;
+            playerStats = GetComponent<DP_PlayerStats>();
             playerManager = GetComponent<DP_PlayerManager>();
             playerRigidBody = GetComponent<Rigidbody>();
             playerCollider = GetComponent<CapsuleCollider>();
@@ -235,7 +239,13 @@ namespace DP
             }
             else
             {
-                if (playerManager.isInteracting == false && !playerManager.isJumping && fallingTimer > 0.3f)
+                if (fallingTimer > 4.5f)
+                {
+                    playerStats.TakeDamage(500);
+                }
+                else if (playerManager.isInteracting == false
+                && !playerManager.isJumping
+                && fallingTimer > 1f)
                 {
                     animationHandler.ApplyTargetAnimation("fall", true, false);
                 }

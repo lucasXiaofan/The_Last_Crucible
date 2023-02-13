@@ -9,7 +9,7 @@ namespace DP
         public DP_PlayerHealthBar playerHealthBar;
         DP_EnemyAnimator enemyAnimator;
         DP_EnemyManger enemyManger;
-        
+
 
         void Start()
         {
@@ -25,28 +25,33 @@ namespace DP
             return maximumHealth;
         }
 
+
         public void TakeDamage(int damage, bool normal)
         {
+            if (enemyManger.isDead)
+            {
+                return;
+            }
             currentHealth = currentHealth - damage;
             playerHealthBar.SetHeathBarValue(currentHealth);
-            if(normal)
+            if (normal)
             {
-                enemyAnimator.ApplyTargetAnimation("getHit",true,false);
+                enemyAnimator.ApplyTargetAnimation("getHit", true, false);
                 if (currentHealth <= 0)
                 {
-                    enemyManger.isDead =true;
+                    enemyManger.isDead = true;
                     print("enemy is dead!");
-                    enemyAnimator.ApplyTargetAnimation("dead",true,false);
-                    
+                    enemyAnimator.ApplyTargetAnimation("dead", true, false);
+
 
                 }
             }
             if (currentHealth <= 0)
-                {
-                    enemyManger.isDead =true;
-                }
-            
-            
+            {
+                enemyManger.isDead = true;
+            }
+
+
         }
 
     }
