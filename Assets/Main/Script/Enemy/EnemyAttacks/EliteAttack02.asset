@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49a6c999b9d4c2d44aaf1fee2a6a2838, type: 3}
-  m_Name: Attack03
+  m_Name: EliteAttack02
   m_EditorClassIdentifier: 
-  actionAnimation: Melee_Enemey_Attack_Thrust
+  actionAnimation: Elite_Enemey_Attack_02
   score: 3
-  recoveryTime: 3
-  maxAttackAngle: 35
-  minAttackAngle: -35
+  recoveryTime: 2
+  maxAttackAngle: 50
+  minAttackAngle: -50
   minDistanceNeededToAttack: 0
-  maxDistanceNeededToAttack: 4
+  maxDistanceNeededToAttack: 3

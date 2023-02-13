@@ -303,6 +303,9 @@ MonoBehaviour:
   canDoAirAttack: 0
   CriticalStabPoint: {fileID: 1908576295}
   isParrying: 0
+  ItemPickLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &5857331303842888204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,6 +324,7 @@ MonoBehaviour:
   rightHandSlots:
   - {fileID: 11400000, guid: ebe67d50a26ec3f4aab65725a55f08d8, type: 2}
   leftHandSlots: []
+  objectsInventory: []
   weaponInventory: []
 --- !u!114 &5857331303842888205
 MonoBehaviour:

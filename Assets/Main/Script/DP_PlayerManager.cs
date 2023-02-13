@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 namespace DP
 {
     public class DP_PlayerManager : DP_Character
@@ -9,7 +10,10 @@ namespace DP
         DP_playerLomotion playerLomotion;
         DP_CameraControl cameraControl;
         DP_animationHandler animationHandler;
+        DP_PlayerInventory playerInventory;
+        DP_PlayerStats playerStats;
         Animator animator;
+        [Header("Player UI")]
         public DP_AlertTextUI textUI;
         public GameObject alertTextObject;
         public GameObject itemTextObject;
@@ -27,20 +31,37 @@ namespace DP
         public Transform CriticalStabPoint;
         public bool isParrying = false;
 
+        [Header("Player Inventory")]
+        LayerMask ItemPickLayer;
+
+        [Header("Player Interact")]
+        string interactString;
+        public GameObject door;
+        bool interacted = false;
+
+        [Header("SceneManagement")]
+        int sceneIndex;
+
         private void Awake()
         {
+            sceneIndex = SceneManager.GetActiveScene().buildIndex;
             cameraControl = FindObjectOfType<DP_CameraControl>();
+            ItemPickLayer = (1 << 8 | 1 << 17);
             isGrounded = true;
         }
 
         void Start()
         {
+            playerStats = GetComponent<DP_PlayerStats>();
             playerLomotion = GetComponent<DP_playerLomotion>();
-            // textUI = FindObjectOfType<DP_AlertTextUI>();
             animationHandler = GetComponent<DP_animationHandler>();
             inputHandler = GetComponent<DP_inputHandler>();
             animator = GetComponentInChildren<Animator>();
-            // itemTextObject.SetActive(false);
+            playerInventory = GetComponent<DP_PlayerInventory>();
+
+            // UI 
+            itemTextObject.SetActive(false);
+            textUI = FindObjectOfType<DP_AlertTextUI>();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -48,6 +69,11 @@ namespace DP
         // Update is called once per frame
         void Update()
         {
+            if (playerStats.PlayerIsDead())
+            {
+                SceneManager.LoadScene(sceneIndex);
+                return;
+            }
             float delta = Time.deltaTime;
             canDoAirAttack = animator.GetBool("canDoAirAttack");
             canDoCombo = animator.GetBool("canDoCombo");
@@ -60,11 +86,15 @@ namespace DP
             CheckForInteractableObject();
             playerLomotion.HandlePlayerJump(inputHandler.jump_input);
 
-            
+
             // If escape key, Cursor.visible = true; CursorLockMode off
         }
         private void FixedUpdate()
         {
+            // if (playerStats.PlayerIsDead())
+            // {
+            //     return;
+            // }
             float delta = Time.deltaTime;
             playerLomotion.PlayerisGrounded();
             playerLomotion.HandleMovement(delta);
@@ -73,6 +103,10 @@ namespace DP
 
         private void LateUpdate()
         {
+            // if (playerStats.PlayerIsDead())
+            // {
+            //     return;
+            // }
             float delta = Time.deltaTime;
 
             inputHandler.rollFlag = false;
@@ -104,30 +138,59 @@ namespace DP
         }
         public void CheckForInteractableObject()
         {
-            RaycastHit hit;
-
-            if (Physics.SphereCast(transform.position, 0.4f, transform.forward, out hit, 1f, cameraControl.ignoreLayers))
+            //RaycastHit hit;
+            Collider[] items = Physics.OverlapSphere(transform.position, 0.3f, ItemPickLayer);
+            //if (Physics.SphereCast(transform.position, 2f, transform.forward, out hit, 0.1f, ItemPickLayer))
+            if (items.Length != 0)
             {
+                itemTextObject.SetActive(false);
 
-                if (hit.collider.tag == "pickUpItem")
+                if (items[0].tag == "pickUpItem")
                 {
 
-                    DP_PickItem pickItem = hit.collider.GetComponent<DP_PickItem>();
+                    DP_PickItem pickItem = items[0].GetComponent<DP_PickItem>();
                     if (pickItem != null)
                     {
-
-                        string interactString = pickItem.ItemName;
-//                        textUI.interactableText.text = interactString;
-//                        alertTextObject.SetActive(true);
+                        interactString = pickItem.ItemName;
+                        textUI.interactableText.text = interactString;
+                        alertTextObject.SetActive(true);
                         if (inputHandler.a_input)
                         {
-
-                            hit.collider.GetComponent<DP_PickItem>().Interact(this);
+                            items[0].GetComponent<DP_PickItem>().Interact(this);
                         }
                     }
                 }
-            }
+                else if (items[0].tag == "Trigger")
+                {
+                    DP_DoorOpener doorOpener = items[0].GetComponent<DP_DoorOpener>();
+                    if (doorOpener != null)
+                    {
+                        if (playerInventory.CheckHasKey())
+                        {
+                            interactString = doorOpener.SuccessMessage;
+                        }
+                        else
+                        {
+                            interactString = doorOpener.FailMessage;
+                        }
 
+                        if (inputHandler.a_input)
+                        {
+                            if (playerInventory.CheckHasKey())
+                            {
+                                // play animation open door
+                                // delete below later
+                                if (door != null)
+                                {
+                                    door.SetActive(false);
+                                }
+                            }
+                        }
+                    }
+                    textUI.interactableText.text = interactString;
+                    alertTextObject.SetActive(true);
+                }
+            }
             else
             {
                 if (alertTextObject != null)
@@ -141,7 +204,6 @@ namespace DP
             }
             inputHandler.a_input = false;
         }
-
-
     }
 }
+

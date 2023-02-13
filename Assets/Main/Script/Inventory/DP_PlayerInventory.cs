@@ -6,6 +6,7 @@ namespace DP
     public class DP_PlayerInventory : MonoBehaviour
     {
         DP_WeaponSlotManager weaponSlotManager;
+        DP_inputHandler inputHandler;
         public DP_WeaponItem leftWeapon;
         public DP_WeaponItem rightWeapon;
         public DP_WeaponItem unarmedWeapon;
@@ -13,6 +14,7 @@ namespace DP
         public DP_WeaponItem[] rightHandSlots = new DP_WeaponItem[1];
         public DP_WeaponItem[] leftHandSlots = new DP_WeaponItem[1];
 
+        public List<DP_PickUpObjects> objectsInventory;
         public List<DP_WeaponItem> weaponInventory;
 
         private int currentLeftWeaponIndex = -1;
@@ -21,6 +23,7 @@ namespace DP
 
         private void Awake()
         {
+            inputHandler = GetComponent<DP_inputHandler>();
             weaponSlotManager = GetComponentInChildren<DP_WeaponSlotManager>();
         }
         private void Start()
@@ -30,6 +33,21 @@ namespace DP
             weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, false);
             //weaponSlotManager.LoadWeaponOnSlot(unarmedWeapon, true);
 
+        }
+
+        public bool CheckHasKey()
+        {
+            for (int i = 0; i < objectsInventory.Count; i++)
+            {
+                if (objectsInventory[i].isKey)
+                {
+                    print("Player has the key now!");
+                    //objectsInventory.remove remove key;
+                    return true;
+                }
+            }
+            print("Player doesn't have the key");
+            return false;
         }
         public void ChangeRightWeaponInSlot()
         {

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49a6c999b9d4c2d44aaf1fee2a6a2838, type: 3}
-  m_Name: Attack01
+  m_Name: MeleeAttack04
   m_EditorClassIdentifier: 
-  actionAnimation: Melee_Enemey_Attack_01
+  actionAnimation: Melee_a_02
   score: 3
   recoveryTime: 2
   maxAttackAngle: 35

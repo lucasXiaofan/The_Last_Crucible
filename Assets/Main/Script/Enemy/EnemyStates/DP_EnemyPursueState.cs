@@ -18,7 +18,8 @@ namespace DP
             {
                 return enemyAttackState;
             }
-            else if (enemyLocomotion.distanceFromtarget >= enemyLocomotion.detectionDistance)
+            else if (enemyLocomotion.distanceFromtarget >= enemyLocomotion.detectionDistance
+                    && enemyPatrolState != null)
             {
                 return enemyPatrolState;
             }
@@ -26,7 +27,7 @@ namespace DP
             enemyLocomotion.HandleMovement();
             return this;
         }
-        
+
     }
 
 }
