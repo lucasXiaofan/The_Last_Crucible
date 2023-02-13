@@ -41,7 +41,7 @@ namespace DP
             {
                 if (objectsInventory[i].isKey)
                 {
-                    print("Player has the key now!");
+                    
                     //objectsInventory.remove remove key;
                     return true;
                 }

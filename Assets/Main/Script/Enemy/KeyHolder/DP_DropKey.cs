@@ -22,8 +22,11 @@ namespace DP
 
             if (enemyManger.isDead)
             {
-
-                item.SetActive(true);
+                if(item!= null)
+                {
+                    item.SetActive(true);
+                }
+                
             }
         }
     }

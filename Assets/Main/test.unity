@@ -464,6 +464,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1269788869044564431, guid: 83117412d3f3a11408b5a13b71740937,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 2142653671}
     - target: {fileID: 1269788869107206337, guid: 83117412d3f3a11408b5a13b71740937,
         type: 3}
       propertyPath: m_IsActive
@@ -2204,6 +2209,18 @@ CapsuleCollider:
     type: 3}
   m_PrefabInstance: {fileID: 5857331305412490990}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2142653671 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5857331303842888204, guid: 78ae4f29056fbf04f8053c128421cc93,
+    type: 3}
+  m_PrefabInstance: {fileID: 5857331305412490990}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4378b82a8caa241ad3b2af77491370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &98203624337271608
 PrefabInstance:
   m_ObjectHideFlags: 0
