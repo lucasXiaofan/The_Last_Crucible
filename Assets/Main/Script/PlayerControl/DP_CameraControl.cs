@@ -35,11 +35,11 @@ namespace DP
 
         //for lock on 
         float maximumTargetDistance = 30f;
-        List<DP_Character> availableTarget = new List<DP_Character>();
-        public DP_Character nearestLockTransform;
-        public DP_Character currentLockOnTransform;
-        public DP_Character leftLockOnTarget;
-        public DP_Character rightLockOnTarget;
+        List<DP_EnemyManger> availableTarget = new List<DP_EnemyManger>();
+        public DP_EnemyManger nearestLockTransform;
+        public DP_EnemyManger currentLockOnTransform;
+        public DP_EnemyManger leftLockOnTarget;
+        public DP_EnemyManger rightLockOnTarget;
         DP_inputHandler inputHandler;
 
         private void Awake()
@@ -79,7 +79,7 @@ namespace DP
             }
             else
             {
-
+                
                 Vector3 dir = currentLockOnTransform.LockOnTransform.position - cameraTransform.position;
                 dir.Normalize();
                 dir.y = 0;
@@ -135,8 +135,8 @@ namespace DP
             Collider[] characters = Physics.OverlapSphere(targetTransform.position, maximumTargetDistance - 5);
             for (int i = 0; i < characters.Length; i++)
             {
-                DP_Character character = characters[i].GetComponent<DP_Character>();
-                if (character != null)
+                DP_EnemyManger character = characters[i].GetComponent<DP_EnemyManger>();
+                if (character != null && !character.isDead)
                 {
                     Vector3 LockOnDirection = character.transform.position - targetTransform.position;
                     float distanceFromTarget = Vector3.Distance(character.transform.position, targetTransform.position);

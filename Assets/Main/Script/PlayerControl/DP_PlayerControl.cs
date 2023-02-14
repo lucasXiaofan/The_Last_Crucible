@@ -373,6 +373,15 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tutorial"",
+                    ""type"": ""Button"",
+                    ""id"": ""d809b117-3001-4e91-9f08-2547331f67ee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -507,6 +516,17 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                     ""action"": ""OpenMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0004fa4c-4728-4c32-9c15-0dd39c4188c1"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tutorial"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -535,6 +555,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         m_PlayerQuickSlot_DPadRight = m_PlayerQuickSlot.FindAction("D Pad Right", throwIfNotFound: true);
         m_PlayerQuickSlot_PickUp = m_PlayerQuickSlot.FindAction("Pick Up", throwIfNotFound: true);
         m_PlayerQuickSlot_OpenMenu = m_PlayerQuickSlot.FindAction("OpenMenu", throwIfNotFound: true);
+        m_PlayerQuickSlot_Tutorial = m_PlayerQuickSlot.FindAction("Tutorial", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -730,6 +751,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerQuickSlot_DPadRight;
     private readonly InputAction m_PlayerQuickSlot_PickUp;
     private readonly InputAction m_PlayerQuickSlot_OpenMenu;
+    private readonly InputAction m_PlayerQuickSlot_Tutorial;
     public struct PlayerQuickSlotActions
     {
         private @DP_PlayerControl m_Wrapper;
@@ -740,6 +762,7 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         public InputAction @DPadRight => m_Wrapper.m_PlayerQuickSlot_DPadRight;
         public InputAction @PickUp => m_Wrapper.m_PlayerQuickSlot_PickUp;
         public InputAction @OpenMenu => m_Wrapper.m_PlayerQuickSlot_OpenMenu;
+        public InputAction @Tutorial => m_Wrapper.m_PlayerQuickSlot_Tutorial;
         public InputActionMap Get() { return m_Wrapper.m_PlayerQuickSlot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -767,6 +790,9 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                 @OpenMenu.started -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnOpenMenu;
                 @OpenMenu.performed -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnOpenMenu;
                 @OpenMenu.canceled -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnOpenMenu;
+                @Tutorial.started -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnTutorial;
+                @Tutorial.performed -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnTutorial;
+                @Tutorial.canceled -= m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface.OnTutorial;
             }
             m_Wrapper.m_PlayerQuickSlotActionsCallbackInterface = instance;
             if (instance != null)
@@ -789,6 +815,9 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
                 @OpenMenu.started += instance.OnOpenMenu;
                 @OpenMenu.performed += instance.OnOpenMenu;
                 @OpenMenu.canceled += instance.OnOpenMenu;
+                @Tutorial.started += instance.OnTutorial;
+                @Tutorial.performed += instance.OnTutorial;
+                @Tutorial.canceled += instance.OnTutorial;
             }
         }
     }
@@ -817,5 +846,6 @@ public partial class @DP_PlayerControl : IInputActionCollection2, IDisposable
         void OnDPadRight(InputAction.CallbackContext context);
         void OnPickUp(InputAction.CallbackContext context);
         void OnOpenMenu(InputAction.CallbackContext context);
+        void OnTutorial(InputAction.CallbackContext context);
     }
 }

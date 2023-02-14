@@ -1,20 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 namespace DP
 {
     public class DP_HealthBarLookAtPlayer : MonoBehaviour
     {
-        Transform cameraPOV;
+        
+        DP_CameraControl cameraControl;
         void Start()
         {
-            cameraPOV = FindObjectOfType<DP_CameraControl>().transform;
+            
+            cameraControl = FindObjectOfType<DP_CameraControl>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            transform.LookAt(transform.position - cameraPOV.transform.position);
+            Vector3 direction = cameraControl.cameraTransform.position - transform.position;
+            direction.y = 0;
+            direction.Normalize();
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,30f/Time.deltaTime);
+            
         }
     }
 }
