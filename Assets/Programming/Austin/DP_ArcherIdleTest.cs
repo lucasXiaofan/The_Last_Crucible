@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Modified idle to switch to my chase state.
+
 namespace DP
 {
     public class DP_ArcherIdleTest : DP_State
