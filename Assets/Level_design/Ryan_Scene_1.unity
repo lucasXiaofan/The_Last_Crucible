@@ -40004,7 +40004,7 @@ PrefabInstance:
         type: 3}
       propertyPath: unarmedWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 00c88c3af82b69a45aebcf54b9dda126,
+      objectReference: {fileID: 11400000, guid: ebe67d50a26ec3f4aab65725a55f08d8,
         type: 2}
     - target: {fileID: 5857331303842888204, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
@@ -40014,7 +40014,7 @@ PrefabInstance:
     - target: {fileID: 5857331303842888204, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
       propertyPath: rightHandSlots.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5857331303842888204, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
