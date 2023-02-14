@@ -530,6 +530,7 @@ MonoBehaviour:
   BackStabPoint: {fileID: 2138444515}
   isDead: 0
   body: {fileID: 0}
+  LockonIcon: {fileID: 798666916548256787}
 --- !u!114 &3782196578562213184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,6 +856,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ac6b46abe88dc849b543eca08471778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &798666916548256787 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4569008387029125526, guid: 427b0d896a2a3b04e98e20076504f74a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3782196577793338757}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1066870364962948880 stripped
