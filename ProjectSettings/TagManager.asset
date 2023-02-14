@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - pickUpItem
+  - Trigger
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Character
   - Character Layer Blocker
   - BackStabLayer
-  - 
+  - Trigger
   - 
   - 
   - 

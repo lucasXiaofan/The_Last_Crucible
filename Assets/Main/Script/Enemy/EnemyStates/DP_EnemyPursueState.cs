@@ -7,6 +7,8 @@ namespace DP
     public class DP_EnemyPursueState : DP_State
     {
         public DP_EnemyAttackState enemyAttackState;
+        public DP_EnemyPatrolState enemyPatrolState;
+
         public override DP_State Tick(DP_EnemyManger enemyManger,
                                     DP_EnemyStats enemyStats,
                                     DP_EnemyAnimator enemyAnimator,
@@ -16,9 +18,16 @@ namespace DP
             {
                 return enemyAttackState;
             }
+            else if (enemyLocomotion.distanceFromtarget >= enemyLocomotion.detectionDistance
+                    && enemyPatrolState != null)
+            {
+                return enemyPatrolState;
+            }
+
             enemyLocomotion.HandleMovement();
             return this;
         }
+
     }
 
 }
