@@ -34,13 +34,17 @@ namespace DP
         public bool lock_left_input;
         public bool lock_right_input;
         public bool parry_input;
-
+       
         public bool rollFlag;
         public bool sprintFlag;
         public bool comboFlag;
         public bool menuFlag;
         public bool lockOnFlag;
         float holdCounter;
+
+        [Header("UI input")]
+        public bool tab_input;
+        private bool isUIOpen = true;
 
         //stamina bar
         public DP_PlayerHealthBar StaminaStatus;
@@ -78,6 +82,7 @@ namespace DP
                 inputActions.PlayerMovement.LockOnLeft.performed += i => lock_left_input = true;
                 inputActions.PlayerMovement.LockOnRight.performed += i => lock_right_input = true;
                 inputActions.PlayerAction.Parry.performed += i => parry_input= true;
+                inputActions.PlayerQuickSlot.Tutorial.performed +=i=> tab_input = true;
 
             }
             inputActions.Enable();
@@ -97,6 +102,7 @@ namespace DP
             HandleLockOnInput();
             HandleJumpInput();
             HandleParry();
+            HandleTutorial();
         }
         private void HandleParry()
         {
@@ -220,6 +226,15 @@ namespace DP
         }
         private void HandleLockOnInput()
         {
+            if(cameraControl.nearestLockTransform!= null && cameraControl.nearestLockTransform.isDead)
+            {
+                cameraControl.currentLockOnTransform.LockonIcon.enabled =false;
+                cameraControl.currentLockOnTransform = null;
+                
+                cameraControl.ClearLockOn();
+                lockOnFlag = false;
+                return;
+            }
 
             if (lock_on_input && lockOnFlag == false)
             {
@@ -229,7 +244,9 @@ namespace DP
                 cameraControl.HandleLockOn();
                 if (cameraControl.nearestLockTransform != null)
                 {
+                    
                     cameraControl.currentLockOnTransform = cameraControl.nearestLockTransform;
+                    cameraControl.currentLockOnTransform.LockonIcon.enabled =true;
                     lockOnFlag = true;
                 }
             }
@@ -238,6 +255,10 @@ namespace DP
 
                 lock_on_input = false;
                 lockOnFlag = false;
+                if(cameraControl.currentLockOnTransform!=null)
+                {
+                    cameraControl.currentLockOnTransform.LockonIcon.enabled =false;
+                }   
                 cameraControl.ClearLockOn();
             }
             if (lockOnFlag && lock_left_input)
@@ -247,7 +268,12 @@ namespace DP
                 cameraControl.HandleLockOn();
                 if (cameraControl.leftLockOnTarget != null)
                 {
+                    if(cameraControl.currentLockOnTransform!=null)
+                    {
+                        cameraControl.currentLockOnTransform.LockonIcon.enabled =false;
+                    }   
                     cameraControl.currentLockOnTransform = cameraControl.leftLockOnTarget;
+                    cameraControl.currentLockOnTransform.LockonIcon.enabled =true;
                 }
             }
             if (lockOnFlag && lock_right_input)
@@ -257,7 +283,12 @@ namespace DP
                 cameraControl.HandleLockOn();
                 if (cameraControl.rightLockOnTarget != null)
                 {
+                    if(cameraControl.currentLockOnTransform!=null)
+                    {
+                        cameraControl.currentLockOnTransform.LockonIcon.enabled =false;
+                    }   
                     cameraControl.currentLockOnTransform = cameraControl.rightLockOnTarget;
+                    cameraControl.currentLockOnTransform.LockonIcon.enabled =true;
                 }
             }
         }
@@ -266,6 +297,23 @@ namespace DP
         {
             inputActions.PlayerAction.Jump.performed += i => jump_input = true;
         }
+        public void HandleTutorial()
+        {
+            if(tab_input)
+            {
+                if(!isUIOpen)
+                {
+                    playerManager.tutorial.SetActive(true);
+                }
+                else
+                {
+                    playerManager.tutorial.SetActive(false);
+                }
+                isUIOpen = !isUIOpen;
+
+            } 
+        }
+        
     }
 
 

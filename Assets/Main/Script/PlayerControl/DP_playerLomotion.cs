@@ -233,7 +233,7 @@ namespace DP
                 RaycastHit hit;
                 Physics.SphereCast(castOrigin, 0.25f, Vector3.down, out hit, ground);
                 targetPositon.y = hit.point.y;
-                transform.position = Vector3.Lerp(transform.position, targetPositon, Time.deltaTime / 0.15f);
+                transform.position = Vector3.Lerp(transform.position, targetPositon, Time.deltaTime / 0.1f);
                 HandleRollingAndSprint(Time.deltaTime);
 
             }
@@ -245,7 +245,7 @@ namespace DP
                 }
                 else if (playerManager.isInteracting == false
                 && !playerManager.isJumping
-                && fallingTimer > 1f)
+                && fallingTimer > 0.5f)
                 {
                     animationHandler.ApplyTargetAnimation("fall", true, false);
                 }

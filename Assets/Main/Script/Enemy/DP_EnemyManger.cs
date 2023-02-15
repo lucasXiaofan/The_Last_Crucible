@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DP
 {
@@ -26,6 +27,8 @@ namespace DP
         public Transform BackStabPoint;
         public bool isDead;
         public CapsuleCollider body;
+        public Image LockonIcon;
+        
 
 
         private void Awake()
@@ -34,25 +37,33 @@ namespace DP
             enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
             enemyStats = GetComponent<DP_EnemyStats>();
             body = GetComponent<CapsuleCollider>();
+            
+            LockonIcon.enabled =false;
 
 
         }
         private void Update()
         {
+            enemyAnimator.anim.SetBool("isDead",isDead);
             if (isDead)
             {
                 body.isTrigger = true;
                 BackStabCollider.gameObject.SetActive(false);
                 return;
             }
-
+            
             isPreformingAction = enemyAnimator.anim.GetBool("isInteracting");
             HandleRoveryTimer();
         }
 
         private void FixedUpdate()
         {
-            if (isDead) return;
+            if (isDead) 
+            {
+                enemyLocomotion.navMeshAgent.enabled = false;
+                LockonIcon.enabled =false;
+                return;
+            }
             // make sure the distance is always updated
             if (!(enemyLocomotion.currentTarget == null))
             {
@@ -148,6 +159,7 @@ namespace DP
                 }
             }
         }
+        
 
 
         #endregion

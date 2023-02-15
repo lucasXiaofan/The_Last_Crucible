@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 399406081}
   m_Layer: 14
   m_Name: CharacterBlocker
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 918791386}
   m_Layer: 14
   m_Name: CombatCollider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 1908576295}
   m_Layer: 14
   m_Name: StabPoint
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -261,6 +261,7 @@ MonoBehaviour:
   comboFlag: 0
   menuFlag: 0
   lockOnFlag: 0
+  tab_input: 0
   StaminaStatus: {fileID: 0}
 --- !u!54 &5857331303842888241
 Rigidbody:
@@ -294,6 +295,7 @@ MonoBehaviour:
   textUI: {fileID: 0}
   alertTextObject: {fileID: 0}
   itemTextObject: {fileID: 0}
+  tutorial: {fileID: 0}
   isInteracting: 0
   isJumping: 0
   isSprinting: 0
@@ -303,9 +305,7 @@ MonoBehaviour:
   canDoAirAttack: 0
   CriticalStabPoint: {fileID: 1908576295}
   isParrying: 0
-  ItemPickLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  door: {fileID: 0}
 --- !u!114 &5857331303842888204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,9 +320,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftWeapon: {fileID: 11400000, guid: c54d463befa191044ad1c881e5ca4770, type: 2}
   rightWeapon: {fileID: 11400000, guid: c54d463befa191044ad1c881e5ca4770, type: 2}
-  unarmedWeapon: {fileID: 11400000, guid: 00c88c3af82b69a45aebcf54b9dda126, type: 2}
-  rightHandSlots:
-  - {fileID: 11400000, guid: ebe67d50a26ec3f4aab65725a55f08d8, type: 2}
+  unarmedWeapon: {fileID: 11400000, guid: ebe67d50a26ec3f4aab65725a55f08d8, type: 2}
+  rightHandSlots: []
   leftHandSlots: []
   objectsInventory: []
   weaponInventory: []
@@ -373,7 +372,7 @@ GameObject:
   - component: {fileID: 5857331304445991877}
   m_Layer: 14
   m_Name: LockOnTarget
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -626,6 +625,10 @@ PrefabInstance:
     - target: {fileID: 162860, guid: 880858dfd9b1e784e89d45242bf78d2b, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 162860, guid: 880858dfd9b1e784e89d45242bf78d2b, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 165894, guid: 880858dfd9b1e784e89d45242bf78d2b, type: 3}
       propertyPath: m_Layer
