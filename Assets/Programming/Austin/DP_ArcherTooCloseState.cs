@@ -12,7 +12,8 @@ namespace DP
         private Vector3 newDirection = Vector3.zero; // Last known direction of player.
         public override DP_State Tick(DP_EnemyManger enemyManger, DP_EnemyStats enemyStats, DP_EnemyAnimator enemyAnimator, DP_EnemyLocomotion enemyLocomotion)
         {
-            if (isRunning) {
+            if (isRunning)
+            {
                 // Should never happen.
                 if (enemyLocomotion.currentTarget == null)
                 {
@@ -30,23 +31,28 @@ namespace DP
                 else
                 {
                     enemyAnimator.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
+                    enemyAnimator.anim.SetFloat("Archer", 0, 0.1f, Time.deltaTime);
                     enemyLocomotion.navMeshAgent.enabled = true;
                     Vector3 fleeDirection = (enemyLocomotion.currentTarget.transform.position - this.transform.position).normalized;
                     enemyLocomotion.navMeshAgent.SetDestination(this.transform.position - (fleeDirection * (2 * enemyLocomotion.stoppingDistance) / 3)); // Move 2/3 the stopping distance away.
                 }
-            } else {
+            }
+            else
+            {
                 // Begin transitioning to still state.
                 enemyAnimator.anim.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
                 enemyLocomotion.HandleDetection();
 
                 // If we found a target while turning around, switch to chase. Still trying to make smoother.
-                if (enemyLocomotion.currentTarget != null && enemyAnimator.anim.GetFloat("Vertical") < 0.1f) {
+                if (enemyLocomotion.currentTarget != null && enemyAnimator.anim.GetFloat("Vertical") < 0.1f)
+                {
                     enemyAnimator.anim.SetFloat("Vertical", 0);
                     isRunning = true;
                     return chaseState;
                 }
                 // If we've turned around fully, switch to idle.
-                if (enemyLocomotion.transform.rotation == Quaternion.LookRotation(newDirection) && enemyAnimator.anim.GetFloat("Vertical") < 0.1f) {
+                if (enemyLocomotion.transform.rotation == Quaternion.LookRotation(newDirection) && enemyAnimator.anim.GetFloat("Vertical") < 0.1f)
+                {
                     enemyAnimator.anim.SetFloat("Vertical", 0);
                     enemyAnimator.anim.SetFloat("Archer", 0);
                     isRunning = true;
