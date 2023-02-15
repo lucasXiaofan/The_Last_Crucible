@@ -22,7 +22,7 @@ namespace DP
         public float detectionDistance = 10f;
 
 
-        
+
 
 
         private void Awake()
@@ -87,6 +87,7 @@ namespace DP
                 {
                     navMeshAgent.enabled = true;
                     enemyAnimator.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
+                    enemyAnimator.anim.SetFloat("Archer", 0, 0.5f, Time.deltaTime);
                     navMeshAgent.SetDestination(currentTarget.transform.position);
                     enemyRigidbody.velocity = navMeshAgent.velocity;
                 }
@@ -127,7 +128,7 @@ namespace DP
             //rotate with pathfinding (navmesh)
         }
 
-        
+
     }
 
 }

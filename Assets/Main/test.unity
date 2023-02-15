@@ -2080,6 +2080,10 @@ PrefabInstance:
       propertyPath: patrolLocations.Array.data[1]
       value: 
       objectReference: {fileID: 1638105342}
+    - target: {fileID: 2036231568, guid: 08e2df0345ceaef488ed067649b31224, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 4085103732954862233, guid: 08e2df0345ceaef488ed067649b31224,
         type: 3}
       propertyPath: m_AnchorMax.x
