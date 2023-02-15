@@ -123,6 +123,7 @@ namespace DP
             inputHandler.menu_input = false;
             inputHandler.parry_input = false;
             inputHandler.tab_input = false;
+            inputHandler.heal_input = false;
 
             if (cameraControl != null)
             {
@@ -206,6 +207,12 @@ namespace DP
                 }
             }
             inputHandler.a_input = false;
+        }
+
+        public void LoadNextScene()
+        {
+            sceneIndex += 1;
+            SceneManager.LoadScene(sceneIndex);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace DP
             {
                 // Place holder aim code.
                 enemyAnimator.anim.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
+                enemyAnimator.anim.SetFloat("Archer", 1);
                 enemyLocomotion.navMeshAgent.enabled = false;
                 #region Rotation
                 Vector3 direction = enemyLocomotion.currentTarget.transform.position - enemyManger.transform.position;
@@ -35,7 +36,8 @@ namespace DP
             return this;
         }
 
-        private bool withinRange(Vector3 location, float range, float minAngle, float maxAngle) {
+        private bool withinRange(Vector3 location, float range, float minAngle, float maxAngle)
+        {
             // Check distance.
             if (Vector3.Distance(transform.position, location) > range) return false;
             Vector3 targetDirection = location - transform.position;

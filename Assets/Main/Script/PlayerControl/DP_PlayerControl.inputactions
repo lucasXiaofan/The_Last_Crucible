@@ -360,6 +360,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Flask",
+                    "type": "Button",
+                    "id": "620207bc-4d47-407b-b25d-08f3a1aad402",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -503,6 +512,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Tutorial",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b16ed4b-5889-40e5-97e1-83f6d079bfd1",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Flask",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

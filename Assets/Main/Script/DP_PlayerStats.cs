@@ -60,5 +60,10 @@ namespace DP
             currentStamina -= damage;
             //            StaminaBar.SetHeathBarValue(currentStamina);
         }
+        public void Heal(int healAmount)
+        {
+            currentHealth += healAmount;
+            playerHealthBar.SetHeathBarValue(currentHealth);
+        }
     }
 }
