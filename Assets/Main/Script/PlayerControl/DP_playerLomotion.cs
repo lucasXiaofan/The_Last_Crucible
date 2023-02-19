@@ -19,14 +19,16 @@ namespace DP
         public Rigidbody playerRigidBody;
         public CapsuleCollider playerCollider;
 
+        [Header("Handle Movement")]
+        public float accelerateTimer = 0.2f;
         public float moveSpeed = 5f;
-        float rotatingSpeed = 5f;
+        float rotatingSpeed = 10f;
         public float sprintSpeed = 10f;
+        float previousHorizontal = 0f;
 
         [Header("Handle Falling")]
         [SerializeField]
-        float minimumDistanceToFall = 1f;
-
+        float ToGroundDistance;
         float groundMinDistance = 0.7f;
         [SerializeField]
         LayerMask ignoreLayer;
@@ -34,12 +36,17 @@ namespace DP
         float fallingSpeed = 100f;
         public float fallingTimer;
 
+        [Header("HandleJumpping")]
+        float speedBeforeJump;
+        Vector3 directionBeforeJump;
+
 
 
         void Start()
         {
             cameraPos = Camera.main.transform;
             playerTransform = transform;
+
             playerStats = GetComponent<DP_PlayerStats>();
             playerManager = GetComponent<DP_PlayerManager>();
             playerRigidBody = GetComponent<Rigidbody>();
@@ -57,27 +64,49 @@ namespace DP
         #region Movement
         public void HandleMovement(float delta)
         {
-            if (inputHandler.rollFlag)
+            if (inputHandler.rollFlag || playerManager.isInteracting)
             {
                 return;
             }
-            if (playerManager.isInteracting)
-                return;
 
-            MoveDirection = cameraPos.forward * inputHandler.vertical;
-            MoveDirection += cameraPos.right * inputHandler.horizontal;
-            MoveDirection.Normalize();
-
-            MoveDirection.y = 0;
-            //I am not using ProjectOnPlane here
-            if (inputHandler.sprintFlag)
+            #region Acceleration
+            float difference = Mathf.Abs(previousHorizontal - inputHandler.horizontal);
+            if (difference < 0.4f)
             {
-                moveSpeed = sprintSpeed;
-                playerManager.isSprinting = true;
+                if (inputHandler.moveAmount > 0 && accelerateTimer <= 1)
+                {
+                    accelerateTimer += Time.deltaTime;
+                }
+                else if (inputHandler.moveAmount <= 0 && accelerateTimer > 0.2)
+                {
+                    accelerateTimer -= Time.deltaTime;
+                }
+            }
+            else if ((playerManager.isJumping || playerManager.isSprinting) && difference >= 0.4f)
+            {
+                print("slow down");
+                accelerateTimer = 0.5f;
+            }
+
+            #endregion
+
+            if (playerManager.isJumping)
+            {
+                moveSpeed = speedBeforeJump;
             }
             else
             {
-                moveSpeed = 5f;
+                if (inputHandler.sprintFlag && !playerManager.isJumping)
+                {
+                    moveSpeed = sprintSpeed;
+                    playerManager.isSprinting = true;
+                }
+                else
+                {
+                    moveSpeed = 5f;
+                }
+
+
             }
             if (inputHandler.lockOnFlag)
             {
@@ -87,22 +116,30 @@ namespace DP
             {
                 animationHandler.HandleAnimatorFloat(inputHandler.moveAmount, 0, playerManager.isSprinting);
             }
-            MoveDirection *= moveSpeed;
 
+            MoveDirection = cameraPos.forward * inputHandler.vertical;
+            MoveDirection += cameraPos.right * inputHandler.horizontal;
+            MoveDirection.Normalize();
+            MoveDirection.y = 0;
+            // for acceleration change;
+            previousHorizontal = inputHandler.horizontal;
+            //
+            MoveDirection *= moveSpeed * accelerateTimer;
             Vector3 projectVelocity = Vector3.ProjectOnPlane(MoveDirection, normalVector);
-            //print(projectVelocity);
             playerRigidBody.velocity = projectVelocity;
+
             if (animationHandler.canRotate)
             {
                 HandleRotation(delta);
             }
 
 
+
         }
         public void HandleRotation(float delta)
         {
 
-            //targetDirection = Vector3.zero;
+
             if (inputHandler.lockOnFlag)
             {
 
@@ -165,10 +202,11 @@ namespace DP
                     Quaternion dir = Quaternion.LookRotation(MoveDirection);
                     playerTransform.rotation = dir;
                 }
-                else
-                {
-                    animationHandler.ApplyTargetAnimation("backStep", true, false);
-                }
+
+            }
+            if (inputHandler.roll_backStep_input && inputHandler.moveAmount <= 0)
+            {
+                animationHandler.ApplyTargetAnimation("backStep", true, false);
             }
         }
         public void PlayerisGrounded()
@@ -212,6 +250,7 @@ namespace DP
                     if (dist > newDist) dist = newDist;
                 }
             }
+            ToGroundDistance = dist;
             return dist;
         }
         public void HandleFalling(float delta, Vector3 moveDirection)
@@ -239,15 +278,24 @@ namespace DP
             }
             else
             {
-                if (fallingTimer > 4.5f)
+                if (fallingTimer > 3f)
                 {
                     playerStats.TakeDamage(500);
                 }
                 else if (playerManager.isInteracting == false
                 && !playerManager.isJumping
-                && fallingTimer > 0.5f)
+                && ToGroundDistance > 1f
+                )
                 {
-                    animationHandler.ApplyTargetAnimation("fall", true, false);
+                    if (inputHandler.moveAmount <= 0)
+                    {
+                        animationHandler.ApplyTargetAnimation("fall", true, false);
+                    }
+                    else
+                    {
+                        animationHandler.ApplyTargetAnimation("fall", false, false);
+                    }
+
                 }
 
                 playerManager.isInAir = true;
@@ -271,6 +319,8 @@ namespace DP
 
             if (pressJump && playerManager.isGrounded)
             {
+                speedBeforeJump = moveSpeed;
+                directionBeforeJump = MoveDirection;
                 playerManager.isGrounded = false;
 
                 animationHandler.ApplyTargetAnimation("jump", false, true);

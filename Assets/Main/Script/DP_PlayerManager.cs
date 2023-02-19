@@ -124,15 +124,13 @@ namespace DP
             inputHandler.parry_input = false;
             inputHandler.tab_input = false;
             inputHandler.heal_input = false;
+            inputHandler.roll_backStep_input = false;
 
             if (cameraControl != null)
             {
                 cameraControl.FollowTarget(delta);
                 cameraControl.CameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
             }
-
-
-
 
             isSprinting = inputHandler.roll_b_input;
             if (isInAir)

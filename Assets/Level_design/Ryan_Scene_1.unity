@@ -39604,10 +39604,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 172783185}
     m_Modifications:
-    - target: {fileID: 2068022053, guid: 78ae4f29056fbf04f8053c128421cc93, type: 3}
-      propertyPath: healAmount
-      value: 60
-      objectReference: {fileID: 0}
     - target: {fileID: 5857331303842888202, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
       propertyPath: playerHealthBar

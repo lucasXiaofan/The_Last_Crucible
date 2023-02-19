@@ -556,6 +556,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 444063447, guid: 83117412d3f3a11408b5a13b71740937, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1269788869044564431, guid: 83117412d3f3a11408b5a13b71740937,
         type: 3}
       propertyPath: playerInventory
@@ -2702,7 +2706,7 @@ PrefabInstance:
     - target: {fileID: 5688548600798869736, guid: 6f6dd897c58c2f24d9b51c08c16110fc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.07
+      value: 9.488
       objectReference: {fileID: 0}
     - target: {fileID: 5688548600798869736, guid: 6f6dd897c58c2f24d9b51c08c16110fc,
         type: 3}
@@ -2802,6 +2806,26 @@ PrefabInstance:
       propertyPath: alertTextObject
       value: 
       objectReference: {fileID: 1901882922}
+    - target: {fileID: 5857331303842888241, guid: 78ae4f29056fbf04f8053c128421cc93,
+        type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857331303842888241, guid: 78ae4f29056fbf04f8053c128421cc93,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857331303842888241, guid: 78ae4f29056fbf04f8053c128421cc93,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857331303842888241, guid: 78ae4f29056fbf04f8053c128421cc93,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5857331303842888242, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
       propertyPath: m_RootOrder
@@ -2815,12 +2839,12 @@ PrefabInstance:
     - target: {fileID: 5857331303842888242, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.049
+      value: 4.14
       objectReference: {fileID: 0}
     - target: {fileID: 5857331303842888242, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.915
+      value: -0.57
       objectReference: {fileID: 0}
     - target: {fileID: 5857331303842888242, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
