@@ -132,8 +132,6 @@ namespace DP
         {
             vertical = moveInput.y;
             horizontal = moveInput.x;
-
-            Vector3 _direction;
             // _direction.y = 0;
             // _direction.x = Mathf.Clamp(moveInput.x, -1f, 1f);
             // _direction.z = Mathf.Clamp(moveInput.y, -1f, 1f);

@@ -31,6 +31,7 @@ namespace DP
         [Header("Combat settings")]
         public Transform CriticalStabPoint;
         public bool isParrying = false;
+        public bool isRolling = false;
 
         [Header("Player Inventory")]
         LayerMask ItemPickLayer;
@@ -38,7 +39,6 @@ namespace DP
         [Header("Player Interact")]
         string interactString;
         public GameObject door;
-        bool interacted = false;
 
         [Header("SceneManagement")]
         int sceneIndex;

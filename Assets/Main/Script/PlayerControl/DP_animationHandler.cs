@@ -140,5 +140,15 @@ namespace DP
         {
             playerManager.isParrying = false;
         }
+
+        public void Enableinvincible()
+        {
+            playerManager.isRolling = true;
+        }
+
+        public void Stopinvincible()
+        {
+            playerManager.isRolling = false;
+        }
     }
 }

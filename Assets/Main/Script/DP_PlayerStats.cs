@@ -45,7 +45,7 @@ namespace DP
 
         public void TakeDamage(int damage)
         {
-            if (PlayerIsDead())
+            if (PlayerIsDead() || playerManager.isRolling)
             {
                 return;
             }
