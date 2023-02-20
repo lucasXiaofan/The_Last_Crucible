@@ -8,10 +8,12 @@ namespace DP
     {
         // Start is called before the first frame update
         DP_EnemyLocomotion enemyLocomotion;
+        DP_EnemyManger enemyManger;
         private void Awake()
         {
             anim = GetComponent<Animator>();
             enemyLocomotion = GetComponentInParent<DP_EnemyLocomotion>();
+            enemyManger = GetComponentInParent<DP_EnemyManger>();
         }
         private void OnAnimatorMove()
         {
@@ -25,6 +27,15 @@ namespace DP
         public void exitParryAnimation()
         {
             anim.SetBool("existParry", true);
+        }
+
+        public void HandleDeath()
+        {
+            if (enemyManger.isDead)
+            {
+                enemyManger.body.isTrigger = true;
+                enemyManger.BackStabCollider.gameObject.SetActive(false);
+            }
         }
 
         // Update is called once per frame

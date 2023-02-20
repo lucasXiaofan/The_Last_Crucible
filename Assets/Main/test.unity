@@ -2089,10 +2089,6 @@ PrefabInstance:
       propertyPath: patrolLocations.Array.data[1]
       value: 
       objectReference: {fileID: 1638105342}
-    - target: {fileID: 2036231568, guid: 08e2df0345ceaef488ed067649b31224, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.65
-      objectReference: {fileID: 0}
     - target: {fileID: 4085103732954862233, guid: 08e2df0345ceaef488ed067649b31224,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2103,20 +2099,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6646359404981029689, guid: 08e2df0345ceaef488ed067649b31224,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6646359404981029824, guid: 08e2df0345ceaef488ed067649b31224,
         type: 3}
       propertyPath: m_Name
       value: Zangard's Soldier
-      objectReference: {fileID: 0}
-    - target: {fileID: 6646359404981029830, guid: 08e2df0345ceaef488ed067649b31224,
-        type: 3}
-      propertyPath: stoppingDistance
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6646359404981029831, guid: 08e2df0345ceaef488ed067649b31224,
         type: 3}
@@ -2831,26 +2817,6 @@ PrefabInstance:
       propertyPath: alertTextObject
       value: 
       objectReference: {fileID: 1901882922}
-    - target: {fileID: 5857331303842888241, guid: 78ae4f29056fbf04f8053c128421cc93,
-        type: 3}
-      propertyPath: m_Drag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5857331303842888241, guid: 78ae4f29056fbf04f8053c128421cc93,
-        type: 3}
-      propertyPath: m_Mass
-      value: 1.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5857331303842888241, guid: 78ae4f29056fbf04f8053c128421cc93,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5857331303842888241, guid: 78ae4f29056fbf04f8053c128421cc93,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5857331303842888242, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
       propertyPath: m_RootOrder

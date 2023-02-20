@@ -40,7 +40,6 @@ namespace DP
                 if (currentHealth <= 0)
                 {
                     enemyManger.isDead = true;
-                    print("enemy is dead!");
                     enemyAnimator.ApplyTargetAnimation("dead", true, false);
 
 
