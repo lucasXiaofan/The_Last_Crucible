@@ -35,6 +35,9 @@ namespace DP
 
         //for lock on 
         float maximumTargetDistance = 30f;
+        bool changeFromLockOn;
+        bool previousLockon;
+        Quaternion LastRotation;
         List<DP_EnemyManger> availableTarget = new List<DP_EnemyManger>();
         public DP_EnemyManger nearestLockTransform;
         public DP_EnemyManger currentLockOnTransform;
@@ -62,8 +65,11 @@ namespace DP
         }
         public void CameraRotation(float delta, float mouseX, float mouseY)
         {
+
             if (inputHandler.lockOnFlag == false && currentLockOnTransform == null)
             {
+                // if(mouseX > 0 || mouseY> 0){}
+
                 rotateAngle += (mouseX * rotationSpeed) / delta;
                 Vector3 rotationH = Vector3.zero;
                 rotationH.y = rotateAngle;
@@ -76,10 +82,11 @@ namespace DP
                 rotationH.x = pivotAngle;
                 Quaternion pivotDirection = Quaternion.Euler(rotationH);
                 pivotTransform.localRotation = pivotDirection;
+                // pivotTransform.rotation = Quaternion.Slerp(pivotTransform.rotation, pivotDirection, 15f * Time.deltaTime);// pivotDirection;
             }
             else
             {
-                
+
                 Vector3 dir = currentLockOnTransform.LockOnTransform.position - cameraTransform.position;
                 dir.Normalize();
                 dir.y = 0;
@@ -93,12 +100,15 @@ namespace DP
                 //and the Rotation
                 // this will be really wonky pivotTransform.localRotation = targetRotation;
                 Vector3 eularAngle = targetRotation.eulerAngles;
-                eularAngle.y = 0;
-                eularAngle.z = 0;
-                pivotTransform.localEulerAngles = eularAngle;
+                // eularAngle.y = 0;
+                // eularAngle.z = 0;
+                // pivotTransform.localEulerAngles = eularAngle;//Quaternion.Slerp(pivotTransform.localRotation, targetRotation, 10f * Time.deltaTime);
+                pivotTransform.rotation = Quaternion.Slerp(pivotTransform.rotation, targetRotation, 10f * Time.deltaTime);
             }
 
+
         }
+
         private void HandleCollision(float delta)
         {
             targetPosition = defaultPositon;
@@ -194,7 +204,6 @@ namespace DP
             availableTarget.Clear();
             nearestLockTransform = null;
             currentLockOnTransform = null;
-
         }
     }
 }

@@ -15,7 +15,7 @@ namespace DP
         public NavMeshAgent navMeshAgent;
         [Header("Enemy Movement")]
         public float distanceFromtarget;
-        public float stoppingDistance = 1f;
+        public float stoppingDistance = 1.5f;
         public float RotationSpeed = 15f;
 
         // New variable
