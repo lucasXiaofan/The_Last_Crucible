@@ -560,6 +560,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1269788868661261911, guid: 83117412d3f3a11408b5a13b71740937,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1269788869044564431, guid: 83117412d3f3a11408b5a13b71740937,
         type: 3}
       propertyPath: playerInventory
@@ -578,12 +583,12 @@ PrefabInstance:
     - target: {fileID: 1269788869971516592, guid: 83117412d3f3a11408b5a13b71740937,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1269788869971516592, guid: 83117412d3f3a11408b5a13b71740937,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1269788870278753755, guid: 83117412d3f3a11408b5a13b71740937,
         type: 3}
@@ -2098,10 +2103,20 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6646359404981029689, guid: 08e2df0345ceaef488ed067649b31224,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6646359404981029824, guid: 08e2df0345ceaef488ed067649b31224,
         type: 3}
       propertyPath: m_Name
       value: Zangard's Soldier
+      objectReference: {fileID: 0}
+    - target: {fileID: 6646359404981029830, guid: 08e2df0345ceaef488ed067649b31224,
+        type: 3}
+      propertyPath: stoppingDistance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6646359404981029831, guid: 08e2df0345ceaef488ed067649b31224,
         type: 3}
@@ -2320,6 +2335,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 98203624255126104, guid: 6bcadd97aa752004b9e628c6b93785d0,
+        type: 3}
+      propertyPath: stoppingDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 98203624255126108, guid: 6bcadd97aa752004b9e628c6b93785d0,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 98203624255126109, guid: 6bcadd97aa752004b9e628c6b93785d0,
         type: 3}
       propertyPath: m_RootOrder

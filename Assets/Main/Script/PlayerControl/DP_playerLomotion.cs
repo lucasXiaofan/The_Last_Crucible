@@ -22,7 +22,7 @@ namespace DP
         [Header("Handle Movement")]
         public float accelerateTimer = 0.2f;
         public float moveSpeed = 5f;
-        float rotatingSpeed = 10f;
+        float rotatingSpeed = 9f;
         public float sprintSpeed = 10f;
         float previousHorizontal = 0f;
 
@@ -96,7 +96,7 @@ namespace DP
             }
             else
             {
-                if (inputHandler.sprintFlag && !playerManager.isJumping)
+                if (inputHandler.sprintFlag && !playerManager.isJumping && !playerManager.isInAir)
                 {
                     moveSpeed = sprintSpeed;
                     playerManager.isSprinting = true;
