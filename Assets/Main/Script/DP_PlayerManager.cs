@@ -17,6 +17,7 @@ namespace DP
         public DP_AlertTextUI textUI;
         public GameObject alertTextObject;
         public GameObject itemTextObject;
+        public GameObject tutorial;
 
         [Header("Player Status")]
         public bool isInteracting;
@@ -61,6 +62,7 @@ namespace DP
 
             // UI 
             itemTextObject.SetActive(false);
+            tutorial.SetActive(true);
             textUI = FindObjectOfType<DP_AlertTextUI>();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -120,15 +122,15 @@ namespace DP
             inputHandler.jump_input = false;
             inputHandler.menu_input = false;
             inputHandler.parry_input = false;
+            inputHandler.tab_input = false;
+            inputHandler.heal_input = false;
+            inputHandler.roll_backStep_input = false;
 
             if (cameraControl != null)
             {
                 cameraControl.FollowTarget(delta);
                 cameraControl.CameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
             }
-
-
-
 
             isSprinting = inputHandler.roll_b_input;
             if (isInAir)
@@ -203,6 +205,12 @@ namespace DP
                 }
             }
             inputHandler.a_input = false;
+        }
+
+        public void LoadNextScene()
+        {
+            sceneIndex += 1;
+            SceneManager.LoadScene(sceneIndex);
         }
     }
 }

@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 namespace DP
 {
     public class DP_QuickSlotUI : MonoBehaviour
     {
         public Image leftIcon;
         public Image RightIcon;
+        public TMP_Text textNumber;
         public void IconHandler(bool isleft, DP_WeaponItem weaponItem)
         {
             if (isleft)
@@ -36,6 +38,10 @@ namespace DP
                     RightIcon.enabled = false;
                 }
             }
+        }
+        public void FlaskIconHandler(int number)
+        {
+            textNumber.text = number.ToString();
         }
     }
 }

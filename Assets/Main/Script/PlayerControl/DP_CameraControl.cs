@@ -35,11 +35,14 @@ namespace DP
 
         //for lock on 
         float maximumTargetDistance = 30f;
-        List<DP_Character> availableTarget = new List<DP_Character>();
-        public DP_Character nearestLockTransform;
-        public DP_Character currentLockOnTransform;
-        public DP_Character leftLockOnTarget;
-        public DP_Character rightLockOnTarget;
+        bool changeFromLockOn;
+        bool previousLockon;
+        Quaternion LastRotation;
+        List<DP_EnemyManger> availableTarget = new List<DP_EnemyManger>();
+        public DP_EnemyManger nearestLockTransform;
+        public DP_EnemyManger currentLockOnTransform;
+        public DP_EnemyManger leftLockOnTarget;
+        public DP_EnemyManger rightLockOnTarget;
         DP_inputHandler inputHandler;
 
         private void Awake()
@@ -62,8 +65,11 @@ namespace DP
         }
         public void CameraRotation(float delta, float mouseX, float mouseY)
         {
+
             if (inputHandler.lockOnFlag == false && currentLockOnTransform == null)
             {
+                // if(mouseX > 0 || mouseY> 0){}
+
                 rotateAngle += (mouseX * rotationSpeed) / delta;
                 Vector3 rotationH = Vector3.zero;
                 rotationH.y = rotateAngle;
@@ -76,6 +82,7 @@ namespace DP
                 rotationH.x = pivotAngle;
                 Quaternion pivotDirection = Quaternion.Euler(rotationH);
                 pivotTransform.localRotation = pivotDirection;
+                // pivotTransform.rotation = Quaternion.Slerp(pivotTransform.rotation, pivotDirection, 15f * Time.deltaTime);// pivotDirection;
             }
             else
             {
@@ -93,12 +100,15 @@ namespace DP
                 //and the Rotation
                 // this will be really wonky pivotTransform.localRotation = targetRotation;
                 Vector3 eularAngle = targetRotation.eulerAngles;
-                eularAngle.y = 0;
-                eularAngle.z = 0;
-                pivotTransform.localEulerAngles = eularAngle;
+                // eularAngle.y = 0;
+                // eularAngle.z = 0;
+                // pivotTransform.localEulerAngles = eularAngle;//Quaternion.Slerp(pivotTransform.localRotation, targetRotation, 10f * Time.deltaTime);
+                pivotTransform.rotation = Quaternion.Slerp(pivotTransform.rotation, targetRotation, 10f * Time.deltaTime);
             }
 
+
         }
+
         private void HandleCollision(float delta)
         {
             targetPosition = defaultPositon;
@@ -135,8 +145,8 @@ namespace DP
             Collider[] characters = Physics.OverlapSphere(targetTransform.position, maximumTargetDistance - 5);
             for (int i = 0; i < characters.Length; i++)
             {
-                DP_Character character = characters[i].GetComponent<DP_Character>();
-                if (character != null)
+                DP_EnemyManger character = characters[i].GetComponent<DP_EnemyManger>();
+                if (character != null && !character.isDead)
                 {
                     Vector3 LockOnDirection = character.transform.position - targetTransform.position;
                     float distanceFromTarget = Vector3.Distance(character.transform.position, targetTransform.position);
@@ -194,7 +204,6 @@ namespace DP
             availableTarget.Clear();
             nearestLockTransform = null;
             currentLockOnTransform = null;
-
         }
     }
 }

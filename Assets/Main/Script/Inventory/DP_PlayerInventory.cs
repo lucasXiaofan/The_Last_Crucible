@@ -15,6 +15,7 @@ namespace DP
         public DP_WeaponItem[] leftHandSlots = new DP_WeaponItem[1];
 
         public List<DP_PickUpObjects> objectsInventory;
+        public List<DP_FlaskItem> FlaskInventory;
         public List<DP_WeaponItem> weaponInventory;
 
         private int currentLeftWeaponIndex = -1;
@@ -41,12 +42,11 @@ namespace DP
             {
                 if (objectsInventory[i].isKey)
                 {
-                    
+
                     //objectsInventory.remove remove key;
                     return true;
                 }
             }
-            print("Player doesn't have the key");
             return false;
         }
         public void ChangeRightWeaponInSlot()

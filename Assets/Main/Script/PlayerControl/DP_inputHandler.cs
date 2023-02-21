@@ -13,6 +13,7 @@ namespace DP
         DP_PlayerInventory playerInventory;
         DP_PlayerManager playerManager;
         DP_UIManager uIManager;
+        DP_PlayerEffectsManager effectsManager;
         public float mouseX;
         public float mouseY;
         public float moveAmount;
@@ -34,13 +35,20 @@ namespace DP
         public bool lock_left_input;
         public bool lock_right_input;
         public bool parry_input;
+        public bool heal_input;
+        public bool roll_backStep_input;
 
         public bool rollFlag;
         public bool sprintFlag;
         public bool comboFlag;
         public bool menuFlag;
         public bool lockOnFlag;
+
         float holdCounter;
+
+        [Header("UI input")]
+        public bool tab_input;
+        private bool isUIOpen = true;
 
         //stamina bar
         public DP_PlayerHealthBar StaminaStatus;
@@ -58,6 +66,7 @@ namespace DP
             playerManager = GetComponent<DP_PlayerManager>();
             cameraControl = FindObjectOfType<DP_CameraControl>();
             animationHandler = GetComponentInChildren<DP_animationHandler>();
+            effectsManager = GetComponentInChildren<DP_PlayerEffectsManager>();
         }
 
         private void OnEnable()
@@ -77,7 +86,10 @@ namespace DP
                 inputActions.PlayerMovement.LockOnTarget.performed += i => lock_on_input = true;
                 inputActions.PlayerMovement.LockOnLeft.performed += i => lock_left_input = true;
                 inputActions.PlayerMovement.LockOnRight.performed += i => lock_right_input = true;
-                inputActions.PlayerAction.Parry.performed += i => parry_input= true;
+                inputActions.PlayerAction.Parry.performed += i => parry_input = true;
+                inputActions.PlayerQuickSlot.Tutorial.performed += i => tab_input = true;
+                inputActions.PlayerQuickSlot.Flask.performed += i => heal_input = true;
+                inputActions.PlayerAction.Roll.performed += i => roll_backStep_input = true;
 
             }
             inputActions.Enable();
@@ -92,24 +104,26 @@ namespace DP
             MoveInputControl(delta);
             HandleRollingInput(delta);
             HandleAttack(delta);
-            HandleQuickSlot();
+            //HandleQuickSlot();
             HandleOpenAndCloseMenuUI();
             HandleLockOnInput();
             HandleJumpInput();
             HandleParry();
+            HandleTutorial();
+            HandleHeal();
         }
         private void HandleParry()
         {
             if (playerManager.isInteracting || playerManager.isJumping) return;
-            if(parry_input)
+            if (parry_input)
             {
-                if(isRight)
+                if (isRight)
                 {
-                    animationHandler.ApplyTargetAnimation("ParryR",true,false);
+                    animationHandler.ApplyTargetAnimation("ParryR", true, false);
                 }
                 else
                 {
-                    animationHandler.ApplyTargetAnimation("ParryL",true,false);
+                    animationHandler.ApplyTargetAnimation("ParryL", true, false);
                 }
                 isRight = !isRight;
             }
@@ -118,13 +132,30 @@ namespace DP
         {
             vertical = moveInput.y;
             horizontal = moveInput.x;
+
+            Vector3 _direction;
+            // _direction.y = 0;
+            // _direction.x = Mathf.Clamp(moveInput.x, -1f, 1f);
+            // _direction.z = Mathf.Clamp(moveInput.y, -1f, 1f);
+            // if (_direction.magnitude > 1f)
+            //     _direction.Normalize();
             moveAmount = Mathf.Clamp01(Mathf.Abs(vertical) + Mathf.Abs(horizontal));
+            horizontal = Mathf.Clamp(moveInput.x, -1f, 1f);
+
             mouseX = cameraInput.x;
             mouseY = cameraInput.y;
         }
         private void HandleRollingInput(float delta)
         {
-            roll_b_input = UnityEngine.InputSystem.Keyboard.current.leftShiftKey.isPressed;
+            if (moveAmount > 0)
+            {
+                roll_b_input = UnityEngine.InputSystem.Keyboard.current.leftShiftKey.isPressed;
+
+            }
+            else
+            {
+                roll_b_input = false;
+            }
             //|| UnityEngine.InputSystem.Gamepad.current.buttonEast.isPressed;
             sprintFlag = roll_b_input;
             if (roll_b_input)
@@ -207,7 +238,7 @@ namespace DP
                 if (menuFlag)
                 {
 
-                    uIManager.UpdateUI();
+                    //uIManager.UpdateUI();
                 }
                 else if (!menuFlag)
                 {
@@ -220,6 +251,15 @@ namespace DP
         }
         private void HandleLockOnInput()
         {
+            if (cameraControl.nearestLockTransform != null && cameraControl.nearestLockTransform.isDead)
+            {
+                cameraControl.currentLockOnTransform.LockonIcon.enabled = false;
+                cameraControl.currentLockOnTransform = null;
+
+                cameraControl.ClearLockOn();
+                lockOnFlag = false;
+                return;
+            }
 
             if (lock_on_input && lockOnFlag == false)
             {
@@ -229,7 +269,9 @@ namespace DP
                 cameraControl.HandleLockOn();
                 if (cameraControl.nearestLockTransform != null)
                 {
+
                     cameraControl.currentLockOnTransform = cameraControl.nearestLockTransform;
+                    cameraControl.currentLockOnTransform.LockonIcon.enabled = true;
                     lockOnFlag = true;
                 }
             }
@@ -238,6 +280,10 @@ namespace DP
 
                 lock_on_input = false;
                 lockOnFlag = false;
+                if (cameraControl.currentLockOnTransform != null)
+                {
+                    cameraControl.currentLockOnTransform.LockonIcon.enabled = false;
+                }
                 cameraControl.ClearLockOn();
             }
             if (lockOnFlag && lock_left_input)
@@ -247,7 +293,12 @@ namespace DP
                 cameraControl.HandleLockOn();
                 if (cameraControl.leftLockOnTarget != null)
                 {
+                    if (cameraControl.currentLockOnTransform != null)
+                    {
+                        cameraControl.currentLockOnTransform.LockonIcon.enabled = false;
+                    }
                     cameraControl.currentLockOnTransform = cameraControl.leftLockOnTarget;
+                    cameraControl.currentLockOnTransform.LockonIcon.enabled = true;
                 }
             }
             if (lockOnFlag && lock_right_input)
@@ -257,7 +308,12 @@ namespace DP
                 cameraControl.HandleLockOn();
                 if (cameraControl.rightLockOnTarget != null)
                 {
+                    if (cameraControl.currentLockOnTransform != null)
+                    {
+                        cameraControl.currentLockOnTransform.LockonIcon.enabled = false;
+                    }
                     cameraControl.currentLockOnTransform = cameraControl.rightLockOnTarget;
+                    cameraControl.currentLockOnTransform.LockonIcon.enabled = true;
                 }
             }
         }
@@ -265,6 +321,33 @@ namespace DP
         private void HandleJumpInput()
         {
             inputActions.PlayerAction.Jump.performed += i => jump_input = true;
+        }
+        public void HandleTutorial()
+        {
+            if (tab_input)
+            {
+                if (!isUIOpen)
+                {
+                    playerManager.tutorial.SetActive(true);
+                }
+                else
+                {
+                    playerManager.tutorial.SetActive(false);
+                }
+                isUIOpen = !isUIOpen;
+
+            }
+        }
+
+        public void HandleHeal()
+        {
+            if (heal_input)
+            {
+                if (effectsManager.FlaskAmount > 0)
+                {
+                    effectsManager.HealPlayer();
+                }
+            }
         }
     }
 

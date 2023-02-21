@@ -15,14 +15,14 @@ namespace DP
         public NavMeshAgent navMeshAgent;
         [Header("Enemy Movement")]
         public float distanceFromtarget;
-        public float stoppingDistance = 1f;
+        public float stoppingDistance = 1.5f;
         public float RotationSpeed = 15f;
 
         // New variable
         public float detectionDistance = 10f;
 
 
-        
+
 
 
         private void Awake()
@@ -87,6 +87,7 @@ namespace DP
                 {
                     navMeshAgent.enabled = true;
                     enemyAnimator.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
+                    enemyAnimator.anim.SetFloat("Archer", 0, 0.5f, Time.deltaTime);
                     navMeshAgent.SetDestination(currentTarget.transform.position);
                     enemyRigidbody.velocity = navMeshAgent.velocity;
                 }
@@ -127,7 +128,7 @@ namespace DP
             //rotate with pathfinding (navmesh)
         }
 
-        
+
     }
 
 }
