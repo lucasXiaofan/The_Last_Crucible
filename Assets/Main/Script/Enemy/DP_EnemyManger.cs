@@ -28,6 +28,8 @@ namespace DP
         public bool isDead;
         public CapsuleCollider body;
         public Image LockonIcon;
+        public BoxCollider ExecuteCollider;
+        public Transform ExecutePoint;
 
 
 
@@ -50,12 +52,13 @@ namespace DP
                 return;
             }
 
-            isPreformingAction = enemyAnimator.anim.GetBool("isInteracting");
+
             HandleRoveryTimer();
         }
 
         private void FixedUpdate()
         {
+            isPreformingAction = enemyAnimator.anim.GetBool("isInteracting");
             if (isDead)
             {
                 enemyLocomotion.navMeshAgent.enabled = false;
@@ -116,10 +119,11 @@ namespace DP
 
             if (isPreformingAction)
             {
+                currentAttack = null;
                 return;
             }
 
-            if (currentAttack == null)
+            else if (currentAttack == null)
             {
                 SelectCurrentAttack();
             }

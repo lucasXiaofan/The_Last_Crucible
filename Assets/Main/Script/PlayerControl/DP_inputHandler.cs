@@ -185,9 +185,15 @@ namespace DP
                 return;
             if (rb_input) //&& StaminaStatus.alive())
             {
-                if (playerAttacker.CanBackStab())
+                if (playerAttacker.CanExecute())
                 {
-                    playerAttacker.HandleBackStab();
+                    print("triggered execution");
+                    playerAttacker.HandleExecution(true);
+                }
+                else if (playerAttacker.CanBackStab())
+                {
+                    print("why back stab");
+                    playerAttacker.HandleExecution(false);
                 }
                 else if (playerManager.canDoAirAttack)
                 {

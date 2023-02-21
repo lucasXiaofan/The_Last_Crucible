@@ -726,6 +726,12 @@ Transform:
   m_Father: {fileID: 1483994974}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &553575411 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 553575411, guid: 08e2df0345ceaef488ed067649b31224,
+    type: 3}
+  m_PrefabInstance: {fileID: 2034546860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &579037656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1829,6 +1835,12 @@ Transform:
   m_Father: {fileID: 1427441252}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1622225248 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1622225248, guid: 08e2df0345ceaef488ed067649b31224,
+    type: 3}
+  m_PrefabInstance: {fileID: 2034546860}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1638105342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2062,6 +2074,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 553575409, guid: 08e2df0345ceaef488ed067649b31224, type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 1559195202, guid: 08e2df0345ceaef488ed067649b31224, type: 3}
       propertyPath: patrolLocations.Array.data[0]
       value: 
@@ -2070,6 +2086,10 @@ PrefabInstance:
       propertyPath: patrolLocations.Array.data[1]
       value: 
       objectReference: {fileID: 1638105342}
+    - target: {fileID: 1622225248, guid: 08e2df0345ceaef488ed067649b31224, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 4085103732954862233, guid: 08e2df0345ceaef488ed067649b31224,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2084,6 +2104,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Zangard's Soldier
+      objectReference: {fileID: 0}
+    - target: {fileID: 6646359404981029827, guid: 08e2df0345ceaef488ed067649b31224,
+        type: 3}
+      propertyPath: ExecutePoint
+      value: 
+      objectReference: {fileID: 1622225248}
+    - target: {fileID: 6646359404981029827, guid: 08e2df0345ceaef488ed067649b31224,
+        type: 3}
+      propertyPath: ExecuteCollider
+      value: 
+      objectReference: {fileID: 553575411}
+    - target: {fileID: 6646359404981029828, guid: 08e2df0345ceaef488ed067649b31224,
+        type: 3}
+      propertyPath: healthLevel
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6646359404981029831, guid: 08e2df0345ceaef488ed067649b31224,
         type: 3}
@@ -2302,16 +2337,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 98203624255126104, guid: 6bcadd97aa752004b9e628c6b93785d0,
-        type: 3}
-      propertyPath: stoppingDistance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 98203624255126108, guid: 6bcadd97aa752004b9e628c6b93785d0,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 98203624255126109, guid: 6bcadd97aa752004b9e628c6b93785d0,
         type: 3}
       propertyPath: m_RootOrder
@@ -4108,6 +4133,11 @@ PrefabInstance:
       propertyPath: playerHealthBar
       value: 
       objectReference: {fileID: 240409969}
+    - target: {fileID: 5857331303842888205, guid: 78ae4f29056fbf04f8053c128421cc93,
+        type: 3}
+      propertyPath: executeLayer.m_Bits
+      value: 262144
+      objectReference: {fileID: 0}
     - target: {fileID: 5857331303842888207, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
       propertyPath: textUI
