@@ -52,7 +52,7 @@ namespace DP
                 return;
             }
 
-
+            enemyStats.RecoverPosture();
             HandleRoveryTimer();
         }
 

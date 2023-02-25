@@ -9,8 +9,13 @@ namespace DP
         // Start is called before the first frame update
         DP_EnemyLocomotion enemyLocomotion;
         DP_EnemyManger enemyManger;
+        public BoxCollider ExecutionCollider;
         private void Awake()
         {
+            if(ExecutionCollider != null)
+            {
+                ExecutionCollider.enabled = false;
+            }
             anim = GetComponent<Animator>();
             enemyLocomotion = GetComponentInParent<DP_EnemyLocomotion>();
             enemyManger = GetComponentInParent<DP_EnemyManger>();
@@ -39,9 +44,20 @@ namespace DP
         }
 
         // Update is called once per frame
-        void Update()
+        public void openExecutionCollider()
         {
+            if(ExecutionCollider!=null)
+            {
+                ExecutionCollider.enabled = true;
+            }
+        }
 
+        public void closeExecutionCollider()
+        {
+            if(ExecutionCollider!=null)
+            {
+                ExecutionCollider.enabled = false;
+            }
         }
     }
 }
