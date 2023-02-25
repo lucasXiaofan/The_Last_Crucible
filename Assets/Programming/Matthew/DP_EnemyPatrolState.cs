@@ -25,7 +25,8 @@ namespace DP
             {
                 enemyLocomotion.HandleDetection();
             }
-            else if (enemyLocomotion.distanceFromtarget <= enemyLocomotion.detectionDistance)
+            
+            if (enemyLocomotion.distanceFromtarget <= enemyLocomotion.detectionDistance)
             {
                 return enemyPursueState;
             }
