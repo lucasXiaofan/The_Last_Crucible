@@ -144,11 +144,13 @@ namespace DP
         public void Enableinvincible()
         {
             playerManager.isRolling = true;
+            anim.SetBool("isRolling", true);
         }
 
         public void Stopinvincible()
         {
             playerManager.isRolling = false;
+            anim.SetBool("isRolling", false);
         }
     }
 }

@@ -24,28 +24,36 @@ namespace DP
             maximumHealth = SetMaximumHealthLevel();
             currentHealth = maximumHealth;
             currentPosture = 1;
-            maximumPosture = PostureLevel *10 ;
+            maximumPosture = PostureLevel * 10;
             playerHealthBar.SetMaximumHeath(maximumHealth);
+            playerHealthBar.hideEnemyUI();
         }
         private int SetMaximumHealthLevel()
         {
             maximumHealth = healthLevel * 10;
             return maximumHealth;
         }
+        public void handleDeath()
+        {
+            playerHealthBar.hideEnemyUI();
+            playerHealthBar.enabled = false;
+        }
 
 
         public void TakeDamage(int damage, bool normal)
         {
-            recoveryTimer = 0;
+
             if (enemyManger.isDead)
             {
+                playerHealthBar.hideEnemyUI();
                 return;
             }
+            playerHealthBar.showEnemyUI();
             currentHealth = currentHealth - damage;
             playerHealthBar.SetHeathBarValue(currentHealth);
             if (normal)
             {
-                if(PostureBreak())
+                if (PostureBreak())
                 {
                     DamagePosture(damage);
                 }
@@ -70,15 +78,19 @@ namespace DP
 
         public void DamagePosture(int damage)
         {
-            
-            currentPosture+=damage;
-            currentPosture= (currentPosture >= maximumPosture? maximumPosture:currentPosture);
-            playerHealthBar.SetPosture(currentPosture/maximumPosture);
-            if( PostureBreak())
+            playerHealthBar.showEnemyUI();
+            recoveryTimer = 0;
+            currentPosture += damage;
+            currentPosture = (currentPosture >= maximumPosture ? maximumPosture : currentPosture);
+            playerHealthBar.SetPosture(currentPosture / maximumPosture);
+            if (PostureBreak())
             {
-                enemyAnimator.ApplyTargetAnimation("vulnerable",true,false);
+                enemyAnimator.ApplyTargetAnimation("vulnerable", true, false);
             }
+
         }
+
+
 
         public bool PostureBreak()
         {
@@ -87,20 +99,20 @@ namespace DP
 
         public void RecoverPosture()
         {
-            recoveryTimer-=Time.deltaTime;
-            
-            if( recoveryTimer >= recoveryLimit)
+            recoveryTimer += Time.deltaTime * 3;
+
+            if (recoveryTimer >= recoveryLimit)
             {
-                if( currentPosture < maximumPosture && currentPosture >0)
+                if (currentPosture <= maximumPosture && currentPosture > 0)
                 {
-                    currentPosture-=Time.deltaTime*10;
+                    currentPosture -= Time.deltaTime * 10;
                 }
-                if(currentPosture<=0)
+                if (currentPosture <= 0)
                 {
                     currentPosture = 1;
                 }
             }
-            playerHealthBar.SetPosture(currentPosture/maximumPosture);
+            playerHealthBar.SetPosture(currentPosture / maximumPosture);
         }
     }
 }

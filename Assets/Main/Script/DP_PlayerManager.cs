@@ -83,10 +83,12 @@ namespace DP
             isJumping = animator.GetBool("isJumping");
             animator.SetBool("IsInAir", isInAir);
             animator.SetBool("isGrounded", isGrounded);
+            isRolling = animator.GetBool("isRolling");
             inputHandler.TickInput(delta);
             playerLomotion.HandleRollingAndSprint(delta);
             CheckForInteractableObject();
             playerLomotion.HandlePlayerJump(inputHandler.jump_input);
+
 
 
             // If escape key, Cursor.visible = true; CursorLockMode off
