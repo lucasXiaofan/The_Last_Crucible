@@ -41,9 +41,11 @@ namespace DP
                         if(playerManager.isParrying)
                         {
                             DP_EnemyAnimator enemyAnimator = GetComponentInParent<DP_EnemyAnimator>();
+                            DP_EnemyStats enemyStats = GetComponentInParent<DP_EnemyStats>();
                             if (enemyAnimator!=null)
                             {
                                 enemyAnimator.anim.SetBool("Parryed",true);
+                                enemyStats.DamagePosture(30);
                                 return;
                             }
                         }
