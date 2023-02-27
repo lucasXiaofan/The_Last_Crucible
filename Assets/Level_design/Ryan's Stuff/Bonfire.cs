@@ -5,20 +5,21 @@ using DP;
 
 public class Bonfire : MonoBehaviour
 {
-    public DP_PlayerManager player;
+    public SpawnManager spawnManager;
+    public ParticleSystem fire;
 
     private void Start()
     {
-        player = FindObjectOfType<DP_PlayerManager>();
+        spawnManager = FindObjectOfType<SpawnManager>();
     }
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
             Debug.Log("Saved at: " + this.transform.position);
-            player.spawnManager.spawnPosition = this.transform.position;
+            fire.gameObject.SetActive(true);
+            spawnManager.spawnPosition = this.transform.position;
 
-            //other.GetComponent<DP_PlayerManager>().spawnManager.spawnPosition = this.transform.position;
             
         }
     }

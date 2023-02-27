@@ -48,12 +48,12 @@ namespace DP
 
         private void Awake()
         {
-            transform.position = spawnManager.spawnPosition;
-            //SpawnAtCheckpoint();
             sceneIndex = SceneManager.GetActiveScene().buildIndex;
             cameraControl = FindObjectOfType<DP_CameraControl>();
             ItemPickLayer = (1 << 8 | 1 << 17);
             isGrounded = true;
+            spawnManager = FindObjectOfType<SpawnManager>();
+            SpawnAtCheckpoint();
         }
 
         void Start()
@@ -71,6 +71,7 @@ namespace DP
             textUI = FindObjectOfType<DP_AlertTextUI>();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
         }
 
         // Update is called once per frame
@@ -79,7 +80,6 @@ namespace DP
             if (playerStats.PlayerIsDead())
             {
                 SceneManager.LoadScene(sceneIndex);
-                //SpawnAtCheckpoint();
                 return;
             }
             float delta = Time.deltaTime;
@@ -224,11 +224,8 @@ namespace DP
         public void SpawnAtCheckpoint()
         {
             //move player to this position 
-            Debug.Log("Spawning " + spawnManager.spawnPosition);
             transform.position = new Vector3(spawnManager.spawnPosition.x - 2, spawnManager.spawnPosition.y, spawnManager.spawnPosition.z);
-        }
-
-        
+        }  
     }
 }
 
