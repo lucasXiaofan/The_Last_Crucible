@@ -132,8 +132,6 @@ namespace DP
         {
             vertical = moveInput.y;
             horizontal = moveInput.x;
-
-            Vector3 _direction;
             // _direction.y = 0;
             // _direction.x = Mathf.Clamp(moveInput.x, -1f, 1f);
             // _direction.z = Mathf.Clamp(moveInput.y, -1f, 1f);
@@ -187,9 +185,15 @@ namespace DP
                 return;
             if (rb_input) //&& StaminaStatus.alive())
             {
-                if (playerAttacker.CanBackStab())
+                if (playerAttacker.CanExecute())
                 {
-                    playerAttacker.HandleBackStab();
+                    print("triggered execution");
+                    playerAttacker.HandleExecution(true);
+                }
+                else if (playerAttacker.CanBackStab())
+                {
+                    print("why back stab");
+                    playerAttacker.HandleExecution(false);
                 }
                 else if (playerManager.canDoAirAttack)
                 {

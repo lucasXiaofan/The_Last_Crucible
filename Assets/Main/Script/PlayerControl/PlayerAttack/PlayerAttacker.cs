@@ -15,6 +15,7 @@ namespace DP
         DP_CameraControl cameraControl;
         public string lastAttack;
         public LayerMask backStacbLayer;
+        public LayerMask executeLayer;
         void Start()
         {
             playerManager = GetComponent<DP_PlayerManager>();
@@ -39,31 +40,38 @@ namespace DP
                 }
             }
         }
-
+        public bool CanExecute()
+        {
+            RaycastHit hit;
+            return (Physics.Raycast(playerManager.CriticalStabPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, executeLayer));
+        }
         public bool CanBackStab()
         {
             RaycastHit hit;
             return (Physics.Raycast(playerManager.CriticalStabPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStacbLayer));
         }
-        public void HandleBackStab()
+        public void HandleExecution(bool isExecute)
         {
             RaycastHit hit;
-            if (Physics.Raycast(playerManager.CriticalStabPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStacbLayer))
+            if (Physics.Raycast(playerManager.CriticalStabPoint.position, transform.TransformDirection(Vector3.forward), out hit, 0.5f,
+                                (isExecute ? executeLayer : backStacbLayer)))
             {
                 DP_EnemyManger enemyManger = hit.transform.gameObject.GetComponentInParent<DP_EnemyManger>();
-                if (enemyManger!= null)
+                if (enemyManger != null)
                 {
-                    playerManager.transform.position = enemyManger.BackStabPoint.position;
-                    //do rotation
+                    playerManager.transform.position = Vector3.Lerp(playerManager.transform.position,
+                            (isExecute ? enemyManger.ExecutePoint.position : enemyManger.BackStabPoint.position),
+                                                                100f * Time.deltaTime);
+                    //do rotation           
                     Vector3 RotationDirection = playerManager.transform.root.eulerAngles;
                     RotationDirection = hit.transform.position - playerManager.transform.position;
                     RotationDirection.y = 0;
                     RotationDirection.Normalize();
                     Quaternion tr = Quaternion.LookRotation(RotationDirection);
-                    playerManager.transform.rotation = Quaternion.Slerp(playerManager.transform.rotation,tr,Time.deltaTime*500);
-                    animationHandler.ApplyTargetAnimation("BackStab",true,false);
-                    enemyManger.GetComponentInChildren<DP_EnemyAnimator>().ApplyTargetAnimation("BackStabbed",true,false);
-                    enemyManger.GetComponent<DP_EnemyStats>().TakeDamage(200,false);
+                    playerManager.transform.rotation = Quaternion.Slerp(playerManager.transform.rotation, tr, Time.deltaTime * 500);
+                    animationHandler.ApplyTargetAnimation((isExecute ? "Execute" : "BackStab"), true, false);
+                    enemyManger.GetComponentInChildren<DP_EnemyAnimator>().ApplyTargetAnimation((isExecute ? "Executed" : "BackStabbed"), true, false);
+                    enemyManger.GetComponent<DP_EnemyStats>().TakeDamage(200, false);
                 }
             }
 
