@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace DP
 {
+    //SWITCH TO ANIMATION EVENTS
+
     public class DP_BossRangeAttack1_2 : DP_State
     {
         //public DP_BossChaseState bossChaseState;
@@ -35,7 +37,7 @@ namespace DP
             //Start coroutine
             if (start)
             {
-                StartCoroutine(generalCoroutine(enemyAnimator, enemyManger));
+                StartCoroutine(generalCoroutine(enemyAnimator, enemyManger, enemyLocomotion));
                 start = false;
                 return this;
             }
@@ -49,22 +51,27 @@ namespace DP
             return this;
         }
 
-        IEnumerator generalCoroutine(DP_EnemyAnimator enemyAnimator, DP_EnemyManger enemyManger)
+        IEnumerator generalCoroutine(DP_EnemyAnimator enemyAnimator, DP_EnemyManger enemyManger, DP_EnemyLocomotion enemyLocomotion)
         {
             CR_running = true;
 
-            yield return StartCoroutine(jumpLandHandler(enemyAnimator, enemyManger, "GhostSamurai_APose_Jump_Start_Inplace", true, 0.83f));
+            float startRotationX = enemyManger.transform.rotation.x;
+            float startRotationZ = enemyManger.transform.rotation.z;
+
+            yield return StartCoroutine(jumpLandHandler(enemyAnimator, enemyManger, enemyLocomotion, "GhostSamurai_APose_Jump_Start_Inplace", true, 0.83f));
 
             yield return StartCoroutine(attackCoroutine(enemyAnimator));
             yield return StartCoroutine(attackCoroutine(enemyAnimator));
 
-            yield return StartCoroutine(jumpLandHandler(enemyAnimator, enemyManger, "GhostSamurai_APose_Jump_End_Inplace", false, 0.83f));
+            yield return StartCoroutine(jumpLandHandler(enemyAnimator, enemyManger, enemyLocomotion, "GhostSamurai_APose_Jump_End_Inplace", false, 0.83f));
+
+            enemyManger.transform.rotation = new Quaternion(0f, enemyManger.transform.rotation.y, 0f, enemyManger.transform.rotation.w);
 
             CR_running = false;
         }
 
         //bool jumpLand: true = jump, false = Land
-        IEnumerator jumpLandHandler(DP_EnemyAnimator enemyAnimator, DP_EnemyManger enemyManger, string animationName, bool jumpLand, float time)
+        IEnumerator jumpLandHandler(DP_EnemyAnimator enemyAnimator, DP_EnemyManger enemyManger, DP_EnemyLocomotion enemyLocomotion, string animationName, bool jumpLand, float time)
         {
             Vector3 startPosition = enemyManger.transform.position;
             float elapsedTime = 0;
@@ -78,6 +85,7 @@ namespace DP
             while (elapsedTime < time)
             {
                 enemyManger.transform.position = Vector3.Lerp(startPosition, new Vector3(startPosition.x, endHeight, startPosition.z), Mathf.Pow((elapsedTime / time), 2.4f));
+
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
