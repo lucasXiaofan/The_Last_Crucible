@@ -498,6 +498,7 @@ MonoBehaviour:
   canDoAirAttack: 0
   CriticalStabPoint: {fileID: 357804687}
   isParrying: 0
+  isRolling: 0
   door: {fileID: 0}
 --- !u!114 &5857331303842888204
 MonoBehaviour:
@@ -535,6 +536,9 @@ MonoBehaviour:
   backStacbLayer:
     serializedVersion: 2
     m_Bits: 65536
+  executeLayer:
+    serializedVersion: 2
+    m_Bits: 262144
 --- !u!114 &5857331303842888202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,6 +554,9 @@ MonoBehaviour:
   maximumHealth: 0
   currentHealth: 0
   healthLevel: 10
+  currentPosture: 0
+  maximumPosture: 0
+  PostureLevel: 10
   playerHealthBar: {fileID: 0}
   StaminaBar: {fileID: 0}
   maxStamina: 0

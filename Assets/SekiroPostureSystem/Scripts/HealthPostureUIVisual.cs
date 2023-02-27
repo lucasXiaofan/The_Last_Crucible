@@ -14,8 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using CodeMonkey.Utils;
-using CodeMonkey;
+
 
 public class HealthPostureUIVisual : MonoBehaviour {
 
@@ -44,10 +43,10 @@ public class HealthPostureUIVisual : MonoBehaviour {
         HealthPostureSystem healthPostureSystem = new HealthPostureSystem();
         SetHealthPostureSystem(healthPostureSystem);
         
-        CMDebug.ButtonUI(new Vector2(-100, -150), "Health Damage", () => healthPostureSystem.HealthDamage(10));
-        CMDebug.ButtonUI(new Vector2(-100, -200), "Health Heal", () => healthPostureSystem.HealthHeal(10));
-        CMDebug.ButtonUI(new Vector2(+100, -150), "Posture Increase", () => healthPostureSystem.PostureIncrease(10));
-        CMDebug.ButtonUI(new Vector2(+100, -200), "Posture Decrease", () => healthPostureSystem.PostureDecrease(10));
+        // CMDebug.ButtonUI(new Vector2(-100, -150), "Health Damage", () => healthPostureSystem.HealthDamage(10));
+        // CMDebug.ButtonUI(new Vector2(-100, -200), "Health Heal", () => healthPostureSystem.HealthHeal(10));
+        // CMDebug.ButtonUI(new Vector2(+100, -150), "Posture Increase", () => healthPostureSystem.PostureIncrease(10));
+        // CMDebug.ButtonUI(new Vector2(+100, -200), "Posture Decrease", () => healthPostureSystem.PostureDecrease(10));
     }
 
     private void Update() {
@@ -75,12 +74,10 @@ public class HealthPostureUIVisual : MonoBehaviour {
     }
 
     private void HealthPostureSystem_OnPostureBroken(object sender, System.EventArgs e) {
-        CMDebug.TextPopupMouse("Posture Broken!");
         postureBarHighlightGameObject.SetActive(true);
     }
 
     private void HealthPostureSystem_OnDead(object sender, System.EventArgs e) {
-        CMDebug.TextPopupMouse("Dead!");
     }
 
     private void HealthPostureSystem_OnPostureChanged(object sender, System.EventArgs e) {

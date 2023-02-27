@@ -49,6 +49,7 @@ namespace DP
             enemyAnimator.anim.SetBool("isDead", isDead);
             if (isDead)
             {
+                enemyStats.handleDeath();
                 return;
             }
 
@@ -58,9 +59,11 @@ namespace DP
 
         private void FixedUpdate()
         {
+
             isPreformingAction = enemyAnimator.anim.GetBool("isInteracting");
             if (isDead)
             {
+
                 enemyLocomotion.navMeshAgent.enabled = false;
                 LockonIcon.enabled = false;
                 return;
@@ -72,6 +75,7 @@ namespace DP
             }
 
             EnemyStateMachine();
+            enemyStats.RecoverPosture();
         }
         private void LateUpdate()
         {
