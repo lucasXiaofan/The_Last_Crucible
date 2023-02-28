@@ -36,15 +36,15 @@ namespace DP
                 if (playerStats != null)
                 {
                     DP_PlayerManager playerManager = other.GetComponent<DP_PlayerManager>();
-                    if(playerManager!= null)
+                    if (playerManager != null)
                     {
-                        if(playerManager.isParrying)
+                        if (playerManager.isParrying)
                         {
                             DP_EnemyAnimator enemyAnimator = GetComponentInParent<DP_EnemyAnimator>();
                             DP_EnemyStats enemyStats = GetComponentInParent<DP_EnemyStats>();
-                            if (enemyAnimator!=null)
+                            if (enemyAnimator != null)
                             {
-                                enemyAnimator.anim.SetBool("Parryed",true);
+                                enemyAnimator.anim.SetBool("Parryed", true);
                                 enemyStats.DamagePosture(30);
                                 return;
                             }
@@ -60,7 +60,7 @@ namespace DP
                 DP_EnemyStats enemyStats = other.GetComponent<DP_EnemyStats>();
                 if (enemyStats != null)
                 {
-                    enemyStats.TakeDamage(currentWeaponDamage,true);
+                    enemyStats.TakeDamage(currentWeaponDamage, true);
                 }
             }
 
