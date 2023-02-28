@@ -11,6 +11,10 @@ public class Bonfire : MonoBehaviour
     private void Start()
     {
         spawnManager = FindObjectOfType<SpawnManager>();
+        if (spawnManager.spawnPosition == this.transform.position)
+        {
+            fire.gameObject.SetActive(true);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
