@@ -53,7 +53,8 @@ namespace DP
             ItemPickLayer = (1 << 8 | 1 << 17);
             isGrounded = true;
             spawnManager = FindObjectOfType<SpawnManager>();
-            SpawnAtCheckpoint();
+            if (spawnManager != null)
+                SpawnAtCheckpoint();
         }
 
         void Start()
@@ -225,7 +226,7 @@ namespace DP
         {
             //move player to this position 
             transform.position = new Vector3(spawnManager.spawnPosition.x - 2, spawnManager.spawnPosition.y, spawnManager.spawnPosition.z);
-        }  
+        }
     }
 }
 

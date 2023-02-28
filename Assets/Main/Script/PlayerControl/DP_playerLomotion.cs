@@ -297,12 +297,13 @@ namespace DP
                     }
 
                 }
-
                 playerManager.isInAir = true;
+
+
             }
             if (playerManager.isInAir)
             {
-                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3 * (fallingTimer + 1));
+                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * (ToGroundDistance > 1.5f ? 7 : 3) * (fallingTimer + 1));
                 // //add a kick off force below
                 Vector3 kickDir = moveDirection;
                 playerRigidBody.AddForce(kickDir * fallingSpeed / 6f);
