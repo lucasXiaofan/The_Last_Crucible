@@ -36,6 +36,7 @@ namespace DP
         public bool lock_right_input;
         public bool parry_input;
         public bool heal_input;
+        public bool roll_backStep_input;
 
         public bool rollFlag;
         public bool sprintFlag;
@@ -88,6 +89,7 @@ namespace DP
                 inputActions.PlayerAction.Parry.performed += i => parry_input = true;
                 inputActions.PlayerQuickSlot.Tutorial.performed += i => tab_input = true;
                 inputActions.PlayerQuickSlot.Flask.performed += i => heal_input = true;
+                inputActions.PlayerAction.Roll.performed += i => roll_backStep_input = true;
 
             }
             inputActions.Enable();
@@ -130,13 +132,28 @@ namespace DP
         {
             vertical = moveInput.y;
             horizontal = moveInput.x;
+            // _direction.y = 0;
+            // _direction.x = Mathf.Clamp(moveInput.x, -1f, 1f);
+            // _direction.z = Mathf.Clamp(moveInput.y, -1f, 1f);
+            // if (_direction.magnitude > 1f)
+            //     _direction.Normalize();
             moveAmount = Mathf.Clamp01(Mathf.Abs(vertical) + Mathf.Abs(horizontal));
+            horizontal = Mathf.Clamp(moveInput.x, -1f, 1f);
+
             mouseX = cameraInput.x;
             mouseY = cameraInput.y;
         }
         private void HandleRollingInput(float delta)
         {
-            roll_b_input = UnityEngine.InputSystem.Keyboard.current.leftShiftKey.isPressed;
+            if (moveAmount > 0)
+            {
+                roll_b_input = UnityEngine.InputSystem.Keyboard.current.leftShiftKey.isPressed;
+
+            }
+            else
+            {
+                roll_b_input = false;
+            }
             //|| UnityEngine.InputSystem.Gamepad.current.buttonEast.isPressed;
             sprintFlag = roll_b_input;
             if (roll_b_input)
@@ -168,9 +185,15 @@ namespace DP
                 return;
             if (rb_input) //&& StaminaStatus.alive())
             {
-                if (playerAttacker.CanBackStab())
+                if (playerAttacker.CanExecute())
                 {
-                    playerAttacker.HandleBackStab();
+                    print("triggered execution");
+                    playerAttacker.HandleExecution(true);
+                }
+                else if (playerAttacker.CanBackStab())
+                {
+                    print("why back stab");
+                    playerAttacker.HandleExecution(false);
                 }
                 else if (playerManager.canDoAirAttack)
                 {

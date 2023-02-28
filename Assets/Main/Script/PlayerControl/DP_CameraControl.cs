@@ -16,6 +16,8 @@ namespace DP
         private Vector3 cameraTransformPoistion;
         private float targetPosition;// for camera collision
 
+        [Header("Camera Sensitivity")]
+        public float Sensitivity = 30f;
         public float rotationSpeed = 0.1f;
         public float pivotSpeed = 0.03f;
         public float followSpeed = 0.1f;
@@ -35,12 +37,15 @@ namespace DP
 
         //for lock on 
         float maximumTargetDistance = 30f;
+
         List<DP_EnemyManger> availableTarget = new List<DP_EnemyManger>();
         public DP_EnemyManger nearestLockTransform;
         public DP_EnemyManger currentLockOnTransform;
         public DP_EnemyManger leftLockOnTarget;
         public DP_EnemyManger rightLockOnTarget;
         DP_inputHandler inputHandler;
+
+
 
         private void Awake()
         {
@@ -62,43 +67,54 @@ namespace DP
         }
         public void CameraRotation(float delta, float mouseX, float mouseY)
         {
+
             if (inputHandler.lockOnFlag == false && currentLockOnTransform == null)
             {
-                rotateAngle += (mouseX * rotationSpeed) / delta;
+                // if(mouseX > 0 || mouseY> 0){}
+
+                rotateAngle += (mouseX * rotationSpeed) / (delta * Sensitivity);
                 Vector3 rotationH = Vector3.zero;
                 rotationH.y = rotateAngle;
                 Quaternion Lookdirection = Quaternion.Euler(rotationH);
-                myTransform.rotation = Lookdirection;
+                myTransform.localRotation = Lookdirection;
 
-                pivotAngle -= (mouseY * pivotSpeed) / delta;
+                pivotAngle -= (mouseY * pivotSpeed) / (delta * Sensitivity);
                 pivotAngle = Mathf.Clamp(pivotAngle, minimumPivot, maximumPivot);
                 rotationH = Vector3.zero;
                 rotationH.x = pivotAngle;
                 Quaternion pivotDirection = Quaternion.Euler(rotationH);
                 pivotTransform.localRotation = pivotDirection;
+                // pivotTransform.rotation = Quaternion.Slerp(pivotTransform.rotation, pivotDirection, 15f * Time.deltaTime);// pivotDirection;
             }
             else
             {
-                
+                // for camera rotation
                 Vector3 dir = currentLockOnTransform.LockOnTransform.position - cameraTransform.position;
                 dir.Normalize();
                 dir.y = 0;
                 Quaternion targetRotation = Quaternion.LookRotation(dir);
-                transform.rotation = targetRotation;
+                myTransform.localRotation = targetRotation;
+                // update rotateangle while lock on
+                Vector3 angle = targetRotation.eulerAngles;
+                rotateAngle = angle.y;
 
+                // for pivot rotation
                 dir = currentLockOnTransform.LockOnTransform.position - pivotTransform.position;
                 dir.Normalize();
                 targetRotation = Quaternion.LookRotation(dir);
-                // I don't understand the eularAngle?? what is the difference between eular angle 
-                //and the Rotation
                 // this will be really wonky pivotTransform.localRotation = targetRotation;
                 Vector3 eularAngle = targetRotation.eulerAngles;
-                eularAngle.y = 0;
-                eularAngle.z = 0;
-                pivotTransform.localEulerAngles = eularAngle;
+
+                pivotTransform.rotation = Quaternion.Slerp(pivotTransform.rotation, targetRotation, 10f * Time.deltaTime);
+                // update rotateangle while lock on
+                angle = targetRotation.eulerAngles;
+                pivotAngle = angle.x;
             }
 
+
+
         }
+
         private void HandleCollision(float delta)
         {
             targetPosition = defaultPositon;
@@ -194,7 +210,6 @@ namespace DP
             availableTarget.Clear();
             nearestLockTransform = null;
             currentLockOnTransform = null;
-
         }
     }
 }

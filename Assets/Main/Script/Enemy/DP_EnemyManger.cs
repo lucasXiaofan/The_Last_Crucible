@@ -28,7 +28,9 @@ namespace DP
         public bool isDead;
         public CapsuleCollider body;
         public Image LockonIcon;
-        
+        public BoxCollider ExecuteCollider;
+        public Transform ExecutePoint;
+
 
 
         private void Awake()
@@ -37,31 +39,33 @@ namespace DP
             enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
             enemyStats = GetComponent<DP_EnemyStats>();
             body = GetComponent<CapsuleCollider>();
-            
-            LockonIcon.enabled =false;
+
+            LockonIcon.enabled = false;
 
 
         }
         private void Update()
         {
-            enemyAnimator.anim.SetBool("isDead",isDead);
+            enemyAnimator.anim.SetBool("isDead", isDead);
             if (isDead)
             {
-                body.isTrigger = true;
-                BackStabCollider.gameObject.SetActive(false);
+                enemyStats.handleDeath();
                 return;
             }
-            
-            isPreformingAction = enemyAnimator.anim.GetBool("isInteracting");
+
+
             HandleRoveryTimer();
         }
 
         private void FixedUpdate()
         {
-            if (isDead) 
+
+            isPreformingAction = enemyAnimator.anim.GetBool("isInteracting");
+            if (isDead)
             {
+
                 enemyLocomotion.navMeshAgent.enabled = false;
-                LockonIcon.enabled =false;
+                LockonIcon.enabled = false;
                 return;
             }
             // make sure the distance is always updated
@@ -71,6 +75,7 @@ namespace DP
             }
 
             EnemyStateMachine();
+            enemyStats.RecoverPosture();
         }
         private void LateUpdate()
         {
@@ -118,10 +123,11 @@ namespace DP
 
             if (isPreformingAction)
             {
+                currentAttack = null;
                 return;
             }
 
-            if (currentAttack == null)
+            else if (currentAttack == null)
             {
                 SelectCurrentAttack();
             }
@@ -159,7 +165,7 @@ namespace DP
                 }
             }
         }
-        
+
 
 
         #endregion

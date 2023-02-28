@@ -9,5 +9,8 @@ namespace DP
         public int maximumHealth;
         public int currentHealth;
         public int healthLevel = 10;
+        public float  currentPosture;
+        public float maximumPosture;
+        public int PostureLevel = 10;
     }
 }

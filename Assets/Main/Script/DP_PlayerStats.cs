@@ -9,6 +9,7 @@ namespace DP
         public DP_PlayerHealthBar playerHealthBar;
         public DP_PlayerHealthBar StaminaBar;
         DP_animationHandler animationHandler;
+        DP_PlayerManager playerManager;
 
 
         //stamina related
@@ -18,6 +19,7 @@ namespace DP
         void Start()
         {
             animationHandler = GetComponentInChildren<DP_animationHandler>();
+            playerManager = GetComponentInParent<DP_PlayerManager>();
             maximumHealth = SetMaximumHealthLevel();
             currentHealth = maximumHealth;
             playerHealthBar.SetMaximumHeath(maximumHealth);
@@ -43,13 +45,16 @@ namespace DP
 
         public void TakeDamage(int damage)
         {
-            if (PlayerIsDead())
+            if (PlayerIsDead() || playerManager.isRolling)
             {
                 return;
             }
             currentHealth = currentHealth - damage;
             playerHealthBar.SetHeathBarValue(currentHealth);
-            animationHandler.ApplyTargetAnimation("playerHitReaction", true, false);
+            if (!playerManager.isInteracting)
+            {
+                animationHandler.ApplyTargetAnimation("playerHitReaction", true, false);
+            }
             if (currentHealth <= 0)
             {
                 animationHandler.ApplyTargetAnimation("dead", true, false);
@@ -63,6 +68,12 @@ namespace DP
         public void Heal(int healAmount)
         {
             currentHealth += healAmount;
+            {
+                if (currentHealth > maximumHealth)
+                {
+                    currentHealth = maximumHealth;
+                }
+            }
             playerHealthBar.SetHeathBarValue(currentHealth);
         }
     }

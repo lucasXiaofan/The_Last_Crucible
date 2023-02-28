@@ -31,6 +31,7 @@ namespace DP
         [Header("Combat settings")]
         public Transform CriticalStabPoint;
         public bool isParrying = false;
+        public bool isRolling = false;
 
         [Header("Player Inventory")]
         LayerMask ItemPickLayer;
@@ -38,7 +39,6 @@ namespace DP
         [Header("Player Interact")]
         string interactString;
         public GameObject door;
-        bool interacted = false;
 
         [Header("SceneManagement")]
         int sceneIndex;
@@ -83,10 +83,12 @@ namespace DP
             isJumping = animator.GetBool("isJumping");
             animator.SetBool("IsInAir", isInAir);
             animator.SetBool("isGrounded", isGrounded);
+            isRolling = animator.GetBool("isRolling");
             inputHandler.TickInput(delta);
             playerLomotion.HandleRollingAndSprint(delta);
             CheckForInteractableObject();
             playerLomotion.HandlePlayerJump(inputHandler.jump_input);
+
 
 
             // If escape key, Cursor.visible = true; CursorLockMode off
@@ -124,15 +126,13 @@ namespace DP
             inputHandler.parry_input = false;
             inputHandler.tab_input = false;
             inputHandler.heal_input = false;
+            inputHandler.roll_backStep_input = false;
 
             if (cameraControl != null)
             {
                 cameraControl.FollowTarget(delta);
                 cameraControl.CameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
             }
-
-
-
 
             isSprinting = inputHandler.roll_b_input;
             if (isInAir)
