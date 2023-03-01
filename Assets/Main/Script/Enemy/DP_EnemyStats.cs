@@ -39,6 +39,10 @@ namespace DP
             playerHealthBar.enabled = false;
         }
 
+        public void ShowUI()
+        {
+            playerHealthBar.showEnemyUI();
+        }
 
         public void TakeDamage(int damage, bool normal)
         {

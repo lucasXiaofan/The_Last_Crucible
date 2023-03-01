@@ -71,7 +71,7 @@ namespace DP
                     playerManager.transform.rotation = Quaternion.Slerp(playerManager.transform.rotation, tr, Time.deltaTime * 500);
                     animationHandler.ApplyTargetAnimation((isExecute ? "Execute" : "BackStab"), true, false);
                     enemyManger.GetComponentInChildren<DP_EnemyAnimator>().ApplyTargetAnimation((isExecute ? "Executed" : "BackStabbed"), true, false);
-                    enemyManger.GetComponent<DP_EnemyStats>().TakeDamage(200, false);
+                    enemyManger.GetComponent<DP_EnemyStats>().TakeDamage(500, false);
                 }
             }
 

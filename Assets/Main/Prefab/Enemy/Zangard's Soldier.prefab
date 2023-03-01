@@ -848,6 +848,7 @@ MonoBehaviour:
   isPreformingAction: 0
   enemyAttacksList:
   - {fileID: 11400000, guid: 246080734b211ea47af15b2839e3f016, type: 2}
+  - {fileID: 11400000, guid: 68d52ae705c9b8148980c2cea7e94999, type: 2}
   - {fileID: 11400000, guid: c3a3af41da03c3f4ab68a652b033538d, type: 2}
   - {fileID: 11400000, guid: 45eb8dae13cd8b9439f8d5fe64f70a58, type: 2}
   currentAttack: {fileID: 0}

@@ -102,12 +102,13 @@ namespace DP
 
             playerLomotion.playerRigidBody.drag = 0;
             Vector3 deltaPosition = anim.deltaPosition;
+
+
             deltaPosition.y = 0;
-
-
-
             Vector3 velocity = deltaPosition / delta;
             playerLomotion.playerRigidBody.velocity = velocity;
+
+
 
         }
         public void enableCombo()
@@ -151,6 +152,10 @@ namespace DP
         {
             playerManager.isRolling = false;
             anim.SetBool("isRolling", false);
+        }
+        public void Falling()
+        {
+            playerManager.isJumping = false;
         }
     }
 }

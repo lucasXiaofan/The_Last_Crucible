@@ -474,7 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumHealth: 0
   currentHealth: 0
-  healthLevel: 50
+  healthLevel: 45
   currentPosture: 0
   maximumPosture: 0
   PostureLevel: 30
