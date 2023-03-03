@@ -61,6 +61,8 @@ namespace DP
                 if (enemyStats != null)
                 {
                     enemyStats.TakeDamage(currentWeaponDamage, true);
+                    Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                    enemyStats.playBloodVFX(contactPoint);
                 }
             }
 

@@ -13,6 +13,9 @@ namespace DP
         public int FlaskAmount;
         public int healAmount;
 
+        // [Header("Combat vfx")]
+        // public GameObject bloodvfx;
+
         [Header("UI")]
         DP_QuickSlotUI quickSlotUI;
         private void Awake()
@@ -26,7 +29,10 @@ namespace DP
         {
             quickSlotUI.FlaskIconHandler(FlaskAmount);
         }
-
+        // public void playBloodVFX(Vector3 location)
+        // {
+        //     GameObject blood = Instantiate(bloodvfx,location,Quaternion.identity);
+        // }
         public void HealPlayer()
         {
             if (!playerManager.isInteracting)
