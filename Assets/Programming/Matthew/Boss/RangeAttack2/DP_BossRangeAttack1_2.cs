@@ -27,6 +27,7 @@ namespace DP
                                         DP_EnemyAnimator enemyAnimator,
                                         DP_EnemyLocomotion enemyLocomotion)
         {
+            
             targetRotation = HandleRotation(enemyLocomotion, enemyManger);
 
             if (enemyManger.isPreformingAction)
@@ -49,8 +50,58 @@ namespace DP
                 }
             }
             return this;
+            
+
+            /*
+            //Jump and land motions are not smooth, a bit choppy.
+            if (enemyManger.isPreformingAction)
+            {
+                return this;
+            }
+
+            //Start attack
+            if (start)
+            {
+                enemyManger.currentAttack = attackSO;
+                enemyManger.AttackTarget();
+                start = false;
+            }
+
+            return this;
+            */
         }
 
+        //Jump function
+        public void jumpMotion(DP_EnemyManger enemyManger, float time)
+        {
+            Vector3 startPosition = enemyManger.transform.position;
+            float elapsedTime = 0;
+
+            while (elapsedTime < time)
+            {
+                enemyManger.transform.position = Vector3.Lerp(startPosition, new Vector3(startPosition.x, jumpHeight, startPosition.z), Mathf.Pow((elapsedTime / time), 2.4f));
+
+                elapsedTime += Time.deltaTime;
+            }
+        }
+
+        //Land function
+        public void landMotion(DP_EnemyManger enemyManger, float time)
+        {
+            Vector3 startPosition = enemyManger.transform.position;
+            float elapsedTime = 0;
+
+            while (elapsedTime < time)
+            {
+                enemyManger.transform.position = Vector3.Lerp(startPosition, new Vector3(startPosition.x, 0f, startPosition.z), Mathf.Pow((elapsedTime / time), 2.4f));
+
+                elapsedTime += Time.deltaTime;
+            }
+
+            enemyManger.transform.rotation = new Quaternion(0f, enemyManger.transform.rotation.y, 0f, enemyManger.transform.rotation.w);
+        }
+
+        
         IEnumerator generalCoroutine(DP_EnemyAnimator enemyAnimator, DP_EnemyManger enemyManger, DP_EnemyLocomotion enemyLocomotion)
         {
             CR_running = true;
@@ -58,12 +109,12 @@ namespace DP
             float startRotationX = enemyManger.transform.rotation.x;
             float startRotationZ = enemyManger.transform.rotation.z;
 
-            yield return StartCoroutine(jumpLandHandler(enemyAnimator, enemyManger, enemyLocomotion, "GhostSamurai_APose_Jump_Start_Inplace", true, 0.83f));
+            yield return StartCoroutine(jumpLandHandler(enemyAnimator, enemyManger, enemyLocomotion, "RangeAttack1_2 Jump", true, 0.83f));
 
             yield return StartCoroutine(attackCoroutine(enemyAnimator));
-            yield return StartCoroutine(attackCoroutine(enemyAnimator));
+            //yield return StartCoroutine(attackCoroutine(enemyAnimator));
 
-            yield return StartCoroutine(jumpLandHandler(enemyAnimator, enemyManger, enemyLocomotion, "GhostSamurai_APose_Jump_End_Inplace", false, 0.83f));
+            yield return StartCoroutine(jumpLandHandler(enemyAnimator, enemyManger, enemyLocomotion, "RangeAttack1_2 Land", false, 0.83f));
 
             enemyManger.transform.rotation = new Quaternion(0f, enemyManger.transform.rotation.y, 0f, enemyManger.transform.rotation.w);
 
@@ -94,24 +145,27 @@ namespace DP
         //Animations can't loop into themselves?
         IEnumerator attackCoroutine(DP_EnemyAnimator enemyAnimator)
         {
-            enemyAnimator.ApplyTargetAnimation("GhostSamurai_APose_Air_Attack02_Inplace", true, true);
+            enemyAnimator.ApplyTargetAnimation("RangeAttack1_2 Swing", true, true);
             
+            //frame 38
             yield return new WaitForSeconds(0.32f);
             ProjectileAttack(targetRotation);
+
+            //frame 94
             yield return new WaitForSeconds(0.41f);
             ProjectileAttack(targetRotation);
             yield return new WaitForSeconds(0.4f);
 
-            enemyAnimator.ApplyTargetAnimation("GhostSamurai_Common_Jump_Loop_Inplace", true, true);
             yield return new WaitForSeconds(0.8f);
         }
+        
 
-        private void ProjectileAttack(Quaternion targetRotation)
+        public void ProjectileAttack(Quaternion targetRotation)
         {
             projectileObj = Instantiate(projectilePrefab, attackOrigin.position, targetRotation);
         }
 
-        private Quaternion HandleRotation(DP_EnemyLocomotion enemyLocomotion, DP_EnemyManger enemyManger)
+        public Quaternion HandleRotation(DP_EnemyLocomotion enemyLocomotion, DP_EnemyManger enemyManger)
         {
             if (enemyLocomotion.currentTarget == null)
             {

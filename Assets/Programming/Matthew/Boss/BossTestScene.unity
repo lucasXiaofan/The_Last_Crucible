@@ -347,6 +347,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 720138125, guid: 83117412d3f3a11408b5a13b71740937, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 720138125, guid: 83117412d3f3a11408b5a13b71740937, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1269788868661261911, guid: 83117412d3f3a11408b5a13b71740937,
         type: 3}
       propertyPath: m_IsActive
@@ -900,9 +908,19 @@ PrefabInstance:
       objectReference: {fileID: 1653616184}
     - target: {fileID: 1586001473515107526, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
         type: 3}
+      propertyPath: distanceMult
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586001473515107526, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
+        type: 3}
+      propertyPath: navMeshNewSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586001473515107526, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
+        type: 3}
       propertyPath: projectilePrefab
       value: 
-      objectReference: {fileID: 8606047022787430714, guid: 6367831631703cc4f90542c317d37d5c,
+      objectReference: {fileID: 392772867228603928, guid: 0fcd3d0a7cfae514baad76c59f561963,
         type: 3}
     - target: {fileID: 6409558228044349640, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
         type: 3}
@@ -913,7 +931,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentState
       value: 
-      objectReference: {fileID: 2071685008}
+      objectReference: {fileID: 1296641791}
     - target: {fileID: 6409558228044349646, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
         type: 3}
       propertyPath: m_Name
@@ -976,6 +994,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81850f49c43fdab4baa1d7fa4b427a8e, type: 3}
+--- !u!114 &1073095199 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6409558228044349641, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1073095198}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0de624500ba9a49aa34b5660484690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1073095200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6409558228044349642, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1073095198}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33a68636da10734b9a382c89eefcf7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1073095201 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7205169316883811472, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1073095198}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1073095202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073095201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22329e0138c84274f85566adfea811f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyManger: {fileID: 1073095200}
+  enemyLocomotion: {fileID: 1073095199}
+  rangeAttack1_1State: {fileID: 1296641791}
+--- !u!114 &1296641791 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1586001473515107526, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1073095198}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09313fefa80066e4496e3dbf5227c09c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1317300381 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1269788869340627191, guid: 83117412d3f3a11408b5a13b71740937,

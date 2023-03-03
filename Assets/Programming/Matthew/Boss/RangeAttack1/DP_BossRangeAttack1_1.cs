@@ -14,10 +14,15 @@ namespace DP
         public GameObject projectilePrefab;
         private Quaternion targetRotation;
 
-        GameObject projectileObj;
+        private GameObject projectileObj;
+
+        private Vector3 currentMoveLoc;
+        public float navMeshNewSpeed = 1f;
+        public float navMeshOldSpeed;
+        public float distanceMult = 0f;
 
         private bool start = true;
-        private bool CR_running = false;
+        private bool finish = false;
 
         //Need to time out animation with projectile spawn
         public override DP_State Tick(DP_EnemyManger enemyManger,
@@ -25,71 +30,41 @@ namespace DP
                                         DP_EnemyAnimator enemyAnimator,
                                         DP_EnemyLocomotion enemyLocomotion)
         {
-            targetRotation = HandleRotation(enemyLocomotion, enemyManger);
-
             if (enemyManger.isPreformingAction)
             {
                 return this;
             }
-
+            
             if (start)
             {
-                StartCoroutine(generalCoroutine(enemyAnimator, enemyManger, enemyLocomotion));
+                if (enemyLocomotion.currentTarget == null)
+                {
+                    enemyLocomotion.HandleDetection();
+                }
+
+                enemyManger.currentAttack = attackSO;
+                enemyManger.AttackTarget();
                 start = false;
                 return this;
             }
-            else
-            {
-                if (!CR_running)
-                {
-                    return tempState;
-                }
-            }
-            return this;
+
+            return tempState;
         }
 
-        IEnumerator generalCoroutine(DP_EnemyAnimator enemyAnimator, DP_EnemyManger enemyManger, DP_EnemyLocomotion enemyLocomotion)
+        public void moveBoss(DP_EnemyLocomotion enemyLocomotion)
         {
-            CR_running = true;
-
-            yield return StartCoroutine(attackCoroutine(enemyAnimator));
-            yield return StartCoroutine(attackCoroutine(enemyAnimator));
-
-            yield return StartCoroutine(rollCoroutine(enemyAnimator, enemyLocomotion));
-
-            yield return StartCoroutine(attackCoroutine(enemyAnimator));
-            yield return StartCoroutine(attackCoroutine(enemyAnimator));
-
-            yield return null;
-
-            CR_running = false;
+            //Determine new location
+            enemyLocomotion.HandleRotationTowardsTarget();
+            currentMoveLoc = transform.position - (transform.forward * distanceMult);
+            enemyLocomotion.navMeshAgent.SetDestination(currentMoveLoc);
         }
 
-        IEnumerator attackCoroutine(DP_EnemyAnimator enemyAnimator)
-        {
-            enemyAnimator.ApplyTargetAnimation("", true, false);
-
-            yield return new WaitForSeconds(0.5f);
-            ProjectileAttack(targetRotation);
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        IEnumerator rollCoroutine(DP_EnemyAnimator enemyAnimator, DP_EnemyLocomotion enemyLocomotion)
-        {
-            //Determine move position
-            //Determine left or right?
-
-            //Play roll animation
-            enemyAnimator.ApplyTargetAnimation("", true, false);
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        private void ProjectileAttack(Quaternion targetRotation)
+        public void ProjectileAttack(Quaternion targetRotation)
         {
             projectileObj = Instantiate(projectilePrefab, attackOrigin.position, targetRotation);
         }
 
-        private Quaternion HandleRotation(DP_EnemyLocomotion enemyLocomotion, DP_EnemyManger enemyManger)
+        public Quaternion HandleRotation(DP_EnemyLocomotion enemyLocomotion, DP_EnemyManger enemyManger)
         {
             if (enemyLocomotion.currentTarget == null)
             {
