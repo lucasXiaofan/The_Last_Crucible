@@ -11,7 +11,7 @@ namespace DP
 {
     public class DP_BossMeleeAttack : DP_State
     {
-        public DP_BossIdleTest chase; // Replace with chase later.
+        public DP_State chase; // Replace with chase later.
         public DP_EnemyAttackActions attack;
         bool exitFlag = false;
         public override DP_State Tick(DP_EnemyManger enemyManger, DP_EnemyStats enemyStats, DP_EnemyAnimator enemyAnimator, DP_EnemyLocomotion enemyLocomotion)
@@ -31,7 +31,8 @@ namespace DP
             else {
                 exitFlag = true;
             }
-            
+            enemyLocomotion.transform.position += enemyAnimator.anim.deltaPosition;
+
             return this;
         }
 
