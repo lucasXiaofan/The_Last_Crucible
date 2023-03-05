@@ -29,7 +29,7 @@ namespace DP
         [Header("Handle Falling")]
         [SerializeField]
         float ToGroundDistance;
-        float groundMinDistance = 0.7f;
+        float groundMinDistance = 0.2f;
         [SerializeField]
         LayerMask ignoreLayer;
         public LayerMask ground;
@@ -260,7 +260,7 @@ namespace DP
             {
                 return;
             }
-
+            // playerRigidBody.AddForce(-Vector3.up * fallingSpeed * (ToGroundDistance > 1.5f ? 3 : 3) * (fallingTimer + 1));
             if (playerManager.isGrounded)
             {
 
@@ -295,17 +295,19 @@ namespace DP
                     {
                         animationHandler.ApplyTargetAnimation("fall", false, false);
                     }
-
+                    playerManager.isInAir = true;
                 }
-
-                playerManager.isInAir = true;
             }
             if (playerManager.isInAir)
             {
-                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3 * (fallingTimer + 1));
+                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 7 * (fallingTimer + 1));
                 // //add a kick off force below
                 Vector3 kickDir = moveDirection;
                 playerRigidBody.AddForce(kickDir * fallingSpeed / 6f);
+            }
+            else if (!playerManager.isGrounded)
+            {
+                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3);
             }
 
         }

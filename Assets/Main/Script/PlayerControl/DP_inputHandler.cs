@@ -180,7 +180,10 @@ namespace DP
         }
         private void HandleAttack(float delta)
         {
-
+            if (playerAttacker.CanExecute())
+            {
+                playerManager.canDoCombo = false;
+            }
             if (playerManager.isInteracting && !playerManager.canDoCombo)
                 return;
             if (rb_input) //&& StaminaStatus.alive())
@@ -190,7 +193,7 @@ namespace DP
                     print("triggered execution");
                     playerAttacker.HandleExecution(true);
                 }
-                else if (playerAttacker.CanBackStab())
+                else if (playerAttacker.CanBackStab() && !playerManager.canDoCombo)
                 {
                     print("why back stab");
                     playerAttacker.HandleExecution(false);

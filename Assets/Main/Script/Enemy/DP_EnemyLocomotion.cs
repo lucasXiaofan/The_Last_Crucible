@@ -62,6 +62,7 @@ namespace DP
                     if (viewAbleAngle < enemyManger.maxDetectionAngle && viewAbleAngle > enemyManger.minDetectionAngle)
                     {
                         currentTarget = characterStats;
+
                     }
                 }
             }

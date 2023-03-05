@@ -9,6 +9,7 @@ namespace DP
         public DP_PlayerHealthBar playerHealthBar;
         DP_EnemyAnimator enemyAnimator;
         DP_EnemyManger enemyManger;
+        public GameObject bloodVFX;
 
 
 
@@ -39,6 +40,10 @@ namespace DP
             playerHealthBar.enabled = false;
         }
 
+        public void ShowUI()
+        {
+            playerHealthBar.showEnemyUI();
+        }
 
         public void TakeDamage(int damage, bool normal)
         {
@@ -61,6 +66,7 @@ namespace DP
                 {
                     DamagePosture(damage);
                     enemyAnimator.ApplyTargetAnimation("getHit", true, false);
+                    
 
                 }
                 if (currentHealth <= 0)
@@ -75,6 +81,10 @@ namespace DP
             }
 
         }
+        public void playBloodVFX(Vector3 location)
+        {
+            GameObject blood = Instantiate(bloodVFX,location,Quaternion.identity);
+        }
 
         public void DamagePosture(int damage)
         {
@@ -86,6 +96,7 @@ namespace DP
             if (PostureBreak())
             {
                 enemyAnimator.ApplyTargetAnimation("vulnerable", true, false);
+                
             }
 
         }

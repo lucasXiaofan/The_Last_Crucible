@@ -109,6 +109,7 @@ namespace DP
             if (currentRecoveryTime > 0)
             {
                 currentRecoveryTime -= Time.deltaTime;
+                isPreformingAction = true;
             }
             if (isPreformingAction)
             {
