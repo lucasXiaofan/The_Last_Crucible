@@ -39,6 +39,7 @@ namespace DP
         [Header("Player Interact")]
         string interactString;
         public GameObject door;
+        public Animator doorAnimation;
 
         [Header("SceneManagement")]
         int sceneIndex;
@@ -190,11 +191,16 @@ namespace DP
                             if (playerInventory.CheckHasKey())
                             {
                                 // play animation open door
+                                if (door != null)
+                                    door.GetComponent<Animator>().Play("Door");
+                                    //doorAnimation.Play("Door");
+                                /*
                                 // delete below later
                                 if (door != null)
                                 {
                                     door.SetActive(false);
                                 }
+                                */
                             }
                         }
                     }
