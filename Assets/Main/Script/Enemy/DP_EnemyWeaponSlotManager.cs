@@ -9,6 +9,7 @@ namespace DP
 
         DP_WeaponSlot rightHandSlot;
         DP_DamageCollider rightHandCollider;
+        KnockUpCollider knockUpCollider;
         public DP_WeaponItem rightHandWeapon;
         void Awake()
         {
@@ -37,13 +38,40 @@ namespace DP
 
         public void LoadWeaponsDamageCollider()
         {
+            knockUpCollider = rightHandSlot.currentWeapon.GetComponentInChildren<KnockUpCollider>();
             rightHandCollider = rightHandSlot.currentWeapon.GetComponentInChildren<DP_DamageCollider>();
             if (rightHandCollider != null)
             {
                 disableCollider();
             }
+            if (knockUpCollider != null)
+            {
+                CloseKnockUpCollider();
+            }
 
             //print(rightHandSlot.currentWeapon);
+        }
+
+        public void openKnockUpCollider()
+        {
+            // if (rightHandCollider != null)
+            // {
+            //     rightHandCollider.DisableDamage();
+            // }
+
+            if (knockUpCollider != null)
+            {
+                knockUpCollider.enableKnockUp();
+            }
+        }
+        public void CloseKnockUpCollider()
+        {
+
+
+            if (knockUpCollider != null)
+            {
+                knockUpCollider.disableKnockUp();
+            }
         }
 
         public void openCollider()

@@ -6,8 +6,8 @@ namespace DP
 {
     public class KnockUpCollider : MonoBehaviour
     {
-        CapsuleCollider KpCollider;
-        public float KnockUpDamage;
+        [SerializeField] CapsuleCollider KpCollider;
+        public int KnockUpDamage = 50;
         private void Start()
         {
             KpCollider = GetComponent<CapsuleCollider>();
@@ -16,8 +16,20 @@ namespace DP
         {
             if (other.gameObject.tag == "Player")
             {
-                //player animation apply damage
+                DP_animationHandler animationHandler = other.transform.GetComponentInChildren<DP_animationHandler>();
+                DP_PlayerStats playerStats = other.transform.GetComponentInParent<DP_PlayerStats>();
+
+                animationHandler.ApplyTargetAnimation("HitUp", true, false);
+                playerStats.TakeDamage(10, true);
             }
+        }
+        public void enableKnockUp()
+        {
+            KpCollider.enabled = true;
+        }
+        public void disableKnockUp()
+        {
+            KpCollider.enabled = false;
         }
     }
 }
