@@ -524,6 +524,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac6b46abe88dc849b543eca08471778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &309457730 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6409558228609240727, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1073095198}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073095201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a458e5c7ddd5e3c47a3ab55b1e377fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &384021527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1586001472875155797, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
@@ -914,7 +926,7 @@ PrefabInstance:
     - target: {fileID: 1586001473515107526, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
         type: 3}
       propertyPath: navMeshNewSpeed
-      value: 10
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 1586001473515107526, guid: 81850f49c43fdab4baa1d7fa4b427a8e,
         type: 3}
@@ -1038,6 +1050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyManger: {fileID: 1073095200}
   enemyLocomotion: {fileID: 1073095199}
+  enemyAnimator: {fileID: 309457730}
   rangeAttack1_1State: {fileID: 1296641791}
 --- !u!114 &1296641791 stripped
 MonoBehaviour:

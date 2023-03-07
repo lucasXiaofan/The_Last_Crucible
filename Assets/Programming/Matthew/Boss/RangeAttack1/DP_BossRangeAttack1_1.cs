@@ -22,7 +22,6 @@ namespace DP
         public float distanceMult = 0f;
 
         private bool start = true;
-        private bool finish = false;
 
         //Need to time out animation with projectile spawn
         public override DP_State Tick(DP_EnemyManger enemyManger,
@@ -51,12 +50,25 @@ namespace DP
             return tempState;
         }
 
-        public void moveBoss(DP_EnemyLocomotion enemyLocomotion)
+        //0 = back, 1 = left, 2 = right
+        public void moveBoss(DP_EnemyLocomotion enemyLocomotion, DP_EnemyManger enemyManger, int moveDir)
         {
             //Determine new location
-            enemyLocomotion.HandleRotationTowardsTarget();
-            currentMoveLoc = transform.position - (transform.forward * distanceMult);
+            if (moveDir == 0)
+            {
+                currentMoveLoc = enemyManger.transform.position - (enemyManger.transform.forward * distanceMult);
+            }
+            else if (moveDir == 1)
+            {
+                currentMoveLoc = enemyManger.transform.position - (enemyManger.transform.right * distanceMult);
+            }
+            else if (moveDir == 2)
+            {
+                currentMoveLoc = enemyManger.transform.position + (enemyManger.transform.right * distanceMult);
+            }
+
             enemyLocomotion.navMeshAgent.SetDestination(currentMoveLoc);
+            //enemyLocomotion.HandleRotationTowardsTarget();
         }
 
         public void ProjectileAttack(Quaternion targetRotation)

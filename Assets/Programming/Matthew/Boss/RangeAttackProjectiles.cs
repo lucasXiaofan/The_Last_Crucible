@@ -8,6 +8,7 @@ namespace DP
     {
         public DP_EnemyManger enemyManger;
         public DP_EnemyLocomotion enemyLocomotion;
+        public DP_EnemyAnimator enemyAnimator;
 
         [Header("RangeAttack1_1")]
         public DP_BossRangeAttack1_1 rangeAttack1_1State;
@@ -18,12 +19,20 @@ namespace DP
             enemyLocomotion.navMeshAgent.speed = rangeAttack1_1State.navMeshNewSpeed;
 
             enemyLocomotion.navMeshAgent.enabled = true;
-            rangeAttack1_1State.moveBoss(enemyLocomotion);
+            enemyLocomotion.navMeshAgent.updateRotation = false;
+            rangeAttack1_1State.moveBoss(enemyLocomotion, enemyManger, enemyAnimator.anim.GetInteger("dodgeDir"));
+        }
+
+        public void determineNewDir()
+        {
+            int moveDir = Random.Range(0, 3);
+            enemyAnimator.anim.SetInteger("dodgeDir", moveDir);
         }
 
         public void stopMove()
         {
             enemyLocomotion.navMeshAgent.speed = rangeAttack1_1State.navMeshOldSpeed;
+            enemyLocomotion.navMeshAgent.updateRotation = true;
             enemyLocomotion.navMeshAgent.enabled = false;
         }
 
