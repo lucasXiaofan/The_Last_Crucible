@@ -43,7 +43,7 @@ namespace DP
             return currentHealth <= 0;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, bool normal = false)
         {
             if (PlayerIsDead() || playerManager.isRolling)
             {
@@ -51,10 +51,11 @@ namespace DP
             }
             currentHealth = currentHealth - damage;
             playerHealthBar.SetHeathBarValue(currentHealth);
-            if (!playerManager.isInteracting)
+            if (!playerManager.isInteracting && !normal)
             {
                 animationHandler.ApplyTargetAnimation("playerHitReaction", true, false);
             }
+
             if (currentHealth <= 0)
             {
                 animationHandler.ApplyTargetAnimation("dead", true, false);

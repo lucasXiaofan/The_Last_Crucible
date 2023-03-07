@@ -30,6 +30,7 @@ namespace DP
         public Image LockonIcon;
         public BoxCollider ExecuteCollider;
         public Transform ExecutePoint;
+        public bool Recovering;
 
 
 
@@ -109,20 +110,20 @@ namespace DP
             if (currentRecoveryTime > 0)
             {
                 currentRecoveryTime -= Time.deltaTime;
-                isPreformingAction = true;
+                Recovering = true;
             }
-            if (isPreformingAction)
+            if (Recovering)
             {
                 if (currentRecoveryTime <= 0)
                 {
-                    isPreformingAction = false;
+                    Recovering = false;
                 }
             }
         }
         public void AttackTarget()
         {
 
-            if (isPreformingAction)
+            if (Recovering || isPreformingAction)
             {
                 currentAttack = null;
                 return;
