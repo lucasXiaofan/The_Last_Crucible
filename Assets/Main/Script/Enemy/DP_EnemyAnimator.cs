@@ -11,6 +11,7 @@ namespace DP
         DP_EnemyManger enemyManger;
         DP_EnemyStats enemyStats;
         public BoxCollider ExecutionCollider;
+        public Transform rootPosition;
         private void Awake()
         {
             if (ExecutionCollider != null)
@@ -27,7 +28,7 @@ namespace DP
             float delta = Time.deltaTime;
             enemyLocomotion.enemyRigidbody.drag = 0;
             Vector3 deltaPosition = anim.deltaPosition;
-            deltaPosition.y = 0;
+            // deltaPosition.y = 0;
             Vector3 velocity = deltaPosition / delta;
             // enemyLocomotion.enemyRigidbody.velocity = velocity * 10;
             // enemyLocomotion.navMeshAgent.nextPosition = anim.rootPosition;
@@ -75,5 +76,9 @@ namespace DP
                 ExecutionCollider.enabled = false;
             }
         }
+
+        #region combat
+
+        #endregion
     }
 }
