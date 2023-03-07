@@ -6,7 +6,7 @@ namespace DP
 {
     public class Boss_IdleState : DP_State
     {
-        public DP_State ChaseState;
+        public DP_State CombatStanceState;
         public override DP_State Tick(DP_EnemyManger enemyManger, DP_EnemyStats enemyStats, DP_EnemyAnimator enemyAnimator, DP_EnemyLocomotion enemyLocomotion)
         {
             if (enemyLocomotion.currentTarget == null)
@@ -15,7 +15,7 @@ namespace DP
             }
             else
             {
-                return ChaseState;
+                return CombatStanceState;
             }
             return this;
         }

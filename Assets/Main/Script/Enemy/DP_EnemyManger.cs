@@ -31,6 +31,7 @@ namespace DP
         public BoxCollider ExecuteCollider;
         public Transform ExecutePoint;
         public bool Recovering;
+        public bool isPhase2;
 
 
 

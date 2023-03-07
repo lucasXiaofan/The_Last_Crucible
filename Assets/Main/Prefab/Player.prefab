@@ -413,7 +413,7 @@ MonoBehaviour:
     m_Bits: 0
   ground:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 524289
   fallingTimer: 0
 --- !u!114 &5857331303842888206
 MonoBehaviour:
@@ -2129,6 +2129,20 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1063494633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5857331304779880175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dec8cb820b02da4881e60e7971f86ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlaskAmount: 3
+  healAmount: 60
 --- !u!114 &5857331304779770590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2156,20 +2170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 5857331304789283351}
   canRotate: 1
---- !u!114 &1063494633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5857331304779880175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dec8cb820b02da4881e60e7971f86ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FlaskAmount: 3
-  healAmount: 60
 --- !u!1 &5857331304779932357 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 165894, guid: 880858dfd9b1e784e89d45242bf78d2b,

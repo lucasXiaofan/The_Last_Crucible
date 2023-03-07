@@ -306,9 +306,10 @@ namespace DP
                 playerRigidBody.AddForce(kickDir * fallingSpeed / 6f);
             }
             else if (!playerManager.isGrounded)
-            {
-                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3);
-            }
+                {
+                    playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3);
+                }
+            
 
         }
         public void HandlePlayerJump(bool pressJump)
@@ -337,8 +338,10 @@ namespace DP
                     playerTransform.rotation = rotation;
                 }
 
-                playerRigidBody.AddForce(Vector3.up * 40, ForceMode.VelocityChange);
+                playerRigidBody.AddForce(Vector3.up * 40*2, ForceMode.VelocityChange);
+                
             }
+            print(transform.position.y);
 
         }
 

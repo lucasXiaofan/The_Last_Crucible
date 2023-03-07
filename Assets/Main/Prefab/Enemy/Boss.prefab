@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &126625292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 126625294}
+  - component: {fileID: 126625293}
+  m_Layer: 0
+  m_Name: CombatStandState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &126625294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126625292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5688548601668077627}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &126625293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126625292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59adf0bd3401c43489f72ec5a1aa522a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RangeAttackState: {fileID: 0}
+  PursueState: {fileID: 102959825}
 --- !u!1 &220189068
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,6 +147,83 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &431291301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431291302}
+  m_Layer: 0
+  m_Name: Melee13 Combo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &431291302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431291301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5022589967878071459}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &809547105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 809547106}
+  - component: {fileID: 809547107}
+  m_Layer: 0
+  m_Name: Melee13
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &809547106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809547105}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5022589967878071459}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &809547107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809547105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c69d4ed8270ed4cbd36bd4b9e29301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatStanceState: {fileID: 126625293}
+  coolDown: 3
 --- !u!1 &819231845
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +327,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 809547106}
+  - {fileID: 431291302}
   m_Father: {fileID: 5688548601668077627}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -355,6 +480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5688548600556534656}
+  - component: {fileID: 102959825}
   m_Layer: 0
   m_Name: PursueState
   m_TagString: Untagged
@@ -377,6 +503,19 @@ Transform:
   m_Father: {fileID: 5688548601668077627}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &102959825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5688548600556534657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d99f433c763764f88bed371c42cae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Attack: {fileID: 809547107}
 --- !u!1 &5688548600798869737
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,7 +623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LockOnTransform: {fileID: 5688548600065512397}
-  currentState: {fileID: 0}
+  currentState: {fileID: 746796448}
   isPreformingAction: 0
   enemyAttacksList: []
   currentAttack: {fileID: 0}
@@ -499,6 +638,8 @@ MonoBehaviour:
   LockonIcon: {fileID: 819231847}
   ExecuteCollider: {fileID: 0}
   ExecutePoint: {fileID: 0}
+  Recovering: 0
+  isPhase2: 0
 --- !u!114 &5688548600798869742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,6 +681,7 @@ MonoBehaviour:
   maximumPosture: 0
   PostureLevel: 10
   playerHealthBar: {fileID: 0}
+  bloodVFX: {fileID: 0}
   recoveryLimit: 10
 --- !u!1 &5688548600843689704
 GameObject:
@@ -550,6 +692,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5688548600843689711}
+  - component: {fileID: 746796448}
   m_Layer: 0
   m_Name: IdleState
   m_TagString: Untagged
@@ -572,6 +715,19 @@ Transform:
   m_Father: {fileID: 5688548601668077627}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &746796448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5688548600843689704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d400e2117e41e54c858e72d3abbb7b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CombatStanceState: {fileID: 126625293}
 --- !u!1 &5688548601298352793
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +793,7 @@ Transform:
   - {fileID: 5688548600556534656}
   - {fileID: 5287370999881017261}
   - {fileID: 5022589967878071459}
+  - {fileID: 126625294}
   m_Father: {fileID: 5688548600798869736}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -745,6 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 8502651778127054637}
   ExecutionCollider: {fileID: 0}
+  rootPosition: {fileID: 0}
 --- !u!114 &5688548600234309303
 MonoBehaviour:
   m_ObjectHideFlags: 0
