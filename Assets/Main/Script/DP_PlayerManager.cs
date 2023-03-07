@@ -27,6 +27,7 @@ namespace DP
         public bool isGrounded;
         public bool canDoCombo;
         public bool canDoAirAttack;
+        public bool Falling;
 
         [Header("Combat settings")]
         public Transform CriticalStabPoint;
@@ -87,15 +88,15 @@ namespace DP
             canDoAirAttack = animator.GetBool("canDoAirAttack");
             canDoCombo = animator.GetBool("canDoCombo");
             isInteracting = animator.GetBool("isInteracting");
-            isJumping = animator.GetBool("isJumping");
             animator.SetBool("IsInAir", isInAir);
             animator.SetBool("isGrounded", isGrounded);
             isRolling = animator.GetBool("isRolling");
+            animator.SetBool("isFalling", Falling);
             inputHandler.TickInput(delta);
             playerLomotion.HandlePlayerJump(inputHandler.jump_input);
             playerLomotion.HandleRollingAndSprint(delta);
             CheckForInteractableObject();
-            
+
 
 
 
@@ -107,13 +108,14 @@ namespace DP
             // {
             //     return;
             // }
-            
+
             float delta = Time.deltaTime;
-            
+
             playerLomotion.PlayerisGrounded();
             playerLomotion.HandleMovement(delta);
-            
-            
+            playerLomotion.updateJumpTime(delta);
+
+
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
         }
 

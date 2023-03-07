@@ -69,7 +69,7 @@ namespace DP
             cameraControl = FindObjectOfType<DP_CameraControl>();
             animationHandler = GetComponentInChildren<DP_animationHandler>();
             effectsManager = GetComponentInChildren<DP_PlayerEffectsManager>();
-            playerLomotion= GetComponent<DP_playerLomotion>();
+            playerLomotion = GetComponent<DP_playerLomotion>();
         }
 
         private void OnEnable()
@@ -201,8 +201,9 @@ namespace DP
                     print("why back stab");
                     playerAttacker.HandleExecution(false);
                 }
-                else if (playerManager.canDoAirAttack)
+                else if (playerManager.isJumping || playerManager.Falling)
                 {
+                    playerManager.Falling = true;
                     playerAttacker.HandleAirAttack(playerInventory.rightWeapon);
                 }
                 else if (playerManager.canDoCombo && !playerManager.isJumping)
@@ -330,7 +331,7 @@ namespace DP
 
         private void HandleJumpInput()
         {
-            if(jump_input)
+            if (jump_input)
             {
                 jumpFlag = true;
             }
