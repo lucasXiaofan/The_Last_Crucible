@@ -76,6 +76,11 @@ namespace DP
                 ExecutionCollider.enabled = false;
             }
         }
+        // boss combat need to exist this for combo
+        public void stopInteracting()
+        {
+            anim.SetBool("isInteracting",false);
+        }
 
         #region combat
 

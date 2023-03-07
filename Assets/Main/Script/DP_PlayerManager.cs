@@ -92,9 +92,10 @@ namespace DP
             animator.SetBool("isGrounded", isGrounded);
             isRolling = animator.GetBool("isRolling");
             inputHandler.TickInput(delta);
+            playerLomotion.HandlePlayerJump(inputHandler.jump_input);
             playerLomotion.HandleRollingAndSprint(delta);
             CheckForInteractableObject();
-            playerLomotion.HandlePlayerJump(inputHandler.jump_input);
+            
 
 
 
@@ -106,9 +107,13 @@ namespace DP
             // {
             //     return;
             // }
+            
             float delta = Time.deltaTime;
+            
             playerLomotion.PlayerisGrounded();
             playerLomotion.HandleMovement(delta);
+            
+            
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
         }
 

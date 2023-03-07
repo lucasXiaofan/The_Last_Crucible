@@ -12,6 +12,7 @@ namespace DP
         PlayerAttacker playerAttacker;
         DP_PlayerInventory playerInventory;
         DP_PlayerManager playerManager;
+        DP_playerLomotion playerLomotion;
         DP_UIManager uIManager;
         DP_PlayerEffectsManager effectsManager;
         public float mouseX;
@@ -43,6 +44,7 @@ namespace DP
         public bool comboFlag;
         public bool menuFlag;
         public bool lockOnFlag;
+        public bool jumpFlag;
 
         float holdCounter;
 
@@ -67,6 +69,7 @@ namespace DP
             cameraControl = FindObjectOfType<DP_CameraControl>();
             animationHandler = GetComponentInChildren<DP_animationHandler>();
             effectsManager = GetComponentInChildren<DP_PlayerEffectsManager>();
+            playerLomotion= GetComponent<DP_playerLomotion>();
         }
 
         private void OnEnable()
@@ -327,7 +330,10 @@ namespace DP
 
         private void HandleJumpInput()
         {
-            inputActions.PlayerAction.Jump.performed += i => jump_input = true;
+            if(jump_input)
+            {
+                jumpFlag = true;
+            }
         }
         public void HandleTutorial()
         {
