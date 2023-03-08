@@ -10,6 +10,7 @@ namespace DP
         public DP_PlayerHealthBar StaminaBar;
         DP_animationHandler animationHandler;
         DP_PlayerManager playerManager;
+        public GameObject bloodVFX;
 
 
         //stamina related
@@ -41,6 +42,10 @@ namespace DP
         public bool PlayerIsDead()
         {
             return currentHealth <= 0;
+        }
+        public void playBloodVFX(Vector3 location)
+        {
+            GameObject blood = Instantiate(bloodVFX, location, Quaternion.identity);
         }
 
         public void TakeDamage(int damage, bool normal = false)

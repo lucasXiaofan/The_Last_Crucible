@@ -13,6 +13,7 @@ namespace DP
 
 
 
+
         [Header("Posture")]
         public float recoveryLimit = 10f;
         float recoveryTimer = 0;
@@ -53,6 +54,10 @@ namespace DP
                 playerHealthBar.hideEnemyUI();
                 return;
             }
+            if (!normal)
+            {
+                playBloodVFX(enemyManger.LockOnTransform.position, normal);
+            }
             playerHealthBar.showEnemyUI();
             currentHealth = currentHealth - damage;
             playerHealthBar.SetHeathBarValue(currentHealth);
@@ -60,13 +65,13 @@ namespace DP
             {
                 if (PostureBreak())
                 {
-                    DamagePosture(damage);
+                    DamagePosture(damage / 3);
                 }
                 else
                 {
-                    DamagePosture(damage);
+                    DamagePosture(damage / 3);
                     enemyAnimator.ApplyTargetAnimation("getHit", true, false);
-                    
+
 
                 }
                 if (currentHealth <= 0)
@@ -81,9 +86,17 @@ namespace DP
             }
 
         }
-        public void playBloodVFX(Vector3 location)
+        public void playBloodVFX(Vector3 location, bool normal)
         {
-            GameObject blood = Instantiate(bloodVFX,location,Quaternion.identity);
+            if (normal)
+            {
+                GameObject blood = Instantiate(bloodVFX, location, Quaternion.identity);
+            }
+            // else
+            // {
+            //     GameObject blood = Instantiate(CricialBlood, location, Quaternion.identity);
+            // }
+
         }
 
         public void DamagePosture(int damage)
@@ -96,7 +109,7 @@ namespace DP
             if (PostureBreak())
             {
                 enemyAnimator.ApplyTargetAnimation("vulnerable", true, false);
-                
+
             }
 
         }

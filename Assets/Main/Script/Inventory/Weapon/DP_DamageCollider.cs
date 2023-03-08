@@ -8,6 +8,7 @@ namespace DP
     {
         DP_inputHandler inputHandler;
         public int currentWeaponDamage = 30;
+        public Transform VFXPoint;
         BoxCollider damageCollider;
         private void Awake()
         {
@@ -52,6 +53,8 @@ namespace DP
                     }
 
                     playerStats.TakeDamage(currentWeaponDamage);
+                    Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                    playerStats.playBloodVFX(contactPoint);
 
                 }
             }
@@ -62,7 +65,7 @@ namespace DP
                 {
                     enemyStats.TakeDamage(currentWeaponDamage, true);
                     Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
-                    enemyStats.playBloodVFX(contactPoint);
+                    enemyStats.playBloodVFX(contactPoint, true);
                 }
             }
 
