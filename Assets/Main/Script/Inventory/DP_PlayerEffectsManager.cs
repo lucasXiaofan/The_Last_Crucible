@@ -46,6 +46,7 @@ namespace DP
             FlaskAmount -= 1;
             quickSlotUI.FlaskIconHandler(FlaskAmount);
         }
+
     }
 
 }
