@@ -53,6 +53,8 @@ namespace DP
                     }
 
                     playerStats.TakeDamage(currentWeaponDamage);
+                    Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                    playerStats.playBloodVFX(contactPoint);
 
                 }
             }
