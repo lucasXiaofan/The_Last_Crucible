@@ -74,6 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000769606710839025}
   - component: {fileID: 531648737470200553}
+  - component: {fileID: 500565556875598407}
   m_Layer: 0
   m_Name: KnockUpCollider
   m_TagString: Untagged
@@ -110,6 +111,20 @@ CapsuleCollider:
   m_Height: 1.1963273
   m_Direction: 1
   m_Center: {x: -0.000000029011098, y: 0.89885974, z: -0.000000690029}
+--- !u!114 &500565556875598407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4528673097964782672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3eeeb04e378e7488a153896777af0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KpCollider: {fileID: 531648737470200553}
+  KnockUpDamage: 50
 --- !u!1 &5932090143262653074
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +139,6 @@ GameObject:
   - component: {fileID: 5958488859759712638}
   - component: {fileID: 3816869452079787380}
   - component: {fileID: 6003800015086572984}
-  - component: {fileID: 3793614664341649010}
   m_Layer: 0
   m_Name: Sword01
   m_TagString: Untagged
@@ -237,19 +251,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79461c1080e033b499176ce6f3f8269a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponDamage: 10
+  currentWeaponDamage: 18
   VFXPoint: {fileID: 0}
---- !u!114 &3793614664341649010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5932090143262653074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d3eeeb04e378e7488a153896777af0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KpCollider: {fileID: 531648737470200553}
-  KnockUpDamage: 50
