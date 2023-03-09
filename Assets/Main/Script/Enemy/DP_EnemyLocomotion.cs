@@ -86,7 +86,9 @@ namespace DP
             {
                 if (distanceFromtarget > stoppingDistance)
                 {
+                    
                     navMeshAgent.enabled = true;
+                    navMeshAgent.speed = 5;
                     enemyAnimator.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
                     enemyAnimator.anim.SetFloat("Archer", 0, 0.5f, Time.deltaTime);
                     navMeshAgent.SetDestination(currentTarget.transform.position);

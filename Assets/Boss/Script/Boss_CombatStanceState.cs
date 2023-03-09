@@ -13,7 +13,7 @@ namespace DP
         public override DP_State Tick(DP_EnemyManger enemyManger, DP_EnemyStats enemyStats, DP_EnemyAnimator enemyAnimator, DP_EnemyLocomotion enemyLocomotion)
         {
             enemyLocomotion.navMeshAgent.enabled = true;
-            if (enemyManger.Recovering)
+            if (enemyManger.Recovering && !enemyManger.isPreformingAction)
             {
                 // circling player
                 #region Rotation
@@ -23,10 +23,21 @@ namespace DP
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 enemyManger.transform.rotation = Quaternion.Slerp(enemyManger.transform.rotation, targetRotation, enemyLocomotion.RotationSpeed / Time.deltaTime);
                 #endregion
-                enemyAnimator.anim.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
+                
+
+                #region walkTowardPlayer
+                if (enemyLocomotion.distanceFromtarget > enemyLocomotion.stoppingDistance)
+                {
+                    enemyLocomotion.navMeshAgent.enabled = true;
+                    enemyAnimator.anim.SetFloat("Vertical", 0.5f, 0.1f, Time.deltaTime);
+                    enemyLocomotion.navMeshAgent.SetDestination(enemyLocomotion.currentTarget.transform.position);
+                    enemyLocomotion.navMeshAgent.speed = 2;
+                    enemyLocomotion.enemyRigidbody.velocity = enemyLocomotion.navMeshAgent.velocity;
+                }
+                #endregion
                 
             }
-            else
+            else if(!enemyManger.Recovering)
             {
                 print("enter the pursue state");
                 return PursueState;

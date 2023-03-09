@@ -12,6 +12,7 @@ namespace DP
         DP_EnemyStats enemyStats;
         public BoxCollider ExecutionCollider;
         public Transform rootPosition;
+        public bool finishCombo;
         private void Awake()
         {
             if (ExecutionCollider != null)
@@ -81,7 +82,11 @@ namespace DP
         {
             anim.SetBool("isInteracting",false);
         }
-
+        public void comboFinish()
+        {
+            finishCombo = true;
+        }
+    
         #region combat
 
         #endregion

@@ -46,6 +46,8 @@ namespace DP
                             if (enemyAnimator != null)
                             {
                                 enemyAnimator.anim.SetBool("Parryed", true);
+                                Vector3 cP = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                                playerStats.playerParryVFX(cP);
                                 enemyStats.DamagePosture(30);
                                 return;
                             }
