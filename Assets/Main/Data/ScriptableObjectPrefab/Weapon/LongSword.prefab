@@ -157,7 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79461c1080e033b499176ce6f3f8269a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponDamage: 45
+  currentWeaponDamage: 15
+  VFXPoint: {fileID: 0}
 --- !u!4 &8509473079844752877 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 496414, guid: e7196d0541b91bf4f8cab39924cb6d49,

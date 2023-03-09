@@ -11,7 +11,7 @@ namespace DP
         DP_animationHandler animationHandler;
         DP_PlayerManager playerManager;
         public GameObject bloodVFX;
-
+        public GameObject ParryVFX;
 
         //stamina related
         public int maxStamina;
@@ -46,6 +46,10 @@ namespace DP
         public void playBloodVFX(Vector3 location)
         {
             GameObject blood = Instantiate(bloodVFX, location, Quaternion.identity);
+        }
+        public void playerParryVFX(Vector3 location)
+        {
+            GameObject metalSpark = Instantiate(ParryVFX, location, Quaternion.identity);
         }
 
         public void TakeDamage(int damage, bool normal = false)
