@@ -197,10 +197,12 @@ namespace DP
                             if (playerInventory.CheckHasKey())
                             {
                                 // play animation open door
-                                // delete below later
                                 if (door != null)
                                 {
-                                    door.SetActive(false);
+                                    door.GetComponent<Animator>().Play("Door");
+                                    GameObject note = GameObject.Find("DoorTrigger");
+                                    note.SetActive(false);
+
                                 }
                             }
                         }
