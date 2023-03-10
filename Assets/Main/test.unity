@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 35292218}
   - component: {fileID: 35292219}
   m_Layer: 0
-  m_Name: BossLockOnTarget
+  m_Name: BossLockOnPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3881,12 +3881,27 @@ PrefabInstance:
         type: 3}
       propertyPath: LockOnPivot
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 35292218}
     - target: {fileID: 5688548600798869741, guid: 6f6dd897c58c2f24d9b51c08c16110fc,
         type: 3}
       propertyPath: LockOnTransform
       value: 
-      objectReference: {fileID: 35292218}
+      objectReference: {fileID: 5688548601975779148}
+    - target: {fileID: 5688548600798869743, guid: 6f6dd897c58c2f24d9b51c08c16110fc,
+        type: 3}
+      propertyPath: healthLevel
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688548600798869743, guid: 6f6dd897c58c2f24d9b51c08c16110fc,
+        type: 3}
+      propertyPath: PostureLevel
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688548600798869743, guid: 6f6dd897c58c2f24d9b51c08c16110fc,
+        type: 3}
+      propertyPath: recoveryLimit
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 5688548600798869743, guid: 6f6dd897c58c2f24d9b51c08c16110fc,
         type: 3}
       propertyPath: playerHealthBar

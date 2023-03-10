@@ -110,7 +110,7 @@ namespace DP
                 // Lockangle.z = 0;
                 // Lockangle.x = 0;
                 // currentLockOnTransform.LockOnTransform.rotation = Lockangle;
-                Vector3 dir = currentLockOnTransform.LockOnTransform.position - cameraTransform.position;
+                Vector3 dir = currentLockOnTransform.LockOnPivot.position - cameraTransform.position;
                 dir.Normalize();
                 dir.y = 0;
                 Quaternion targetRotation = Quaternion.LookRotation(dir);
@@ -123,7 +123,7 @@ namespace DP
 
 
                 #region LockOn pivot rotaiton
-                dir = currentLockOnTransform.LockOnTransform.position - pivotTransform.position;
+                dir = currentLockOnTransform.LockOnPivot.position - pivotTransform.position;
                 dir.Normalize();
                 targetRotation = Quaternion.LookRotation(dir);
                 pivotTransform.rotation = targetRotation;//Quaternion.Slerp(pivotTransform.rotation, targetRotation, 3f * Time.deltaTime);
