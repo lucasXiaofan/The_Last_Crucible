@@ -21,14 +21,16 @@ namespace DP
                 DP_animationHandler animationHandler = other.transform.GetComponentInChildren<DP_animationHandler>();
                 DP_PlayerStats playerStats = other.transform.GetComponentInParent<DP_PlayerStats>();
                 DP_PlayerManager playerManager = other.transform.GetComponentInParent<DP_PlayerManager>();
+                Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
                 if (playerManager.isParrying)
                 {
                     //player vfx
-                    Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+
                     playerStats.playerParryVFX(contactPoint);
                     enemyStats.DamagePosture(40);
                     return;
                 }
+                playerStats.playBloodVFX(contactPoint);
                 animationHandler.ApplyTargetAnimation("HitUp", true, false);
                 playerStats.TakeDamage(10, true);
             }

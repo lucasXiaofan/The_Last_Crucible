@@ -47,6 +47,7 @@ namespace DP
         public DP_EnemyManger rightLockOnTarget;
         DP_PlayerManager playerManager;
         DP_inputHandler inputHandler;
+        float DampVelocity = 0f;
 
 
 
@@ -100,23 +101,32 @@ namespace DP
                 /// 3. prevent lock on object behind wall 
                 /// </summary>
                 /// <returns></returns>
-                float distance = Vector3.Distance(currentLockOnTransform.LockOnTransform.position, cameraTransform.position);
+                #region Lock on Camera Rotation
+                // Vector3 LockOnTransfromRotation = cameraTransform.position - currentLockOnTransform.LockOnTransform.position;
 
+
+                // LockOnTransfromRotation.Normalize();
+                // Quaternion Lockangle = Quaternion.LookRotation(LockOnTransfromRotation);
+                // Lockangle.z = 0;
+                // Lockangle.x = 0;
+                // currentLockOnTransform.LockOnTransform.rotation = Lockangle;
                 Vector3 dir = currentLockOnTransform.LockOnTransform.position - cameraTransform.position;
                 dir.Normalize();
                 dir.y = 0;
                 Quaternion targetRotation = Quaternion.LookRotation(dir);
-                myTransform.localRotation = targetRotation;
+                myTransform.localRotation = Quaternion.Slerp(myTransform.localRotation, targetRotation, Time.deltaTime); ;
 
                 // update rotateangle while lock on
                 Vector3 angle = targetRotation.eulerAngles;
                 rotateAngle = angle.y;
+                #endregion
+
 
                 #region LockOn pivot rotaiton
                 dir = currentLockOnTransform.LockOnTransform.position - pivotTransform.position;
                 dir.Normalize();
                 targetRotation = Quaternion.LookRotation(dir);
-                pivotTransform.rotation = Quaternion.Slerp(pivotTransform.rotation, targetRotation, 10f * Time.deltaTime);
+                pivotTransform.rotation = targetRotation;//Quaternion.Slerp(pivotTransform.rotation, targetRotation, 3f * Time.deltaTime);
 
                 // update rotateangle while lock on
                 angle = targetRotation.eulerAngles;
@@ -147,7 +157,7 @@ namespace DP
             {
                 targetPosition = -miniOffet;
             }
-            float DampVelocity = 0f;
+
 
             cameraTransformPoistion.z = Mathf.SmoothDamp(cameraTransform.localPosition.z, targetPosition, ref DampVelocity, delta / 0.2f);
             cameraTransform.localPosition = cameraTransformPoistion;

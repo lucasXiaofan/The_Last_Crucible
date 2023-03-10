@@ -1970,6 +1970,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   ExecutionCollider: {fileID: 268382341}
   rootPosition: {fileID: 0}
+  finishCombo: 0
 --- !u!1 &98891024785322368 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1046123597860970, guid: dc6170fded71bf944b115160ab2cae64,

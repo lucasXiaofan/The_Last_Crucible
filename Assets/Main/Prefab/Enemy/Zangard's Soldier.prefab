@@ -798,13 +798,11 @@ MonoBehaviour:
   healthLevel: 20
   currentPosture: 0
   maximumPosture: 0
-  PostureLevel: 10
+  PostureLevel: 8
   playerHealthBar: {fileID: 3999595407320552071}
   bloodVFX: {fileID: 8022661629436978311, guid: f71e94aa686763d4dba878f3e1a231fd,
     type: 3}
-  CricialBlood: {fileID: 8748458681459924781, guid: ac063574d4148f94c900ca6d3bc49faa,
-    type: 3}
-  recoveryLimit: 7
+  recoveryLimit: 10
 --- !u!136 &6646359404981029829
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -830,7 +828,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.5
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 122
@@ -2352,6 +2350,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.2700176
       objectReference: {fileID: 0}
+    - target: {fileID: 95700630886227062, guid: 767b276e5b6e4b14bbcd51b5a6e78ca8,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0597255e0ec484f4fa1fdf7c958d3e32, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 767b276e5b6e4b14bbcd51b5a6e78ca8, type: 3}
 --- !u!4 &6641690305474142586 stripped
@@ -2413,3 +2416,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rightHandWeapon: {fileID: 11400000, guid: 33ab5b26e9d19684db6de9ef1de19c70, type: 2}
+--- !u!114 &1342259707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6645821030269009662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a458e5c7ddd5e3c47a3ab55b1e377fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 6732709493933860906}
+  ExecutionCollider: {fileID: 553575411}
+  rootPosition: {fileID: 0}
+  finishCombo: 0
+--- !u!95 &6732709493933860906 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95700630886227062, guid: 767b276e5b6e4b14bbcd51b5a6e78ca8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6646359406148777052}
+  m_PrefabAsset: {fileID: 0}
