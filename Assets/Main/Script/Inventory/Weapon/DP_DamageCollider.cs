@@ -8,6 +8,7 @@ namespace DP
     {
         DP_inputHandler inputHandler;
         public int currentWeaponDamage = 30;
+        public Transform VFXPoint;
         BoxCollider damageCollider;
         private void Awake()
         {
@@ -36,15 +37,17 @@ namespace DP
                 if (playerStats != null)
                 {
                     DP_PlayerManager playerManager = other.GetComponent<DP_PlayerManager>();
-                    if(playerManager!= null)
+                    if (playerManager != null)
                     {
-                        if(playerManager.isParrying)
+                        if (playerManager.isParrying)
                         {
                             DP_EnemyAnimator enemyAnimator = GetComponentInParent<DP_EnemyAnimator>();
                             DP_EnemyStats enemyStats = GetComponentInParent<DP_EnemyStats>();
-                            if (enemyAnimator!=null)
+                            if (enemyAnimator != null)
                             {
-                                enemyAnimator.anim.SetBool("Parryed",true);
+                                enemyAnimator.anim.SetBool("Parryed", true);
+                                Vector3 cP = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                                playerStats.playerParryVFX(cP);
                                 enemyStats.DamagePosture(30);
                                 return;
                             }
@@ -52,6 +55,8 @@ namespace DP
                     }
 
                     playerStats.TakeDamage(currentWeaponDamage);
+                    Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                    playerStats.playBloodVFX(contactPoint);
 
                 }
             }
@@ -60,7 +65,9 @@ namespace DP
                 DP_EnemyStats enemyStats = other.GetComponent<DP_EnemyStats>();
                 if (enemyStats != null)
                 {
-                    enemyStats.TakeDamage(currentWeaponDamage,true);
+                    enemyStats.TakeDamage(currentWeaponDamage, true);
+                    Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                    enemyStats.playBloodVFX(contactPoint, true);
                 }
             }
 

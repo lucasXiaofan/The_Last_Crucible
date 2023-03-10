@@ -29,7 +29,7 @@ namespace DP
         [Header("Handle Falling")]
         [SerializeField]
         float ToGroundDistance;
-        float groundMinDistance = 0.7f;
+        float groundMinDistance = 0.2f;
         [SerializeField]
         LayerMask ignoreLayer;
         public LayerMask ground;
@@ -39,6 +39,10 @@ namespace DP
         [Header("HandleJumpping")]
         float speedBeforeJump;
         Vector3 directionBeforeJump;
+        public float jumpTimer;
+        public float jumpTime = 1.08f;
+
+
 
 
 
@@ -256,14 +260,14 @@ namespace DP
         public void HandleFalling(float delta, Vector3 moveDirection)
         {
 
-            if (playerManager.isJumping)
+            if (playerManager.isJumping && !playerManager.Falling)
             {
                 return;
             }
-
+            // playerRigidBody.AddForce(-Vector3.up * fallingSpeed * (ToGroundDistance > 1.5f ? 3 : 3) * (fallingTimer + 1));
             if (playerManager.isGrounded)
             {
-
+                playerManager.Falling = false;
                 playerManager.isInAir = false;
                 fallingTimer = 0;
                 Vector3 targetPositon = transform.position;
@@ -272,7 +276,7 @@ namespace DP
                 RaycastHit hit;
                 Physics.SphereCast(castOrigin, 0.25f, Vector3.down, out hit, ground);
                 targetPositon.y = hit.point.y;
-                transform.position = Vector3.Lerp(transform.position, targetPositon, Time.deltaTime / 0.1f);
+                transform.position = Vector3.Lerp(transform.position, targetPositon, Time.deltaTime / 0.05f);
                 HandleRollingAndSprint(Time.deltaTime);
 
             }
@@ -282,30 +286,46 @@ namespace DP
                 {
                     playerStats.TakeDamage(500);
                 }
-                else if (playerManager.isInteracting == false
-                && !playerManager.isJumping
+                else if (
+                !playerManager.isJumping
                 && ToGroundDistance > 1f
                 )
                 {
-                    if (inputHandler.moveAmount <= 0)
+                    if (inputHandler.moveAmount <= 0 && !playerManager.isInteracting)
                     {
                         animationHandler.ApplyTargetAnimation("fall", true, false);
                     }
-                    else
+                    else if (!playerManager.isInteracting)
                     {
                         animationHandler.ApplyTargetAnimation("fall", false, false);
                     }
-
+                    playerManager.isInAir = true;
                 }
-
-                playerManager.isInAir = true;
             }
             if (playerManager.isInAir)
             {
-                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3 * (fallingTimer + 1));
+                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 7 * (fallingTimer + 1));
                 // //add a kick off force below
                 Vector3 kickDir = moveDirection;
                 playerRigidBody.AddForce(kickDir * fallingSpeed / 6f);
+            }
+            else if (!playerManager.isGrounded)
+            {
+                playerRigidBody.AddForce(-Vector3.up * fallingSpeed * 3);
+            }
+
+
+        }
+        public void updateJumpTime(float delta)
+        {
+            if (jumpTimer >= 0)
+            {
+                jumpTimer -= delta;
+                playerManager.isJumping = true;
+            }
+            else
+            {
+                playerManager.isJumping = false;
             }
 
         }
@@ -314,6 +334,10 @@ namespace DP
             //HandleFalling(delta, moveDirection);
             if (playerManager.isInteracting || playerManager.isJumping)
             {
+                // if (playerManager.isJumping)
+                // {
+                //     playerRigidBody.AddForce(Vector3.up * forceUP, ForceMode.VelocityChange);// Time.deltaTime;
+                // }
                 return;
             }
 
@@ -335,8 +359,10 @@ namespace DP
                     playerTransform.rotation = rotation;
                 }
 
-                playerRigidBody.AddForce(Vector3.up * 40, ForceMode.VelocityChange);
+                playerRigidBody.AddForce(Vector3.up * 40 * 1, ForceMode.VelocityChange);
+                jumpTimer = jumpTime;
             }
+
 
         }
 

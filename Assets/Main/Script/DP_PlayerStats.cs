@@ -10,7 +10,8 @@ namespace DP
         public DP_PlayerHealthBar StaminaBar;
         DP_animationHandler animationHandler;
         DP_PlayerManager playerManager;
-
+        public GameObject bloodVFX;
+        public GameObject ParryVFX;
 
         //stamina related
         public int maxStamina;
@@ -42,8 +43,16 @@ namespace DP
         {
             return currentHealth <= 0;
         }
+        public void playBloodVFX(Vector3 location)
+        {
+            GameObject blood = Instantiate(bloodVFX, location, Quaternion.identity);
+        }
+        public void playerParryVFX(Vector3 location)
+        {
+            GameObject metalSpark = Instantiate(ParryVFX, location, Quaternion.identity);
+        }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, bool normal = false)
         {
             if (PlayerIsDead() || playerManager.isRolling)
             {
@@ -51,10 +60,11 @@ namespace DP
             }
             currentHealth = currentHealth - damage;
             playerHealthBar.SetHeathBarValue(currentHealth);
-            if (!playerManager.isInteracting)
+            if (!playerManager.isInteracting && !normal)
             {
                 animationHandler.ApplyTargetAnimation("playerHitReaction", true, false);
             }
+
             if (currentHealth <= 0)
             {
                 animationHandler.ApplyTargetAnimation("dead", true, false);

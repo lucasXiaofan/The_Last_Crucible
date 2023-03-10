@@ -26,8 +26,8 @@ namespace DP
         public float rotateAngle;
         public float pivotAngle;
 
-        public float maximumPivot = 35f;
-        public float minimumPivot = -35f;
+        public float maximumPivot = 60f;
+        public float minimumPivot = -60f;
 
         //camera collision
         public float miniOffet = 0.2f;
@@ -35,15 +35,19 @@ namespace DP
 
         private Vector3 CameraVelocity = Vector3.zero;
 
-        //for lock on 
+        [Header("Lock on")]
         float maximumTargetDistance = 30f;
+        float maximumDistanceFromTarget = 2f;
+        public LayerMask EnvironmentLayer;
 
         List<DP_EnemyManger> availableTarget = new List<DP_EnemyManger>();
         public DP_EnemyManger nearestLockTransform;
         public DP_EnemyManger currentLockOnTransform;
         public DP_EnemyManger leftLockOnTarget;
         public DP_EnemyManger rightLockOnTarget;
+        DP_PlayerManager playerManager;
         DP_inputHandler inputHandler;
+        float DampVelocity = 0f;
 
 
 
@@ -56,6 +60,7 @@ namespace DP
             defaultPositon = cameraTransform.localPosition.z;
             targetTransform = FindObjectOfType<DP_PlayerManager>().transform;
             inputHandler = FindObjectOfType<DP_inputHandler>();
+            playerManager = FindObjectOfType<DP_PlayerManager>();
 
         }
         public void FollowTarget(float delta)
@@ -89,26 +94,44 @@ namespace DP
             else
             {
                 // for camera rotation
-                Vector3 dir = currentLockOnTransform.LockOnTransform.position - cameraTransform.position;
+                /// <summary>
+                /// 1. create a lock on transfrom that works on camera collision that will always 
+                /// stay 2 distance away from player so it won't have crazy rotation
+                /// 2. also remember to make pivot rotation limit lower, 40, -40
+                /// 3. prevent lock on object behind wall 
+                /// </summary>
+                /// <returns></returns>
+                #region Lock on Camera Rotation
+                // Vector3 LockOnTransfromRotation = cameraTransform.position - currentLockOnTransform.LockOnTransform.position;
+
+
+                // LockOnTransfromRotation.Normalize();
+                // Quaternion Lockangle = Quaternion.LookRotation(LockOnTransfromRotation);
+                // Lockangle.z = 0;
+                // Lockangle.x = 0;
+                // currentLockOnTransform.LockOnTransform.rotation = Lockangle;
+                Vector3 dir = currentLockOnTransform.LockOnPivot.position - cameraTransform.position;
                 dir.Normalize();
                 dir.y = 0;
                 Quaternion targetRotation = Quaternion.LookRotation(dir);
-                myTransform.localRotation = targetRotation;
+                myTransform.localRotation = Quaternion.Slerp(myTransform.localRotation, targetRotation, Time.deltaTime); ;
+
                 // update rotateangle while lock on
                 Vector3 angle = targetRotation.eulerAngles;
                 rotateAngle = angle.y;
+                #endregion
 
-                // for pivot rotation
-                dir = currentLockOnTransform.LockOnTransform.position - pivotTransform.position;
+
+                #region LockOn pivot rotaiton
+                dir = currentLockOnTransform.LockOnPivot.position - pivotTransform.position;
                 dir.Normalize();
                 targetRotation = Quaternion.LookRotation(dir);
-                // this will be really wonky pivotTransform.localRotation = targetRotation;
-                Vector3 eularAngle = targetRotation.eulerAngles;
+                pivotTransform.rotation = targetRotation;//Quaternion.Slerp(pivotTransform.rotation, targetRotation, 3f * Time.deltaTime);
 
-                pivotTransform.rotation = Quaternion.Slerp(pivotTransform.rotation, targetRotation, 10f * Time.deltaTime);
                 // update rotateangle while lock on
                 angle = targetRotation.eulerAngles;
                 pivotAngle = angle.x;
+                #endregion
             }
 
 
@@ -134,7 +157,7 @@ namespace DP
             {
                 targetPosition = -miniOffet;
             }
-            float DampVelocity = 0f;
+
 
             cameraTransformPoistion.z = Mathf.SmoothDamp(cameraTransform.localPosition.z, targetPosition, ref DampVelocity, delta / 0.2f);
             cameraTransform.localPosition = cameraTransformPoistion;
@@ -158,14 +181,29 @@ namespace DP
                     float distanceFromTarget = Vector3.Distance(character.transform.position, targetTransform.position);
                     float targetAngle = Vector3.Angle(LockOnDirection, cameraTransform.forward);
                     Debug.DrawRay(cameraTransform.position, cameraTransform.forward, Color.red, 0.1f);
+                    RaycastHit wallhit;
                     if (character.transform.root != targetTransform.root
                     && distanceFromTarget < maximumTargetDistance
                     && targetAngle < 50f && targetAngle > -50f)
                     {
-                        if (!(availableTarget.Contains(character)))
+                        if (Physics.Linecast(playerManager.LockOnTransform.position, character.LockOnTransform.position, out wallhit))
                         {
-                            availableTarget.Add(character);
+
+                            if (wallhit.transform.gameObject.layer == 19)
+                            {
+
+                            }
+                            else
+                            {
+                                if (!(availableTarget.Contains(character)))
+                                {
+                                    availableTarget.Add(character);
+                                }
+
+                            }
+
                         }
+
 
                     }
                 }

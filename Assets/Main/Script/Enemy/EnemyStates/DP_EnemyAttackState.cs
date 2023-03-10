@@ -24,6 +24,13 @@ namespace DP
             enemyManger.transform.rotation = Quaternion.Slerp(enemyManger.transform.rotation, targetDir, Time.deltaTime / 0.1f);
             enemyManger.AttackTarget();
 
+
+            // enemyLocomotion.transform.position += enemyAnimator.anim.deltaPosition;
+            // Vector3 jump = enemyLocomotion.transform.position;
+            // jump.y += enemyAnimator.rootPosition.position.y;
+            // enemyLocomotion.transform.position = jump;
+            // print("how much enemy jumped: " + enemyAnimator.rootPosition.position.y + "how much jumped? " + enemyLocomotion.transform.position.y);
+
             return this;
         }
     }

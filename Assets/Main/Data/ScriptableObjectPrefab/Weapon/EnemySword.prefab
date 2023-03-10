@@ -158,4 +158,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79461c1080e033b499176ce6f3f8269a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponDamage: 30
+  currentWeaponDamage: 13
+  VFXPoint: {fileID: 0}

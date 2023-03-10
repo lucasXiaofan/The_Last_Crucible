@@ -8,12 +8,14 @@ namespace DP
     {
         DP_WeaponSlot leftWeaponSlot;
         DP_WeaponSlot RightWeaponSlot;
-        DP_DamageCollider leftDamageCollider;
+
         DP_DamageCollider rightDamageCollider;
+        public GameObject CriticalBloodVFX;
         Animator animator;
         DP_QuickSlotUI quickSlotUI;
         DP_PlayerStats playerStats;
         public DP_WeaponItem attackingWeapon;
+        public Transform VFXPoint;
         private void Awake()
         {
             playerStats = GetComponentInParent<DP_PlayerStats>();
@@ -34,71 +36,56 @@ namespace DP
         }
         public void LoadWeaponOnSlot(DP_WeaponItem weaponItem, bool isLeft)
         {
-            if (isLeft)
+
+
+
+            quickSlotUI.IconHandler(false, weaponItem);
+            RightWeaponSlot.UploadWeapon(weaponItem);
+            LoadRightWeaponCollider();
+            if (weaponItem != null)
             {
-                leftWeaponSlot.UploadWeapon(weaponItem);
-                LoadLeftWeaponCollider();
-                quickSlotUI.IconHandler(true, weaponItem);
-                if (weaponItem != null)
-                {
-                    animator.CrossFade(weaponItem.Left_arm_idle, 0.2f);
-                }
-                else
-                {
-                    animator.CrossFade("Left_arm_empty", 0.2f);
-                }
+                animator.CrossFade(weaponItem.Right_arm_idle, 0.2f);
             }
             else
             {
-                quickSlotUI.IconHandler(false, weaponItem);
-                RightWeaponSlot.UploadWeapon(weaponItem);
-                LoadRightWeaponCollider();
-                if (weaponItem != null)
-                {
-                    animator.CrossFade(weaponItem.Right_arm_idle, 0.2f);
-                }
-                else
-                {
-                    animator.CrossFade("Right_arm_empty", 0.2f);
-                }
+                animator.CrossFade("Right_arm_empty", 0.2f);
             }
+
         }
 
         #region Open and close weapon collider
-        private void LoadLeftWeaponCollider()
+        private void PlayVFX()
         {
-            leftDamageCollider = leftWeaponSlot.currentWeapon.GetComponentInChildren<DP_DamageCollider>();
+            GameObject blood = Instantiate(CriticalBloodVFX, VFXPoint.position, Quaternion.identity);
         }
+
         private void LoadRightWeaponCollider()
         {
             rightDamageCollider = RightWeaponSlot.currentWeapon.GetComponentInChildren<DP_DamageCollider>();
         }
-        public void OpenLeftWeaponCollider()
-        {
-            leftDamageCollider.EnableDamage();
-        }
+
         public void OpenRightWeaponCollider()
         {
             rightDamageCollider.EnableDamage();
         }
-        public void CloseLeftWeaponCollider()
+
+        public void BoostkDamage(int damageBoost)
         {
-            leftDamageCollider.DisableDamage();
+            rightDamageCollider.currentWeaponDamage = damageBoost;
         }
+
+        public void normalDamage(int normal)
+        {
+            rightDamageCollider.currentWeaponDamage = normal;
+        }
+
         public void CloseRightWeaponCollider()
         {
             rightDamageCollider.DisableDamage();
         }
         #endregion
         #region Handle weapon stamina cost
-        public void DrainStaminaLightAttack()
-        {
-            playerStats.TakeStaminaDamage(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.lightAttackStaminaMultiplier));
-        }
-        public void DrainStaminaHeavyAttack()
-        {
-            playerStats.TakeStaminaDamage(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.heavyAttackStaminaMultiplier));
-        }
+
         #endregion
     }
 }

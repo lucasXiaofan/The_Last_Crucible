@@ -7,5 +7,6 @@ namespace DP
     public class DP_Character : MonoBehaviour
     {
         public Transform LockOnTransform;
+        public Transform LockOnPivot;
     }
 }

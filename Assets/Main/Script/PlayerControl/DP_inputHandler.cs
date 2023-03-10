@@ -12,6 +12,7 @@ namespace DP
         PlayerAttacker playerAttacker;
         DP_PlayerInventory playerInventory;
         DP_PlayerManager playerManager;
+        DP_playerLomotion playerLomotion;
         DP_UIManager uIManager;
         DP_PlayerEffectsManager effectsManager;
         public float mouseX;
@@ -43,6 +44,7 @@ namespace DP
         public bool comboFlag;
         public bool menuFlag;
         public bool lockOnFlag;
+        public bool jumpFlag;
 
         float holdCounter;
 
@@ -67,6 +69,7 @@ namespace DP
             cameraControl = FindObjectOfType<DP_CameraControl>();
             animationHandler = GetComponentInChildren<DP_animationHandler>();
             effectsManager = GetComponentInChildren<DP_PlayerEffectsManager>();
+            playerLomotion = GetComponent<DP_playerLomotion>();
         }
 
         private void OnEnable()
@@ -180,7 +183,10 @@ namespace DP
         }
         private void HandleAttack(float delta)
         {
-
+            if (playerAttacker.CanExecute())
+            {
+                playerManager.canDoCombo = false;
+            }
             if (playerManager.isInteracting && !playerManager.canDoCombo)
                 return;
             if (rb_input) //&& StaminaStatus.alive())
@@ -190,13 +196,14 @@ namespace DP
                     print("triggered execution");
                     playerAttacker.HandleExecution(true);
                 }
-                else if (playerAttacker.CanBackStab())
+                else if (playerAttacker.CanBackStab() && !playerManager.canDoCombo)
                 {
                     print("why back stab");
                     playerAttacker.HandleExecution(false);
                 }
-                else if (playerManager.canDoAirAttack)
+                else if (playerManager.isJumping || playerManager.Falling)
                 {
+                    playerManager.Falling = true;
                     playerAttacker.HandleAirAttack(playerInventory.rightWeapon);
                 }
                 else if (playerManager.canDoCombo && !playerManager.isJumping)
@@ -324,7 +331,10 @@ namespace DP
 
         private void HandleJumpInput()
         {
-            inputActions.PlayerAction.Jump.performed += i => jump_input = true;
+            if (jump_input)
+            {
+                jumpFlag = true;
+            }
         }
         public void HandleTutorial()
         {

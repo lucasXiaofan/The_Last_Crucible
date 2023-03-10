@@ -27,6 +27,7 @@ namespace DP
         public bool isGrounded;
         public bool canDoCombo;
         public bool canDoAirAttack;
+        public bool Falling;
 
         [Header("Combat settings")]
         public Transform CriticalStabPoint;
@@ -43,12 +44,18 @@ namespace DP
         [Header("SceneManagement")]
         int sceneIndex;
 
+        [Header("Spawn Location")]
+        public SpawnManager spawnManager;
+
         private void Awake()
         {
             sceneIndex = SceneManager.GetActiveScene().buildIndex;
             cameraControl = FindObjectOfType<DP_CameraControl>();
             ItemPickLayer = (1 << 8 | 1 << 17);
             isGrounded = true;
+            spawnManager = FindObjectOfType<SpawnManager>();
+            if (spawnManager != null)
+                SpawnAtCheckpoint();
         }
 
         void Start()
@@ -66,6 +73,7 @@ namespace DP
             textUI = FindObjectOfType<DP_AlertTextUI>();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
         }
 
         // Update is called once per frame
@@ -80,14 +88,15 @@ namespace DP
             canDoAirAttack = animator.GetBool("canDoAirAttack");
             canDoCombo = animator.GetBool("canDoCombo");
             isInteracting = animator.GetBool("isInteracting");
-            isJumping = animator.GetBool("isJumping");
             animator.SetBool("IsInAir", isInAir);
             animator.SetBool("isGrounded", isGrounded);
             isRolling = animator.GetBool("isRolling");
+            animator.SetBool("isFalling", Falling);
             inputHandler.TickInput(delta);
+            playerLomotion.HandlePlayerJump(inputHandler.jump_input);
             playerLomotion.HandleRollingAndSprint(delta);
             CheckForInteractableObject();
-            playerLomotion.HandlePlayerJump(inputHandler.jump_input);
+
 
 
 
@@ -99,9 +108,14 @@ namespace DP
             // {
             //     return;
             // }
+
             float delta = Time.deltaTime;
+
             playerLomotion.PlayerisGrounded();
             playerLomotion.HandleMovement(delta);
+            playerLomotion.updateJumpTime(delta);
+
+
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
         }
 
@@ -183,10 +197,12 @@ namespace DP
                             if (playerInventory.CheckHasKey())
                             {
                                 // play animation open door
-                                // delete below later
                                 if (door != null)
                                 {
-                                    door.SetActive(false);
+                                    door.GetComponent<Animator>().Play("Door");
+                                    GameObject note = GameObject.Find("DoorTrigger");
+                                    note.SetActive(false);
+
                                 }
                             }
                         }
@@ -213,6 +229,12 @@ namespace DP
         {
             sceneIndex += 1;
             SceneManager.LoadScene(sceneIndex);
+        }
+
+        public void SpawnAtCheckpoint()
+        {
+            //move player to this position 
+            transform.position = new Vector3(spawnManager.spawnPosition.x - 2, spawnManager.spawnPosition.y, spawnManager.spawnPosition.z);
         }
     }
 }

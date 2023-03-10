@@ -11,6 +11,8 @@ namespace DP
         DP_EnemyManger enemyManger;
         DP_EnemyStats enemyStats;
         public BoxCollider ExecutionCollider;
+        public Transform rootPosition;
+        public bool finishCombo;
         private void Awake()
         {
             if (ExecutionCollider != null)
@@ -27,9 +29,13 @@ namespace DP
             float delta = Time.deltaTime;
             enemyLocomotion.enemyRigidbody.drag = 0;
             Vector3 deltaPosition = anim.deltaPosition;
-            deltaPosition.y = 0;
-            // Vector3 velocity = deltaPosition / delta;
+            // deltaPosition.y = 0;
+            Vector3 velocity = deltaPosition / delta;
             // enemyLocomotion.enemyRigidbody.velocity = velocity * 10;
+            // enemyLocomotion.navMeshAgent.nextPosition = anim.rootPosition;
+            // enemyLocomotion.transform.position = anim.rootPosition;
+
+
         }
         public void exitParryAnimation()
         {
@@ -71,5 +77,18 @@ namespace DP
                 ExecutionCollider.enabled = false;
             }
         }
+        // boss combat need to exist this for combo
+        public void stopInteracting()
+        {
+            anim.SetBool("isInteracting",false);
+        }
+        public void comboFinish()
+        {
+            finishCombo = true;
+        }
+    
+        #region combat
+
+        #endregion
     }
 }
