@@ -12,7 +12,12 @@ namespace DP
 
         [Header("RangeAttack1_1")]
         public DP_BossRangeAttack1_1 rangeAttack1_1State;
+
         
+        [Header("RangeAttack1_2")]
+        public DP_BossRangeAttack1_2 rangeAttack1_2State;
+
+
         public void startMove()
         {
             rangeAttack1_1State.navMeshOldSpeed = enemyLocomotion.navMeshAgent.speed;
@@ -43,12 +48,16 @@ namespace DP
             rangeAttack1_1State.ProjectileAttack(targetDir);
         }
 
-        /*
-        [Header("Range Attack 1_2")]
-        public DP_BossRangeAttack1_2 rangeAttack1_2State;
-        
-        private GameObject projectileObj;
-        public GameObject rangeAttack1_2Prefab;
+        //RangeAttack1_2
+        public void jumpMove()
+        {
+            rangeAttack1_2State.startJump(enemyAnimator, enemyManger, enemyLocomotion);
+        }
+
+        public void landMove()
+        {
+            rangeAttack1_2State.startLand(enemyAnimator, enemyManger, enemyLocomotion);
+        }
 
         public void fireProjectile1_2()
         {
@@ -56,16 +65,5 @@ namespace DP
 
             rangeAttack1_2State.ProjectileAttack(targetDir);
         }
-
-        public void jumpMotion1_2()
-        {
-            rangeAttack1_2State.jumpMotion(enemyManger, 0.83f);
-        }
-
-        public void landMotion1_2()
-        {
-            rangeAttack1_2State.landMotion(enemyManger, 0.83f);
-        }
-        */
     }
 }
