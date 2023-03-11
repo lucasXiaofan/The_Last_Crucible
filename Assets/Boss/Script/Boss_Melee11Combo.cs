@@ -6,6 +6,8 @@ namespace DP
 {
     public class Boss_Melee11Combo : DP_State
     {
+        public int coolDown = 3;
+
         public DP_State ComboState;
 
         //after boss attacked player always return to this state to select next attack;
@@ -21,10 +23,10 @@ namespace DP
                 enemyAnimator.finishCombo = false;
                 enemyLocomotion.navMeshAgent.enabled = false;
                 enemyAnimator.ApplyTargetAnimation("MA11_1", true, false);
+                enemyManger.currentRecoveryTime = coolDown;
             }
             else if (enemyAnimator.finishCombo)
             {
-
                 return ComboState;
             }
             else

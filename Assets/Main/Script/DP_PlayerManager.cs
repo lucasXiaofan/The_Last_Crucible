@@ -114,7 +114,7 @@ namespace DP
             playerLomotion.PlayerisGrounded();
             playerLomotion.HandleMovement(delta);
             playerLomotion.updateJumpTime(delta);
-
+            playerStats.BloodEffect(delta);
 
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
         }

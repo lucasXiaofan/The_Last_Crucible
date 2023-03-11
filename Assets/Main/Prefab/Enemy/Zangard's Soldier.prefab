@@ -846,6 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LockOnTransform: {fileID: 6646359405702340518}
+  LockOnPivot: {fileID: 6646359405702340518}
   currentState: {fileID: 1153405588}
   isPreformingAction: 0
   enemyAttacksList:

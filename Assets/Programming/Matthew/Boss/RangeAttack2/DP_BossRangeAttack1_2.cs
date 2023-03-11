@@ -9,7 +9,7 @@ namespace DP
     public class DP_BossRangeAttack1_2 : DP_State
     {
         //public DP_BossChaseState bossChaseState;
-        public DP_EnemyIdleState tempState;
+        public DP_State tempState;
 
         public DP_EnemyAttackActions attackSO;
         public Transform attackOrigin;
@@ -18,35 +18,27 @@ namespace DP
 
         private GameObject projectileObj;
 
-        private bool start = true;
+        
         public float jumpHeight;
         private bool CR_running = false;
+        public float coolDown = 5f;
 
         public override DP_State Tick(DP_EnemyManger enemyManger,
                                         DP_EnemyStats enemyStats,
                                         DP_EnemyAnimator enemyAnimator,
                                         DP_EnemyLocomotion enemyLocomotion)
         {
-            if (enemyManger.isPreformingAction)
+
+            if (enemyLocomotion.currentTarget == null)
             {
-                return this;
+                
+                enemyLocomotion.HandleDetection();
             }
 
-            if (start)
-            {
-                if (enemyLocomotion.currentTarget == null)
-                {
-                    enemyLocomotion.HandleDetection();
-                }
-
-                enemyManger.currentAttack = attackSO;
-                enemyManger.AttackTarget();
-                start = false;
-                return this;
-            }
-
+            enemyManger.currentAttack = attackSO;
+            enemyManger.AttackTarget();
+            enemyManger.currentRecoveryTime = coolDown;
             return tempState;
-            
         }
 
         public void startJump(DP_EnemyAnimator enemyAnimator, DP_EnemyManger enemyManger, DP_EnemyLocomotion enemyLocomotion)

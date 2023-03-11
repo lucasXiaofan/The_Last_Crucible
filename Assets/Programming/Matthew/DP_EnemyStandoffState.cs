@@ -7,7 +7,7 @@ namespace DP
     public class DP_EnemyStandoffState : DP_State
     {
         //public DP_EnemyChaseState enemyChaseState;
-        public DP_EnemyIdleState tempState;
+        public DP_State tempState;
 
 
         private bool destinationDetermined = false;
