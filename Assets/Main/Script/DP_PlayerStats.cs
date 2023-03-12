@@ -88,6 +88,7 @@ namespace DP
             playerHealthBar.SetHeathBarValue(currentHealth);
             if (!playerManager.isInteracting && !normal)
             {
+                playerManager.soundManager.PlayRandomDamageSoundFX();
                 animationHandler.ApplyTargetAnimation("playerHitReaction", true, false);
             }
 

@@ -38,7 +38,7 @@ namespace DP
             }
 
             enemyManger.currentAttack = attackSO;
-            enemyManger.AttackTarget();
+            enemyManger.AttackTarget(0);
             enemyManger.currentRecoveryTime = coolDown;
             
             return tempState;

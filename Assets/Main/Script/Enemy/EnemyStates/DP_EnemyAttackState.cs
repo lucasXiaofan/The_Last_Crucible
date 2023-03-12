@@ -22,7 +22,7 @@ namespace DP
             Vector3 AttackDirection = enemyLocomotion.currentTarget.transform.position - enemyManger.transform.position;
             Quaternion targetDir = Quaternion.LookRotation(AttackDirection);
             enemyManger.transform.rotation = Quaternion.Slerp(enemyManger.transform.rotation, targetDir, Time.deltaTime / 0.1f);
-            enemyManger.AttackTarget();
+            enemyManger.AttackTarget(0);
 
 
             // enemyLocomotion.transform.position += enemyAnimator.anim.deltaPosition;

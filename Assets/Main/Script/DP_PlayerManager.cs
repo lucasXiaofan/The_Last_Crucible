@@ -12,6 +12,7 @@ namespace DP
         DP_animationHandler animationHandler;
         DP_PlayerInventory playerInventory;
         DP_PlayerStats playerStats;
+        public DP_PlayerSoundManager soundManager;
         Animator animator;
         [Header("Player UI")]
         public DP_AlertTextUI textUI;
@@ -66,6 +67,7 @@ namespace DP
             inputHandler = GetComponent<DP_inputHandler>();
             animator = GetComponentInChildren<Animator>();
             playerInventory = GetComponent<DP_PlayerInventory>();
+            soundManager = GetComponentInChildren<DP_PlayerSoundManager>();
 
             // UI 
             itemTextObject.SetActive(false);
