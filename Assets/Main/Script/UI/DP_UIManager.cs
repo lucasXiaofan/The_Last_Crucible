@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 namespace DP
 {
     public class DP_UIManager : MonoBehaviour
 
     {
         DP_EquipmentSlotFunctions equipmentSlotFunctions;
+
         [Header("UI Window")]
         public GameObject hudWindows;//player health bar, quick slots. etc
         public GameObject playerUIBar;
@@ -57,6 +59,16 @@ namespace DP
         {
             playerUIBar.SetActive(on);
         }
+        public void LoadFirstScene()
+        {
+            SceneManager.LoadScene(1);
+        }
+        public void ExistGame()
+        {
+            print("quit game");
+            Application.Quit();
+        }
+
     }
 }
 
