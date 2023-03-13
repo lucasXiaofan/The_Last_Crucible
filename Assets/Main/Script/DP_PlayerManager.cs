@@ -43,6 +43,8 @@ namespace DP
         public GameObject door;
 
         [Header("SceneManagement")]
+        public GameObject DeathScene;
+        public GameObject Menu;
         int sceneIndex;
 
         [Header("Spawn Location")]
@@ -156,6 +158,35 @@ namespace DP
                 playerLomotion.fallingTimer += Time.deltaTime;
             }
         }
+        // IEnumerator TransitionFadeIn()
+        // {
+        //     transitionFade.gameObject.SetActive(true);
+        //     transitionFade.alpha = 0;
+        //     while (transitionFade.alpha < 1) // inicia o fade da transicao entre cenas
+        //     {
+        //         transitionFade.alpha += 0.05f;
+        //         yield return new WaitForSeconds(0.1f);
+        //     }
+        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // }
+
+        // IEnumerator TransitionFadeOut()
+        // {
+        //     transitionFade.gameObject.SetActive(true);
+        //     transitionFade.alpha = 1;
+        //     while (transitionFade.alpha > 0) // inicia o fade da transicao entre cenas
+        //     {
+        //         transitionFade.alpha -= 0.05f;
+        //         yield return new WaitForSeconds(0.1f);
+        //     }
+        //     transitionFade.gameObject.SetActive(false);
+        // }
+
+        // public void Restart()
+        // {
+        //     restarting = true;
+        //     StartCoroutine(TransitionFadeIn());
+        // }
         public void CheckForInteractableObject()
         {
             //RaycastHit hit;
