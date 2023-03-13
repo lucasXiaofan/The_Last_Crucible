@@ -396,6 +396,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followTarget: {fileID: 107022366}
   followSpeed: 0.2
+--- !u!225 &67072724 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 564478005, guid: 83117412d3f3a11408b5a13b71740937,
+    type: 3}
+  m_PrefabInstance: {fileID: 258653145}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &82997437 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 82997437, guid: 83117412d3f3a11408b5a13b71740937,
@@ -833,6 +839,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 564478003, guid: 83117412d3f3a11408b5a13b71740937, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 564478005, guid: 83117412d3f3a11408b5a13b71740937, type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 720138125, guid: 83117412d3f3a11408b5a13b71740937, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -840,6 +854,10 @@ PrefabInstance:
     - target: {fileID: 720138125, guid: 83117412d3f3a11408b5a13b71740937, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 776813783, guid: 83117412d3f3a11408b5a13b71740937, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1269788869044564431, guid: 83117412d3f3a11408b5a13b71740937,
         type: 3}
@@ -2105,6 +2123,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066545928}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1070009545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 776813783, guid: 83117412d3f3a11408b5a13b71740937,
+    type: 3}
+  m_PrefabInstance: {fileID: 258653145}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1099657324
 GameObject:
   m_ObjectHideFlags: 0
@@ -4457,9 +4481,19 @@ PrefabInstance:
       objectReference: {fileID: 82997437}
     - target: {fileID: 5857331303842888207, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
+      propertyPath: DeathText
+      value: 
+      objectReference: {fileID: 1070009545}
+    - target: {fileID: 5857331303842888207, guid: 78ae4f29056fbf04f8053c128421cc93,
+        type: 3}
       propertyPath: itemTextObject
       value: 
       objectReference: {fileID: 749806806}
+    - target: {fileID: 5857331303842888207, guid: 78ae4f29056fbf04f8053c128421cc93,
+        type: 3}
+      propertyPath: TransitionScene
+      value: 
+      objectReference: {fileID: 67072724}
     - target: {fileID: 5857331303842888207, guid: 78ae4f29056fbf04f8053c128421cc93,
         type: 3}
       propertyPath: alertTextObject

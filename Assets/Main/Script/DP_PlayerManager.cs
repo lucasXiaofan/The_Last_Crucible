@@ -43,7 +43,8 @@ namespace DP
         public GameObject door;
 
         [Header("SceneManagement")]
-        public GameObject DeathScene;
+        public CanvasGroup TransitionScene;
+        public GameObject DeathText;
         public GameObject Menu;
         int sceneIndex;
 
@@ -52,6 +53,7 @@ namespace DP
 
         private void Awake()
         {
+            StartCoroutine(TransitionFadeOut());
             sceneIndex = SceneManager.GetActiveScene().buildIndex;
             cameraControl = FindObjectOfType<DP_CameraControl>();
             ItemPickLayer = (1 << 8 | 1 << 17);
@@ -85,7 +87,8 @@ namespace DP
         {
             if (playerStats.PlayerIsDead())
             {
-                SceneManager.LoadScene(sceneIndex);
+                StartCoroutine(WaitToRestart());
+                // SceneManager.LoadScene(sceneIndex);
                 return;
             }
             float delta = Time.deltaTime;
@@ -158,35 +161,45 @@ namespace DP
                 playerLomotion.fallingTimer += Time.deltaTime;
             }
         }
-        // IEnumerator TransitionFadeIn()
-        // {
-        //     transitionFade.gameObject.SetActive(true);
-        //     transitionFade.alpha = 0;
-        //     while (transitionFade.alpha < 1) // inicia o fade da transicao entre cenas
-        //     {
-        //         transitionFade.alpha += 0.05f;
-        //         yield return new WaitForSeconds(0.1f);
-        //     }
-        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        // }
+        IEnumerator TransitionFadeIn()
+        {
 
-        // IEnumerator TransitionFadeOut()
-        // {
-        //     transitionFade.gameObject.SetActive(true);
-        //     transitionFade.alpha = 1;
-        //     while (transitionFade.alpha > 0) // inicia o fade da transicao entre cenas
-        //     {
-        //         transitionFade.alpha -= 0.05f;
-        //         yield return new WaitForSeconds(0.1f);
-        //     }
-        //     transitionFade.gameObject.SetActive(false);
-        // }
 
-        // public void Restart()
-        // {
-        //     restarting = true;
-        //     StartCoroutine(TransitionFadeIn());
-        // }
+            TransitionScene.alpha = 0;
+            while (TransitionScene.alpha < 1) // inicia o fade da transicao entre cenas
+            {
+                TransitionScene.alpha += 0.05f;
+            }
+            yield return new WaitForSeconds(0.1f);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        IEnumerator TransitionFadeOut()
+        {
+            TransitionScene.gameObject.SetActive(true);
+            DeathText.SetActive(false);
+            TransitionScene.alpha = 1;
+            while (TransitionScene.alpha > 0) // inicia o fade da transicao entre cenas
+            {
+                TransitionScene.alpha -= 0.05f;
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            TransitionScene.gameObject.SetActive(false);
+        }
+        IEnumerator WaitToRestart()
+        {
+            DeathText.SetActive(true);
+            TransitionScene.gameObject.SetActive(true);
+            yield return new WaitForSeconds(2);
+            Restart();
+        }
+
+        public void Restart()
+        {
+            // restarting = true;
+            StartCoroutine(TransitionFadeIn());
+        }
         public void CheckForInteractableObject()
         {
             //RaycastHit hit;
