@@ -67,10 +67,9 @@ namespace DP
         public void CloseKnockUpCollider()
         {
 
-            
+
             if (knockUpCollider != null)
             {
-                print("closed knockup collider");
                 knockUpCollider.disableKnockUp();
             }
         }

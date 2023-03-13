@@ -113,5 +113,6 @@ namespace DP
             }
             playerHealthBar.SetHeathBarValue(currentHealth);
         }
+        
     }
 }
