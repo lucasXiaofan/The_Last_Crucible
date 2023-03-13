@@ -88,8 +88,7 @@ namespace DP
             }
             else if ((playerManager.isJumping || playerManager.isSprinting) && difference >= 0.4f)
             {
-                print("slow down");
-                accelerateTimer = 0.5f;
+                accelerateTimer = 0.9f;
             }
 
             #endregion
