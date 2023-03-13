@@ -29,6 +29,7 @@ namespace DP
         public bool canDoCombo;
         public bool canDoAirAttack;
         public bool Falling;
+        public bool isDead;
 
         [Header("Combat settings")]
         public Transform CriticalStabPoint;
@@ -53,7 +54,9 @@ namespace DP
 
         private void Awake()
         {
-            StartCoroutine(TransitionFadeOut());
+            isDead = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             sceneIndex = SceneManager.GetActiveScene().buildIndex;
             cameraControl = FindObjectOfType<DP_CameraControl>();
             ItemPickLayer = (1 << 8 | 1 << 17);
@@ -74,24 +77,25 @@ namespace DP
             soundManager = GetComponentInChildren<DP_PlayerSoundManager>();
 
             // UI 
+            StartCoroutine(TransitionFadeOut());
             itemTextObject.SetActive(false);
             tutorial.SetActive(true);
             textUI = FindObjectOfType<DP_AlertTextUI>();
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+
 
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (playerStats.PlayerIsDead())
+            if (isDead)
             {
-                StartCoroutine(WaitToRestart());
+                StartCoroutine(TransitionFadeIn());
                 // SceneManager.LoadScene(sceneIndex);
                 return;
             }
             float delta = Time.deltaTime;
+            HandleDeath();
             canDoAirAttack = animator.GetBool("canDoAirAttack");
             canDoCombo = animator.GetBool("canDoCombo");
             isInteracting = animator.GetBool("isInteracting");
@@ -111,10 +115,10 @@ namespace DP
         }
         private void FixedUpdate()
         {
-            // if (playerStats.PlayerIsDead())
-            // {
-            //     return;
-            // }
+            if (isDead)
+            {
+                return;
+            }
 
             float delta = Time.deltaTime;
 
@@ -161,16 +165,27 @@ namespace DP
                 playerLomotion.fallingTimer += Time.deltaTime;
             }
         }
+
+        public void HandleDeath()
+        {
+            if (playerStats.PlayerIsDead())
+            {
+                isDead = true;
+                DeathText.SetActive(true);
+                TransitionScene.gameObject.SetActive(true);
+                TransitionScene.alpha = 0;
+            }
+
+        }
         IEnumerator TransitionFadeIn()
         {
-
-
-            TransitionScene.alpha = 0;
+            yield return new WaitForSeconds(1);
             while (TransitionScene.alpha < 1) // inicia o fade da transicao entre cenas
             {
                 TransitionScene.alpha += 0.05f;
+                yield return new WaitForSeconds(0.1f);
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -187,19 +202,7 @@ namespace DP
 
             TransitionScene.gameObject.SetActive(false);
         }
-        IEnumerator WaitToRestart()
-        {
-            DeathText.SetActive(true);
-            TransitionScene.gameObject.SetActive(true);
-            yield return new WaitForSeconds(2);
-            Restart();
-        }
 
-        public void Restart()
-        {
-            // restarting = true;
-            StartCoroutine(TransitionFadeIn());
-        }
         public void CheckForInteractableObject()
         {
             //RaycastHit hit;
