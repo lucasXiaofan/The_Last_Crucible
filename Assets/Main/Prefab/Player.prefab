@@ -2151,50 +2151,6 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &1063494633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5857331304779880175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dec8cb820b02da4881e60e7971f86ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FlaskAmount: 3
-  healAmount: 60
---- !u!114 &5857331304779770590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5857331304779880175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d96c1cb5b019cd345862ad2ec51ddf70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CriticalBloodVFX: {fileID: 8748458681459924781, guid: ac063574d4148f94c900ca6d3bc49faa,
-    type: 3}
-  attackingWeapon: {fileID: 11400000, guid: ebe67d50a26ec3f4aab65725a55f08d8, type: 2}
-  VFXPoint: {fileID: 5857331304779741541}
---- !u!114 &5857331304779770591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5857331304779880175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f030fdae010f8749ab095fd14b9e57b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 5857331304789283351}
-  canRotate: 1
 --- !u!82 &1970109487
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2291,6 +2247,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1063494633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5857331304779880175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dec8cb820b02da4881e60e7971f86ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlaskAmount: 3
+  healAmount: 60
 --- !u!114 &1970109494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2323,6 +2293,36 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6e4fa3f67dbbe314ea18996c7b8fa18f, type: 3}
   - {fileID: 8300000, guid: 9f939ffdc9cb52c4aa7dd7836ad7d4da, type: 3}
   parryVolume: 0.85
+--- !u!114 &5857331304779770590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5857331304779880175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d96c1cb5b019cd345862ad2ec51ddf70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CriticalBloodVFX: {fileID: 8748458681459924781, guid: ac063574d4148f94c900ca6d3bc49faa,
+    type: 3}
+  attackingWeapon: {fileID: 11400000, guid: ebe67d50a26ec3f4aab65725a55f08d8, type: 2}
+  VFXPoint: {fileID: 5857331304779741541}
+--- !u!114 &5857331304779770591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5857331304779880175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f030fdae010f8749ab095fd14b9e57b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 5857331304789283351}
+  canRotate: 1
 --- !u!1 &5857331304779932357 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 165894, guid: 880858dfd9b1e784e89d45242bf78d2b,
