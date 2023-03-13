@@ -7,7 +7,7 @@ namespace DP
     public class DP_BossRangeAttack1_1 : DP_State
     {
         //public DP_BossChaseState bossChaseState;
-        public DP_EnemyIdleState tempState;
+        public DP_State tempState;
 
         public DP_EnemyAttackActions attackSO;
         public Transform attackOrigin;
@@ -20,33 +20,27 @@ namespace DP
         public float navMeshNewSpeed = 1f;
         public float navMeshOldSpeed;
         public float distanceMult = 0f;
+        public float coolDown = 5f;
 
-        private bool start = true;
+        
 
         //Need to time out animation with projectile spawn
         public override DP_State Tick(DP_EnemyManger enemyManger,
                                         DP_EnemyStats enemyStats,
                                         DP_EnemyAnimator enemyAnimator,
                                         DP_EnemyLocomotion enemyLocomotion)
-        {
-            if (enemyManger.isPreformingAction)
-            {
-                return this;
-            }
+        {   
             
-            if (start)
+            
+            if (enemyLocomotion.currentTarget == null)
             {
-                if (enemyLocomotion.currentTarget == null)
-                {
-                    enemyLocomotion.HandleDetection();
-                }
-
-                enemyManger.currentAttack = attackSO;
-                enemyManger.AttackTarget();
-                start = false;
-                return this;
+                enemyLocomotion.HandleDetection();
             }
 
+            enemyManger.currentAttack = attackSO;
+            enemyManger.AttackTarget(0);
+            enemyManger.currentRecoveryTime = coolDown;
+            
             return tempState;
         }
 

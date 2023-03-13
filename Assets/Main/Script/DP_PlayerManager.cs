@@ -12,6 +12,7 @@ namespace DP
         DP_animationHandler animationHandler;
         DP_PlayerInventory playerInventory;
         DP_PlayerStats playerStats;
+        public DP_PlayerSoundManager soundManager;
         Animator animator;
         [Header("Player UI")]
         public DP_AlertTextUI textUI;
@@ -42,6 +43,8 @@ namespace DP
         public GameObject door;
 
         [Header("SceneManagement")]
+        public GameObject DeathScene;
+        public GameObject Menu;
         int sceneIndex;
 
         [Header("Spawn Location")]
@@ -66,6 +69,7 @@ namespace DP
             inputHandler = GetComponent<DP_inputHandler>();
             animator = GetComponentInChildren<Animator>();
             playerInventory = GetComponent<DP_PlayerInventory>();
+            soundManager = GetComponentInChildren<DP_PlayerSoundManager>();
 
             // UI 
             itemTextObject.SetActive(false);
@@ -114,7 +118,7 @@ namespace DP
             playerLomotion.PlayerisGrounded();
             playerLomotion.HandleMovement(delta);
             playerLomotion.updateJumpTime(delta);
-
+            playerStats.BloodEffect(delta);
 
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
         }
@@ -154,6 +158,35 @@ namespace DP
                 playerLomotion.fallingTimer += Time.deltaTime;
             }
         }
+        // IEnumerator TransitionFadeIn()
+        // {
+        //     transitionFade.gameObject.SetActive(true);
+        //     transitionFade.alpha = 0;
+        //     while (transitionFade.alpha < 1) // inicia o fade da transicao entre cenas
+        //     {
+        //         transitionFade.alpha += 0.05f;
+        //         yield return new WaitForSeconds(0.1f);
+        //     }
+        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // }
+
+        // IEnumerator TransitionFadeOut()
+        // {
+        //     transitionFade.gameObject.SetActive(true);
+        //     transitionFade.alpha = 1;
+        //     while (transitionFade.alpha > 0) // inicia o fade da transicao entre cenas
+        //     {
+        //         transitionFade.alpha -= 0.05f;
+        //         yield return new WaitForSeconds(0.1f);
+        //     }
+        //     transitionFade.gameObject.SetActive(false);
+        // }
+
+        // public void Restart()
+        // {
+        //     restarting = true;
+        //     StartCoroutine(TransitionFadeIn());
+        // }
         public void CheckForInteractableObject()
         {
             //RaycastHit hit;

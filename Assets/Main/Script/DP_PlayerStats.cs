@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DP
 {
@@ -17,6 +18,11 @@ namespace DP
         public int maxStamina;
         public int staminaLevel = 10;
         public int currentStamina;
+        [Header(" Damaged BloodEffect")]
+        public Image BloodEffectImg;
+        public float duration =1f;
+        public float durationTimer;
+        public float fadeSpeed= 10f;
         void Start()
         {
             animationHandler = GetComponentInChildren<DP_animationHandler>();
@@ -24,10 +30,27 @@ namespace DP
             maximumHealth = SetMaximumHealthLevel();
             currentHealth = maximumHealth;
             playerHealthBar.SetMaximumHeath(maximumHealth);
-
+            BloodEffectImg.color = new Color(BloodEffectImg.color.r,BloodEffectImg.color.g,
+                BloodEffectImg.color.b,0);
             maxStamina = SetMaximumStaminaLevel();
             currentStamina = maxStamina;
             //StaminaBar.SetMaximumHeath(maxStamina);
+        }
+        
+        public void BloodEffect(float delta)
+        {
+            if(BloodEffectImg.color.a>0)
+            {
+                durationTimer+=delta;
+                if (durationTimer<duration)
+                {
+                    float TemPa = BloodEffectImg.color.a;
+                    TemPa -= delta * fadeSpeed;
+                    BloodEffectImg.color = new Color(BloodEffectImg.color.r,BloodEffectImg.color.g,
+                    BloodEffectImg.color.b,TemPa);
+                }
+                
+            }
         }
         private int SetMaximumHealthLevel()
         {
@@ -59,9 +82,13 @@ namespace DP
                 return;
             }
             currentHealth = currentHealth - damage;
+            durationTimer = 0;
+            BloodEffectImg.color = new Color(BloodEffectImg.color.r,BloodEffectImg.color.g,
+                BloodEffectImg.color.b,1);
             playerHealthBar.SetHeathBarValue(currentHealth);
             if (!playerManager.isInteracting && !normal)
             {
+                playerManager.soundManager.PlayRandomDamageSoundFX();
                 animationHandler.ApplyTargetAnimation("playerHitReaction", true, false);
             }
 
@@ -86,5 +113,6 @@ namespace DP
             }
             playerHealthBar.SetHeathBarValue(currentHealth);
         }
+        
     }
 }

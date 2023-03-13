@@ -10,6 +10,7 @@ namespace DP
         DP_EnemyLocomotion enemyLocomotion;
         DP_EnemyAnimator enemyAnimator;
         DP_EnemyStats enemyStats;
+        public DP_PlayerSoundManager soundManager;
         public DP_State currentState;
 
         public bool isPreformingAction;
@@ -32,6 +33,11 @@ namespace DP
         public Transform ExecutePoint;
         public bool Recovering;
         public bool isPhase2;
+        [Header("Type of Enemy")]
+        public bool Boss;
+        public bool KeyHolder;
+        public bool Minion;
+
 
 
 
@@ -41,7 +47,7 @@ namespace DP
             enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
             enemyStats = GetComponent<DP_EnemyStats>();
             body = GetComponent<CapsuleCollider>();
-
+            soundManager = GetComponentInChildren<DP_PlayerSoundManager>();
             LockonIcon.enabled = false;
 
 
@@ -121,7 +127,7 @@ namespace DP
                 }
             }
         }
-        public void AttackTarget()
+        public void AttackTarget(int soundIndex)
         {
 
             if (Recovering || isPreformingAction)
@@ -137,6 +143,7 @@ namespace DP
             else
             {
                 currentRecoveryTime = currentAttack.recoveryTime;
+                soundManager.playSwingSound(soundIndex);
                 enemyAnimator.ApplyTargetAnimation(currentAttack.actionAnimation, true, false);
                 currentAttack = null; //to get new attack;
             }
