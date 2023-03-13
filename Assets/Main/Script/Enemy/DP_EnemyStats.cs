@@ -63,6 +63,7 @@ namespace DP
             playerHealthBar.SetHeathBarValue(currentHealth);
             if (normal)
             {
+                enemyManger.soundManager.PlayRandomDamageSoundFX();
                 if (PostureBreak())
                 {
                     DamagePosture(damage / 3);
@@ -70,7 +71,11 @@ namespace DP
                 else
                 {
                     DamagePosture(damage / 3);
-                    enemyAnimator.ApplyTargetAnimation("getHit", true, false);
+                    if(!enemyManger.Boss)
+                    {
+                        enemyAnimator.ApplyTargetAnimation("getHit", true, false);
+                    }
+                    
 
 
                 }
@@ -88,6 +93,7 @@ namespace DP
         }
         public void playBloodVFX(Vector3 location, bool normal)
         {
+            
             if (normal)
             {
                 GameObject blood = Instantiate(bloodVFX, location, Quaternion.identity);
