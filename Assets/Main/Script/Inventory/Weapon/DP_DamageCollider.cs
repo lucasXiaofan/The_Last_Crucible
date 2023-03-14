@@ -54,21 +54,29 @@ namespace DP
                             }
                         }
                     }
-
-                    playerStats.TakeDamage(currentWeaponDamage);
-                    Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
-                    playerStats.playBloodVFX(contactPoint);
+                    if(!playerManager.isDead)
+                    {
+                        playerStats.TakeDamage(currentWeaponDamage);
+                        Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                        playerStats.playBloodVFX(contactPoint);
+                    }
+                    
 
                 }
             }
             if (other.tag == "Enemy")
             {
                 DP_EnemyStats enemyStats = other.GetComponent<DP_EnemyStats>();
+                DP_EnemyManger enemyManger = other.GetComponent<DP_EnemyManger>();
                 if (enemyStats != null)
                 {
-                    enemyStats.TakeDamage(currentWeaponDamage, true);
-                    Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
-                    enemyStats.playBloodVFX(contactPoint, true);
+                    
+                    if(!enemyManger.isDead || !enemyManger.Invincible)
+                    {
+                        enemyStats.TakeDamage(currentWeaponDamage, true);
+                        Vector3 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+                        enemyStats.playBloodVFX(contactPoint, true);
+                    }
                 }
             }
 

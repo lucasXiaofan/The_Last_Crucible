@@ -62,6 +62,10 @@ namespace DP
                     if (viewAbleAngle < enemyManger.maxDetectionAngle && viewAbleAngle > enemyManger.minDetectionAngle)
                     {
                         currentTarget = characterStats;
+                        if(enemyManger.Boss || enemyManger.KeyHolder)
+                        {
+                            enemyManger.soundManager.PlayBattleM(true);
+                        }
 
                     }
                 }

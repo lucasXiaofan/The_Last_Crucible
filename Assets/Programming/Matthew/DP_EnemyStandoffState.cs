@@ -7,13 +7,20 @@ namespace DP
     public class DP_EnemyStandoffState : DP_State
     {
         //public DP_EnemyChaseState enemyChaseState;
-        public DP_State tempState;
+        public DP_State nextState;
 
-
-        private bool destinationDetermined = false;
-        public float destinationDistanceCheck = 1f;
+        private bool directionDetermined = false;
         public float distanceMult = 1f;
         private Vector3 destinationLocation;
+
+        public float goalDistance = 3f;
+        public float movementSpeed = 1f;
+        public float goalTime = 1f;
+
+        private float oldMovementSpeed;
+        private int moveDir;
+        private float currentTime = 0f;
+
 
         public override DP_State Tick(DP_EnemyManger enemyManger,
                                     DP_EnemyStats enemyStats,
@@ -21,10 +28,14 @@ namespace DP
                                     DP_EnemyLocomotion enemyLocomotion)
         {
             //USE Common_StrafeWalkL_Root and Common_StrafeWalkR_Root ANIM
+
+            /*
             if (enemyManger.isPreformingAction)
             {
                 return this;
             }
+            */
+            
 
             if (enemyLocomotion.currentTarget == null)
             {
@@ -32,20 +43,16 @@ namespace DP
             }
 
             //Check if destination reached
-            if (destinationDetermined)
+            if (directionDetermined && currentTime >= goalTime)
             {
-                float distanceFromDestination = Vector3.Distance(enemyManger.transform.position, destinationLocation);
+                enemyLocomotion.navMeshAgent.updateRotation = true;
+                enemyLocomotion.navMeshAgent.enabled = false;
+                enemyLocomotion.navMeshAgent.speed = oldMovementSpeed;
 
-                if (distanceFromDestination < destinationDistanceCheck)
-                {
-                    enemyLocomotion.navMeshAgent.updateRotation = true;
-                    enemyLocomotion.navMeshAgent.enabled = false;
+                //Set animation bool to true
+                enemyAnimator.anim.SetBool("standoffDest", true);
 
-                    //Set animation bool to true
-                    enemyAnimator.anim.SetBool("standoffDest", true);
-
-                    return tempState;
-                }
+                return nextState;
             }
 
             HandleStandoff(enemyManger, enemyLocomotion, enemyAnimator);
@@ -55,33 +62,66 @@ namespace DP
         private void HandleStandoff(DP_EnemyManger enemyManger, DP_EnemyLocomotion enemyLocomotion, DP_EnemyAnimator enemyAnimator)
         {
             //Determine Location
-            if (!destinationDetermined)
+            if (!directionDetermined)
             {
+                currentTime = 0f;
+                enemyAnimator.anim.SetBool("standoffDest", false);
+
                 //Determining Left(0)/Right(1)
-                int moveDir = Random.Range(0, 2);
+                moveDir = Random.Range(0, 2);
                 if (moveDir == 0)
                 {
-                    destinationLocation = enemyManger.transform.position - (enemyManger.transform.right * distanceMult);
                     enemyAnimator.ApplyTargetAnimation("Standoff Left", true, false);
                 }
                 else if (moveDir == 1)
                 {
-                    destinationLocation = enemyManger.transform.position + (enemyManger.transform.right * distanceMult);
                     enemyAnimator.ApplyTargetAnimation("Standoff Right", true, false);
                 }
 
                 //Start NavMeshAgent
                 enemyLocomotion.navMeshAgent.enabled = true;
                 enemyLocomotion.navMeshAgent.updateRotation = false;
-                enemyLocomotion.navMeshAgent.SetDestination(destinationLocation);
+                oldMovementSpeed = enemyLocomotion.navMeshAgent.speed;
+                enemyLocomotion.navMeshAgent.speed = movementSpeed;
 
-                destinationDetermined = true;
+                directionDetermined = true;
             }
+
+            //Manage direction
+            //Move left
+            if (moveDir == 0)
+            {
+                destinationLocation = enemyManger.transform.position - (enemyManger.transform.right * distanceMult);
+            }
+            //Move right
+            else if (moveDir == 1)
+            {
+                destinationLocation = enemyManger.transform.position + (enemyManger.transform.right * distanceMult);
+            }
+
+            //Manage distance from player
+            //Move forwards
+            float distanceFromtarget = Vector3.Distance(transform.position, enemyLocomotion.currentTarget.transform.position);
+            if (distanceFromtarget > goalDistance)
+            {
+                destinationLocation += (enemyManger.transform.forward * distanceMult);
+            }
+            //Move backwards
+            else if (enemyLocomotion.distanceFromtarget < goalDistance)
+            {
+                destinationLocation -= (enemyManger.transform.forward * distanceMult);
+            }
+
+            
 
             //Handle rotation towards player
             Vector3 AttackDirection = enemyLocomotion.currentTarget.transform.position - enemyManger.transform.position;
             Quaternion targetDir = Quaternion.LookRotation(AttackDirection);
             enemyManger.transform.rotation = Quaternion.Slerp(enemyManger.transform.rotation, targetDir, Time.deltaTime / 0.1f);
+
+
+            enemyLocomotion.navMeshAgent.SetDestination(destinationLocation);
+            currentTime += Time.deltaTime;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace DP
     {
         public DP_State[] RangeAttackStates;
         public DP_State PursueState;
+        public DP_State StandOffState;
         public float walkSpeed = 3.2f;
 
         //after boss attacked player always return to this state to select next attack;
@@ -17,6 +18,7 @@ namespace DP
 
             if (enemyManger.Recovering && !enemyManger.isPreformingAction)
             {
+                // return this;
                 enemyAnimator.anim.SetFloat("Vertical", 0f, 0.1f, Time.deltaTime);
                 #region Rotation
                 Vector3 direction = enemyLocomotion.currentTarget.transform.position - enemyManger.transform.position;
@@ -52,6 +54,7 @@ namespace DP
                 return PursueState;
             }
             return this;
+            // return StandOffState;
 
         }
     }

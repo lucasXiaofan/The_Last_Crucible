@@ -55,8 +55,7 @@ namespace DP
         private void Awake()
         {
             isDead = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            HideCursor();
             sceneIndex = SceneManager.GetActiveScene().buildIndex;
             cameraControl = FindObjectOfType<DP_CameraControl>();
             ItemPickLayer = (1 << 8 | 1 << 17);
@@ -166,6 +165,16 @@ namespace DP
             }
         }
 
+        public void HideCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        public void ShowCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
         public void HandleDeath()
         {
             if (playerStats.PlayerIsDead())

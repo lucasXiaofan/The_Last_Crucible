@@ -39,6 +39,10 @@ namespace DP
         {
             playerHealthBar.hideEnemyUI();
             playerHealthBar.enabled = false;
+            if(enemyManger.Boss || enemyManger.KeyHolder)
+            {
+                enemyManger.soundManager.PlayBattleM(false);
+            }
         }
 
         public void ShowUI()
@@ -52,6 +56,10 @@ namespace DP
             if (enemyManger.isDead)
             {
                 playerHealthBar.hideEnemyUI();
+                return;
+            }
+            if(enemyManger.Invincible)
+            {
                 return;
             }
             if (!normal)
@@ -71,7 +79,7 @@ namespace DP
                 else
                 {
                     DamagePosture(damage / 3);
-                    if(!enemyManger.Boss)
+                    if(!enemyManger.Boss || enemyManger.isPreformingAction)
                     {
                         enemyAnimator.ApplyTargetAnimation("getHit", true, false);
                     }

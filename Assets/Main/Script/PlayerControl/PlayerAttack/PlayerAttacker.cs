@@ -32,7 +32,7 @@ namespace DP
                 animationHandler.anim.SetBool("canDoCombo", false);
                 if (lastAttack == weaponItem.Oh_Light_Attack_1)
                 {
-                    playerManager.soundManager.playSwingSound(0);
+                    
                     animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_2, true, false);
                 }
                 if (lastAttack == weaponItem.Oh_Heavy_Attack_1)
@@ -87,7 +87,7 @@ namespace DP
         {
             weaponSlotManager.attackingWeapon = weaponItem;
             HandleRotationWhileAttack();
-            playerManager.soundManager.playSwingSound(0);
+            
             animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_1, true, false);
             lastAttack = weaponItem.Oh_Light_Attack_1;
 

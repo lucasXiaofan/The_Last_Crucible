@@ -501,10 +501,14 @@ MonoBehaviour:
   canDoCombo: 0
   canDoAirAttack: 0
   Falling: 0
+  isDead: 0
   CriticalStabPoint: {fileID: 357804687}
   isParrying: 0
   isRolling: 0
   door: {fileID: 0}
+  TransitionScene: {fileID: 0}
+  DeathText: {fileID: 0}
+  Menu: {fileID: 0}
   spawnManager: {fileID: 0}
 --- !u!114 &5857331303842888204
 MonoBehaviour:
@@ -559,7 +563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumHealth: 0
   currentHealth: 0
-  healthLevel: 9
+  healthLevel: 8
   currentPosture: 0
   maximumPosture: 0
   PostureLevel: 10
@@ -2273,6 +2277,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37ec90249f01114387598934a67265b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleMusicSource: {fileID: 0}
+  Transition: {fileID: 0}
+  BattleMusic: {fileID: 0}
+  MusicVolume: 0
   SwordSwingSound:
   - {fileID: 8300000, guid: 23ae1fcf83321fa419dca8a288612e13, type: 3}
   - {fileID: 8300000, guid: b858f8b55d42bac49896fc38d09d9675, type: 3}

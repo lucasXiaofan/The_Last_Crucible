@@ -245,14 +245,16 @@ namespace DP
             {
                 menuFlag = !menuFlag;
                 uIManager.TurnOnorOffUI(menuFlag);
+                playerManager.ShowCursor();
                 uIManager.hudWindows.SetActive(!menuFlag);
                 if (menuFlag)
                 {
-
+                    
                     //uIManager.UpdateUI();
                 }
                 else if (!menuFlag)
                 {
+                    playerManager.HideCursor();
                     uIManager.weaponWindow.SetActive(false);
                 }
             }
