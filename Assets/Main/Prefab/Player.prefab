@@ -523,7 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftWeapon: {fileID: 0}
-  rightWeapon: {fileID: 11400000, guid: c54d463befa191044ad1c881e5ca4770, type: 2}
+  rightWeapon: {fileID: 0}
   unarmedWeapon: {fileID: 11400000, guid: ebe67d50a26ec3f4aab65725a55f08d8, type: 2}
   rightHandSlots: []
   leftHandSlots: []

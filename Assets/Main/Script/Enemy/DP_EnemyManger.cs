@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace DP
 {
@@ -58,6 +59,7 @@ namespace DP
             enemyAnimator.anim.SetBool("isDead", isDead);
             if (isDead)
             {
+
                 enemyStats.handleDeath();
                 return;
             }
@@ -91,6 +93,7 @@ namespace DP
 
 
         }
+
 
         private void EnemyStateMachine()
         {

@@ -43,6 +43,7 @@ namespace DP
             {
                 enemyManger.soundManager.PlayBattleM(false);
             }
+
         }
 
         public void ShowUI()

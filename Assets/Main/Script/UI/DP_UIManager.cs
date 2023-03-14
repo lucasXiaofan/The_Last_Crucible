@@ -59,9 +59,9 @@ namespace DP
         {
             playerUIBar.SetActive(on);
         }
-        public void LoadFirstScene()
+        public void LoadScene(int index)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(index);
         }
         public void ExistGame()
         {

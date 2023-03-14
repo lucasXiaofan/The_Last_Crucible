@@ -32,7 +32,7 @@ namespace DP
                 animationHandler.anim.SetBool("canDoCombo", false);
                 if (lastAttack == weaponItem.Oh_Light_Attack_1)
                 {
-                    
+
                     animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_2, true, false);
                 }
                 if (lastAttack == weaponItem.Oh_Heavy_Attack_1)
@@ -72,7 +72,7 @@ namespace DP
                     playerManager.transform.rotation = Quaternion.Slerp(playerManager.transform.rotation, tr, Time.deltaTime * 500);
                     animationHandler.ApplyTargetAnimation((isExecute ? "Execute" : "BackStab"), true, false);
                     enemyManger.GetComponentInChildren<DP_EnemyAnimator>().ApplyTargetAnimation((isExecute ? "Executed" : "BackStabbed"), true, false);
-                    enemyManger.GetComponent<DP_EnemyStats>().TakeDamage(500, false);
+                    enemyManger.GetComponent<DP_EnemyStats>().TakeDamage(2000, false);
                 }
             }
 
@@ -87,7 +87,7 @@ namespace DP
         {
             weaponSlotManager.attackingWeapon = weaponItem;
             HandleRotationWhileAttack();
-            
+
             animationHandler.ApplyTargetAnimation(weaponItem.Oh_Light_Attack_1, true, false);
             lastAttack = weaponItem.Oh_Light_Attack_1;
 

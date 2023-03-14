@@ -15,6 +15,8 @@ namespace DP
             }
             else
             {
+                enemyStats.ShowUI();
+                enemyManger.soundManager.playDialogue();
                 return CombatStanceState;
             }
             return this;

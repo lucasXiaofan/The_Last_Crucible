@@ -208,7 +208,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleMusicSource: {fileID: 956005496}
+  DialogueSource: {fileID: 0}
   Transition: {fileID: 0}
+  dialogues: []
+  Diaglouevolume: 0.6
   BattleMusic: {fileID: 0}
   MusicVolume: 0
   SwordSwingSound: []
@@ -2267,7 +2270,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleMusicSource: {fileID: 956005496}
+  DialogueSource: {fileID: 0}
   Transition: {fileID: 956005498}
+  dialogues: []
+  Diaglouevolume: 0.6
   BattleMusic: {fileID: 8300000, guid: c4792440701671d46a7e3ac2d637f932, type: 3}
   MusicVolume: 0
   SwordSwingSound:

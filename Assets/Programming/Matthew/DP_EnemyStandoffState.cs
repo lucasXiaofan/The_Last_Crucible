@@ -15,7 +15,7 @@ namespace DP
 
         public float goalDistance = 3f;
         public float movementSpeed = 1f;
-        public float goalTime = 1f;
+        public float goalTime = 2f;
 
         private float oldMovementSpeed;
         private int moveDir;
@@ -35,7 +35,7 @@ namespace DP
                 return this;
             }
             */
-            
+
 
             if (enemyLocomotion.currentTarget == null)
             {
@@ -50,15 +50,77 @@ namespace DP
                 enemyLocomotion.navMeshAgent.speed = oldMovementSpeed;
 
                 //Set animation bool to true
-                enemyAnimator.anim.SetBool("standoffDest", true);
+                // enemyAnimator.anim.SetBool("standoffDest", true);
 
                 return nextState;
             }
+            else if (!directionDetermined)
+            {
+                currentTime = 0;
+                moveDir = Random.Range(0, 3);
+                directionDetermined = true;
+            }
 
-            HandleStandoff(enemyManger, enemyLocomotion, enemyAnimator);
+            #region CirclePlayer
+            // in range step back
+            enemyLocomotion.navMeshAgent.enabled = true;
+            enemyLocomotion.navMeshAgent.speed = 2.5f;
+            if (enemyLocomotion.distanceFromtarget < enemyLocomotion.stoppingDistance && moveDir != 2)
+            {
+
+                enemyAnimator.anim.SetFloat("Vertical", -0.5f, 0.1f, Time.deltaTime);
+                enemyAnimator.anim.SetFloat("phase2", 0f, 0.1f, Time.deltaTime);
+                FacePlayer(enemyManger, enemyLocomotion);
+
+                Vector3 fleeDirection = (enemyLocomotion.currentTarget.transform.position - this.transform.position).normalized;
+                enemyLocomotion.navMeshAgent.SetDestination(this.transform.position - (fleeDirection * (enemyLocomotion.stoppingDistance + 1) / 2));
+            }
+            else if (moveDir == 2)
+            {
+                enemyAnimator.anim.SetFloat("Vertical", 0f, 0.1f, Time.deltaTime);
+                #region Rotation
+                Vector3 direction = enemyLocomotion.currentTarget.transform.position - enemyManger.transform.position;
+                direction.y = 0;
+                direction.Normalize();
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                enemyManger.transform.rotation = Quaternion.Slerp(enemyManger.transform.rotation, targetRotation, enemyLocomotion.RotationSpeed / Time.deltaTime);
+                #endregion
+
+                #region walkTowardPlayer
+                if (enemyLocomotion.distanceFromtarget > enemyLocomotion.stoppingDistance)
+                {
+                    enemyAnimator.anim.SetFloat("Vertical", 0.5f, 0.1f, Time.deltaTime);
+                    enemyLocomotion.navMeshAgent.enabled = true;
+                    enemyLocomotion.navMeshAgent.SetDestination(enemyLocomotion.currentTarget.transform.position);
+                    enemyLocomotion.navMeshAgent.speed = 3.2f;
+                    enemyLocomotion.enemyRigidbody.velocity = enemyLocomotion.navMeshAgent.velocity;
+                }
+                #endregion
+            }
+            else if (moveDir != 2)
+            {
+                Vector3 circleDirection = Vector3.Cross((this.transform.position - enemyLocomotion.currentTarget.transform.position),
+                                                        (moveDir == 0 ? this.transform.up : -this.transform.up)).normalized;
+                enemyAnimator.anim.SetFloat("Vertical", 0.5f, 0.2f, Time.deltaTime);
+                enemyAnimator.anim.SetFloat("phase2", (moveDir == 0 ? 0.5f : -0.5f), 0.2f, Time.deltaTime);
+                FacePlayer(enemyManger, enemyLocomotion);
+                enemyLocomotion.navMeshAgent.SetDestination(this.transform.position - (circleDirection * (enemyLocomotion.stoppingDistance + 1)));
+            }
+            //out range circle 
+            // after circle time return to combatstance
+            #endregion
+            currentTime += Time.deltaTime;
+            // HandleStandoff(enemyManger, enemyLocomotion, enemyAnimator);
             return this;
         }
-
+        private void FacePlayer(DP_EnemyManger enemyManger, DP_EnemyLocomotion enemyLocomotion)
+        {
+            Vector3 direction = enemyLocomotion.currentTarget.transform.position - enemyManger.transform.position;
+            direction.y = 0;
+            direction.Normalize();
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            enemyManger.transform.rotation = Quaternion.Slerp(enemyManger.transform.rotation, targetRotation, enemyLocomotion.RotationSpeed / Time.deltaTime);
+        }
         private void HandleStandoff(DP_EnemyManger enemyManger, DP_EnemyLocomotion enemyLocomotion, DP_EnemyAnimator enemyAnimator)
         {
             //Determine Location
@@ -112,7 +174,7 @@ namespace DP
                 destinationLocation -= (enemyManger.transform.forward * distanceMult);
             }
 
-            
+
 
             //Handle rotation towards player
             Vector3 AttackDirection = enemyLocomotion.currentTarget.transform.position - enemyManger.transform.position;

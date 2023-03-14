@@ -9,10 +9,14 @@ namespace DP
         AudioSource audioSource;
         AudioSource ambienceSource;
         public AudioSource battleMusicSource;
+        public AudioSource DialogueSource;
         public Animator Transition;
+        [Header("Dialogue")]
+        public AudioClip[] dialogues;
+        public float Diaglouevolume = 0.6f;
         [Header("BattleMusic")]
         public AudioClip BattleMusic;
-        public float MusicVolume;        
+        public float MusicVolume;
         [Header("Sword Swing Sound")]
         public AudioClip[] SwordSwingSound;
         public float swingVolume = 0.7f;
@@ -34,12 +38,17 @@ namespace DP
         public float parryVolume = 0.85f;
         [Header("Locomotion Sound")]
         public AudioClip[] LocomotionSound;
-        
+
 
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
-           
+
+        }
+        public void playDialogue()
+        {
+            int ind = Random.Range(0, dialogues.Length);
+            DialogueSource.PlayOneShot(dialogues[ind], 0.8f);
         }
         public void PlayStepSound(int index)
         {
@@ -57,7 +66,7 @@ namespace DP
             // }
             // int randomValue = Random.Range(0,potentialDamageSound.Count);
             // lastDamageSoundPlayed = takeDamageSound[randomValue];
-            audioSource.PlayOneShot(takeDamageSound[0],hitVolume);    
+            audioSource.PlayOneShot(takeDamageSound[0], hitVolume);
         }
         public void TransitionStopPlayClip()
         {
@@ -69,47 +78,48 @@ namespace DP
         }
         private void playBattleMusic(bool DoPlay)
         {
-            
-            if(DoPlay)
+
+            if (DoPlay)
             {
                 battleMusicSource.Play();
-                Transition.SetBool("Play",true);
+                battleMusicSource.volume = 0.8f;
+                Transition.SetBool("Play", true);
             }
             else // turn off the music
             {
-                Transition.SetBool("Play",false);
+                Transition.SetBool("Play", false);
             }
-            
+
         }
         public void playSwingSound(int index)
         {
-            audioSource.PlayOneShot(SwordSwingSound[index],swingVolume);
+            audioSource.PlayOneShot(SwordSwingSound[index], swingVolume);
         }
         public void playExecutionSound()
         {
-            audioSource.PlayOneShot(executeSound[0],ExecuteVolume);    
+            audioSource.PlayOneShot(executeSound[0], ExecuteVolume);
         }
         public void FrontExecution1()
         {
-            audioSource.PlayOneShot(executeSound[1],ExecuteVolume);
+            audioSource.PlayOneShot(executeSound[1], ExecuteVolume);
         }
         public void FrontExecution2()
         {
-            audioSource.PlayOneShot(executeSound[2],ExecuteVolume);
+            audioSource.PlayOneShot(executeSound[2], ExecuteVolume);
         }
         public void PlayParrySound()
         {
             potentialParrySound = new List<AudioClip>();
             foreach (var damagesound in parrySound)
             {
-                if(damagesound != lastParrySoundPlayed)
+                if (damagesound != lastParrySoundPlayed)
                 {
                     potentialParrySound.Add(damagesound);
                 }
             }
-            int randomValue = Random.Range(0,potentialParrySound.Count);
+            int randomValue = Random.Range(0, potentialParrySound.Count);
             lastParrySoundPlayed = parrySound[randomValue];
-            audioSource.PlayOneShot(parrySound[randomValue],parryVolume); 
+            audioSource.PlayOneShot(parrySound[randomValue], parryVolume);
 
         }
     }
