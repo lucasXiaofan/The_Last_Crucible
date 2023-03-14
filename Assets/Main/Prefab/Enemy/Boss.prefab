@@ -176,6 +176,7 @@ MonoBehaviour:
   ExecuteVolume: 1
   parrySound: []
   parryVolume: 0.85
+  LocomotionSound: []
 --- !u!1 &126625292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,9 +1089,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 122
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &5688548600798869740
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1136,6 +1137,7 @@ MonoBehaviour:
   LockonIcon: {fileID: 819231847}
   ExecuteCollider: {fileID: 0}
   ExecutePoint: {fileID: 5688548600215578193}
+  Invincible: 0
   Recovering: 0
   isPhase2: 0
   Boss: 1
@@ -3176,52 +3178,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5688548600434875596}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1488315072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8502651778134324407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22329e0138c84274f85566adfea811f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyManger: {fileID: 5688548600798869741}
-  enemyLocomotion: {fileID: 5688548600798869742}
-  enemyAnimator: {fileID: 5688548600234309296}
-  rangeAttack1_1State: {fileID: 1406696632}
-  rangeAttack1_2State: {fileID: 1283813650}
---- !u!114 &5688548600234309296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8502651778134324407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a458e5c7ddd5e3c47a3ab55b1e377fee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 8502651778127054637}
-  ExecutionCollider: {fileID: 5688548600327990541}
-  rootPosition: {fileID: 0}
-  finishCombo: 0
---- !u!114 &5688548600234309303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8502651778134324407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c2957064c31b94e9a591428b38b8e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightHandWeapon: {fileID: 11400000, guid: c54d463befa191044ad1c881e5ca4770, type: 2}
 --- !u!82 &107022368
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3348,6 +3304,53 @@ MonoBehaviour:
   ExecuteVolume: 1
   parrySound: []
   parryVolume: 0.85
+  LocomotionSound: []
+--- !u!114 &1488315072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502651778134324407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22329e0138c84274f85566adfea811f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyManger: {fileID: 5688548600798869741}
+  enemyLocomotion: {fileID: 5688548600798869742}
+  enemyAnimator: {fileID: 5688548600234309296}
+  rangeAttack1_1State: {fileID: 1406696632}
+  rangeAttack1_2State: {fileID: 1283813650}
+--- !u!114 &5688548600234309296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502651778134324407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a458e5c7ddd5e3c47a3ab55b1e377fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 8502651778127054637}
+  ExecutionCollider: {fileID: 5688548600327990541}
+  rootPosition: {fileID: 0}
+  finishCombo: 0
+--- !u!114 &5688548600234309303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8502651778134324407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c2957064c31b94e9a591428b38b8e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHandWeapon: {fileID: 11400000, guid: c54d463befa191044ad1c881e5ca4770, type: 2}
 --- !u!1 &8502651778134324545 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4255537084011211149, guid: e4e5fc6d1f5f4eb4a81bde36076d9fd5,

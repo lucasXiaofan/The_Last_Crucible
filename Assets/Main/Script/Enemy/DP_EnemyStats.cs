@@ -39,7 +39,7 @@ namespace DP
         {
             playerHealthBar.hideEnemyUI();
             playerHealthBar.enabled = false;
-            if(enemyManger.Boss || enemyManger.KeyHolder)
+            if (enemyManger.Boss || enemyManger.KeyHolder)
             {
                 enemyManger.soundManager.PlayBattleM(false);
             }
@@ -58,7 +58,7 @@ namespace DP
                 playerHealthBar.hideEnemyUI();
                 return;
             }
-            if(enemyManger.Invincible)
+            if (enemyManger.Invincible)
             {
                 return;
             }
@@ -79,13 +79,10 @@ namespace DP
                 else
                 {
                     DamagePosture(damage / 3);
-                    if(!enemyManger.Boss || enemyManger.isPreformingAction)
+                    if (!enemyManger.Boss || !enemyManger.isPreformingAction)
                     {
                         enemyAnimator.ApplyTargetAnimation("getHit", true, false);
                     }
-                    
-
-
                 }
                 if (currentHealth <= 0)
                 {
@@ -101,7 +98,7 @@ namespace DP
         }
         public void playBloodVFX(Vector3 location, bool normal)
         {
-            
+
             if (normal)
             {
                 GameObject blood = Instantiate(bloodVFX, location, Quaternion.identity);

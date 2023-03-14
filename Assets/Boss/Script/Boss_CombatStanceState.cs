@@ -44,13 +44,13 @@ namespace DP
             else if (!enemyManger.Recovering && !enemyManger.isPreformingAction)
             {
                 enemyLocomotion.navMeshAgent.enabled = false;
-                int doRangeAttack = Random.Range(0, 2);
-                print("do range attacks? " + doRangeAttack);
-                if (doRangeAttack == 0)
-                {
-                    int attack = Random.Range(0, RangeAttackStates.Length);
-                    return RangeAttackStates[attack];
-                }
+                // int doRangeAttack = Random.Range(0, 2);
+                // print("do range attacks? " + doRangeAttack);
+                // if (doRangeAttack == 0)
+                // {
+                //     int attack = Random.Range(0, RangeAttackStates.Length);
+                //     return RangeAttackStates[attack];
+                // }
                 return PursueState;
             }
             return this;

@@ -19,13 +19,17 @@ namespace DP
                 return enemyAttackState;
             }
             else if (enemyLocomotion.distanceFromtarget >= enemyLocomotion.detectionDistance
-                    && enemyPatrolState != null)
+                    )
             {
-                return enemyPatrolState;
+                enemyAnimator.anim.SetFloat("Vertical", 0);
+                return this;
+            }
+            else
+            {
+                enemyLocomotion.HandleMovement();
+                return this;
             }
 
-            enemyLocomotion.HandleMovement();
-            return this;
         }
 
     }

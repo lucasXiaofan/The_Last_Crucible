@@ -32,7 +32,7 @@ namespace DP
                 }
                 playerStats.playBloodVFX(contactPoint);
                 animationHandler.ApplyTargetAnimation("HitUp", true, false);
-                playerStats.TakeDamage(10, true);
+                playerStats.TakeDamage(50, true);
             }
         }
         public void enableKnockUp()
