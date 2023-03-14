@@ -47,6 +47,15 @@ namespace DP
             enemyStats.currentPosture = 0;
             closeExecutionCollider();
         }
+        public void Invincible()
+        {
+            enemyManger.Invincible = true;
+        }
+
+        public void Normal()
+        {
+            enemyManger.Invincible = false;
+        }
 
         public void HandleDeath()
         {

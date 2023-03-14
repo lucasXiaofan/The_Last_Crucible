@@ -31,6 +31,7 @@ namespace DP
         public Image LockonIcon;
         public BoxCollider ExecuteCollider;
         public Transform ExecutePoint;
+        public bool Invincible;
         public bool Recovering;
         public bool isPhase2;
         [Header("Type of Enemy")]

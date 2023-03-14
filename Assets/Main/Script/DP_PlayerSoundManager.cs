@@ -8,8 +8,11 @@ namespace DP
     {
         AudioSource audioSource;
         AudioSource ambienceSource;
-        AudioSource battleMusic;
-        
+        public AudioSource battleMusicSource;
+        public Animator Transition;
+        [Header("BattleMusic")]
+        public AudioClip BattleMusic;
+        public float MusicVolume;        
         [Header("Sword Swing Sound")]
         public AudioClip[] SwordSwingSound;
         public float swingVolume = 0.7f;
@@ -29,10 +32,18 @@ namespace DP
         private List<AudioClip> potentialParrySound;
         private AudioClip lastParrySoundPlayed;
         public float parryVolume = 0.85f;
+        [Header("Locomotion Sound")]
+        public AudioClip[] LocomotionSound;
+        
 
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
+           
+        }
+        public void PlayStepSound(int index)
+        {
+            audioSource.PlayOneShot(LocomotionSound[index]);
         }
         public void PlayRandomDamageSoundFX()
         {
@@ -47,6 +58,28 @@ namespace DP
             // int randomValue = Random.Range(0,potentialDamageSound.Count);
             // lastDamageSoundPlayed = takeDamageSound[randomValue];
             audioSource.PlayOneShot(takeDamageSound[0],hitVolume);    
+        }
+        public void TransitionStopPlayClip()
+        {
+            battleMusicSource.Stop();
+        }
+        public void PlayBattleM(bool Play)
+        {
+            playBattleMusic(Play);
+        }
+        private void playBattleMusic(bool DoPlay)
+        {
+            
+            if(DoPlay)
+            {
+                battleMusicSource.Play();
+                Transition.SetBool("Play",true);
+            }
+            else // turn off the music
+            {
+                Transition.SetBool("Play",false);
+            }
+            
         }
         public void playSwingSound(int index)
         {
