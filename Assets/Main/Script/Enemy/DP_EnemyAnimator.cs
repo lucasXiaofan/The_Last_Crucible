@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DP
 {
@@ -36,6 +37,15 @@ namespace DP
             // enemyLocomotion.transform.position = anim.rootPosition;
 
 
+        }
+        public void BossDeath()
+        {
+            if (enemyManger.Boss)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                SceneManager.LoadScene("End");
+            }
         }
         public void exitParryAnimation()
         {
@@ -89,13 +99,14 @@ namespace DP
         // boss combat need to exist this for combo
         public void stopInteracting()
         {
-            anim.SetBool("isInteracting",false);
+            anim.SetBool("isInteracting", false);
         }
-        public void comboFinish()
+        public void comboFinish(float Cooldown)
         {
+            enemyManger.currentRecoveryTime = Cooldown;
             finishCombo = true;
         }
-    
+
         #region combat
 
         #endregion

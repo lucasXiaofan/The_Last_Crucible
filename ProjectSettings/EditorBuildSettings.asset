@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Level_design/Uzi_Scene.unity
     guid: 742e2dd280392f8439d8311b8cfa68b9
+  - enabled: 1
+    path: Assets/Main/End.unity
+    guid: 0caa823fbeebffe4c825cebf6ac2fbd4
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 653cf171e3965f34a9cd60b25a62baae,
       type: 2}

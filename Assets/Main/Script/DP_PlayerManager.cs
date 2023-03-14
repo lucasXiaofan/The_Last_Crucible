@@ -61,8 +61,7 @@ namespace DP
             ItemPickLayer = (1 << 8 | 1 << 17);
             isGrounded = true;
             spawnManager = FindObjectOfType<SpawnManager>();
-            if (spawnManager != null)
-                SpawnAtCheckpoint();
+
         }
 
         void Start()
@@ -76,6 +75,8 @@ namespace DP
             soundManager = GetComponentInChildren<DP_PlayerSoundManager>();
 
             // UI 
+            if (spawnManager != null)
+                SpawnAtCheckpoint();
             StartCoroutine(TransitionFadeOut());
             itemTextObject.SetActive(false);
             tutorial.SetActive(true);
@@ -127,6 +128,7 @@ namespace DP
             playerStats.BloodEffect(delta);
 
             playerLomotion.HandleFalling(delta, playerLomotion.MoveDirection);
+
         }
 
         private void LateUpdate()
@@ -136,6 +138,11 @@ namespace DP
             //     return;
             // }
             float delta = Time.deltaTime;
+            if (cameraControl != null)
+            {
+                cameraControl.FollowTarget(delta);
+                cameraControl.CameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
+            }
 
             inputHandler.rollFlag = false;
             //inputHandler.sprintFlag = false;
@@ -152,11 +159,7 @@ namespace DP
             inputHandler.heal_input = false;
             inputHandler.roll_backStep_input = false;
 
-            if (cameraControl != null)
-            {
-                cameraControl.FollowTarget(delta);
-                cameraControl.CameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
-            }
+
 
             isSprinting = inputHandler.roll_b_input;
             if (isInAir)
@@ -196,6 +199,8 @@ namespace DP
             }
             yield return new WaitForSeconds(0.2f);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (spawnManager != null)
+                SpawnAtCheckpoint();
         }
 
         IEnumerator TransitionFadeOut()
@@ -292,7 +297,9 @@ namespace DP
         public void SpawnAtCheckpoint()
         {
             //move player to this position 
+            print("called spawncheck");
             transform.position = new Vector3(spawnManager.spawnPosition.x - 2, spawnManager.spawnPosition.y, spawnManager.spawnPosition.z);
+            print(transform.position);
         }
     }
 }

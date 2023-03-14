@@ -27,12 +27,14 @@ namespace DP
                     //player vfx
 
                     playerStats.playerParryVFX(contactPoint);
+                    playerManager.soundManager.PlayParrySound();
                     enemyStats.DamagePosture(40);
                     return;
                 }
                 playerStats.playBloodVFX(contactPoint);
+
                 animationHandler.ApplyTargetAnimation("HitUp", true, false);
-                playerStats.TakeDamage(10, true);
+                playerStats.TakeDamage(25, true);
             }
         }
         public void enableKnockUp()

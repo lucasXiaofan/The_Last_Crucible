@@ -523,7 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftWeapon: {fileID: 0}
-  rightWeapon: {fileID: 11400000, guid: c54d463befa191044ad1c881e5ca4770, type: 2}
+  rightWeapon: {fileID: 0}
   unarmedWeapon: {fileID: 11400000, guid: ebe67d50a26ec3f4aab65725a55f08d8, type: 2}
   rightHandSlots: []
   leftHandSlots: []
@@ -2301,6 +2301,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6e4fa3f67dbbe314ea18996c7b8fa18f, type: 3}
   - {fileID: 8300000, guid: 9f939ffdc9cb52c4aa7dd7836ad7d4da, type: 3}
   parryVolume: 0.85
+  LocomotionSound:
+  - {fileID: 8300000, guid: 8b95bfe469c9d73419a278c866432b4e, type: 3}
+  - {fileID: 8300000, guid: 5f8a3649d86dc374f9d24df553174fd9, type: 3}
 --- !u!114 &5857331304779770590
 MonoBehaviour:
   m_ObjectHideFlags: 0

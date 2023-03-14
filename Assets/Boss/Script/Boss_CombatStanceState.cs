@@ -8,8 +8,10 @@ namespace DP
     public class Boss_CombatStanceState : DP_State
     {
         public DP_State[] RangeAttackStates;
+        public string[] RecoverMoves;
         public DP_State PursueState;
         public DP_State StandOffState;
+
         public float walkSpeed = 3.2f;
 
         //after boss attacked player always return to this state to select next attack;
@@ -19,33 +21,22 @@ namespace DP
             if (enemyManger.Recovering && !enemyManger.isPreformingAction)
             {
                 // return this;
-                enemyAnimator.anim.SetFloat("Vertical", 0f, 0.1f, Time.deltaTime);
-                #region Rotation
-                Vector3 direction = enemyLocomotion.currentTarget.transform.position - enemyManger.transform.position;
-                direction.y = 0;
-                direction.Normalize();
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                enemyManger.transform.rotation = Quaternion.Slerp(enemyManger.transform.rotation, targetRotation, enemyLocomotion.RotationSpeed / Time.deltaTime);
-                #endregion
 
-                #region walkTowardPlayer
-                if (enemyLocomotion.distanceFromtarget > enemyLocomotion.stoppingDistance)
+                int move = Random.Range(0, 10);
+                if (move < 2)
                 {
-                    enemyAnimator.anim.SetFloat("Vertical", 0.5f, 0.1f, Time.deltaTime);
-                    enemyLocomotion.navMeshAgent.enabled = true;
-                    enemyLocomotion.navMeshAgent.SetDestination(enemyLocomotion.currentTarget.transform.position);
-                    enemyLocomotion.navMeshAgent.speed = walkSpeed;
-                    enemyLocomotion.enemyRigidbody.velocity = enemyLocomotion.navMeshAgent.velocity;
+                    enemyAnimator.ApplyTargetAnimation(RecoverMoves[move], true, false);
                 }
-                #endregion
-
-
+                else
+                {
+                    return StandOffState;
+                }
             }
             else if (!enemyManger.Recovering && !enemyManger.isPreformingAction)
             {
                 enemyLocomotion.navMeshAgent.enabled = false;
-                int doRangeAttack = Random.Range(0, 2);
-                print("do range attacks? " + doRangeAttack);
+                int doRangeAttack = Random.Range(0, 3);
+                // print("do range attacks? " + doRangeAttack);
                 if (doRangeAttack == 0)
                 {
                     int attack = Random.Range(0, RangeAttackStates.Length);
@@ -53,6 +44,7 @@ namespace DP
                 }
                 return PursueState;
             }
+            enemyLocomotion.transform.position += enemyAnimator.anim.deltaPosition;
             return this;
             // return StandOffState;
 

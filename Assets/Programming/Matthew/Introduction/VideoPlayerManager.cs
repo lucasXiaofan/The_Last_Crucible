@@ -18,6 +18,6 @@ public class VideoPlayerManager : MonoBehaviour
     private void CheckOver(UnityEngine.Video.VideoPlayer vp)
     {
         sceneIndex += 1;
-        SceneManager.LoadScene(sceneIndex);
+        SceneManager.LoadScene(0);
     }
 }

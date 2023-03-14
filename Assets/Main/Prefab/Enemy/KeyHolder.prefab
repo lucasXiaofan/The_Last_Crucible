@@ -208,7 +208,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleMusicSource: {fileID: 956005496}
+  DialogueSource: {fileID: 0}
   Transition: {fileID: 0}
+  dialogues: []
+  Diaglouevolume: 0.6
   BattleMusic: {fileID: 0}
   MusicVolume: 0
   SwordSwingSound: []
@@ -221,6 +224,7 @@ MonoBehaviour:
   ExecuteVolume: 1
   parrySound: []
   parryVolume: 0.85
+  LocomotionSound: []
 --- !u!1 &1161928665
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +415,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1918165061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1918165062}
+  m_Layer: 0
+  m_Name: CombatStanceState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1918165062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918165061}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 98203625385405940}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1947139306
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,9 +615,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 122
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &98203624255126105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,8 +638,9 @@ MonoBehaviour:
   enemyAttacksList:
   - {fileID: 11400000, guid: 4bc896e4bd8c1074887806a566c7f436, type: 2}
   - {fileID: 11400000, guid: 014bf81175ca7bf4d876c0c35f90afb9, type: 2}
-  - {fileID: 11400000, guid: 246080734b211ea47af15b2839e3f016, type: 2}
-  - {fileID: 11400000, guid: 45eb8dae13cd8b9439f8d5fe64f70a58, type: 2}
+  - {fileID: 11400000, guid: fabe3202bc059314184efb6678785d5e, type: 2}
+  - {fileID: 11400000, guid: 076f1e010860c654b80a01dd57bbbad5, type: 2}
+  - {fileID: 11400000, guid: 27ab79d730b6ce2478e2666fad2379c6, type: 2}
   currentAttack: {fileID: 0}
   detectionRadius: 20
   minDetectionAngle: -60
@@ -617,6 +653,7 @@ MonoBehaviour:
   LockonIcon: {fileID: 4482351869105602954}
   ExecuteCollider: {fileID: 268382341}
   ExecutePoint: {fileID: 1947139307}
+  Invincible: 0
   Recovering: 0
   isPhase2: 0
   Boss: 0
@@ -865,6 +902,7 @@ Transform:
   - {fileID: 98203625374267002}
   - {fileID: 98203624161986996}
   - {fileID: 98203625171253357}
+  - {fileID: 1918165062}
   m_Father: {fileID: 98203624255126109}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2123,35 +2161,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 98203625452249578}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &98203625452249581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 97339488151908464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c2957064c31b94e9a591428b38b8e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightHandWeapon: {fileID: 11400000, guid: 81807b7da052b284a8d86eca40c19611, type: 2}
---- !u!114 &98203625452249582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 97339488151908464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a458e5c7ddd5e3c47a3ab55b1e377fee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  ExecutionCollider: {fileID: 268382341}
-  rootPosition: {fileID: 0}
-  finishCombo: 0
 --- !u!82 &449299010
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2261,7 +2270,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleMusicSource: {fileID: 956005496}
+  DialogueSource: {fileID: 0}
   Transition: {fileID: 956005498}
+  dialogues: []
+  Diaglouevolume: 0.6
   BattleMusic: {fileID: 8300000, guid: c4792440701671d46a7e3ac2d637f932, type: 3}
   MusicVolume: 0
   SwordSwingSound:
@@ -2276,6 +2288,36 @@ MonoBehaviour:
   ExecuteVolume: 1
   parrySound: []
   parryVolume: 0.85
+  LocomotionSound: []
+--- !u!114 &98203625452249581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97339488151908464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c2957064c31b94e9a591428b38b8e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHandWeapon: {fileID: 11400000, guid: 81807b7da052b284a8d86eca40c19611, type: 2}
+--- !u!114 &98203625452249582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97339488151908464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a458e5c7ddd5e3c47a3ab55b1e377fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  ExecutionCollider: {fileID: 268382341}
+  rootPosition: {fileID: 0}
+  finishCombo: 0
 --- !u!1 &98891024785322368 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1046123597860970, guid: dc6170fded71bf944b115160ab2cae64,
