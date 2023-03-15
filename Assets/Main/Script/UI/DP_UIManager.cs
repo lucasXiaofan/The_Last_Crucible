@@ -63,6 +63,11 @@ namespace DP
         {
             SceneManager.LoadScene(index);
         }
+        public void HideCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         public void ExistGame()
         {
             print("quit game");

@@ -228,7 +228,6 @@ MonoBehaviour:
   - {fileID: 1406696632}
   - {fileID: 1283813650}
   RecoverMoves:
-  - Dodge_B
   - Roll_Attack
   PursueState: {fileID: 102959825}
   StandOffState: {fileID: 1211024692}

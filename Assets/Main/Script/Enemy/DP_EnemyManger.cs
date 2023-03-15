@@ -32,6 +32,7 @@ namespace DP
         public Image LockonIcon;
         public BoxCollider ExecuteCollider;
         public Transform ExecutePoint;
+        DP_EnemyIdleState idleState;
         public bool Invincible;
         public bool Recovering;
         public bool isPhase2;
@@ -50,7 +51,13 @@ namespace DP
             enemyStats = GetComponent<DP_EnemyStats>();
             body = GetComponent<CapsuleCollider>();
             soundManager = GetComponentInChildren<DP_PlayerSoundManager>();
+            idleState = GetComponentInChildren<DP_EnemyIdleState>();
             LockonIcon.enabled = false;
+            if(!Boss)
+            {
+                currentState = idleState;
+            }
+            
 
 
         }

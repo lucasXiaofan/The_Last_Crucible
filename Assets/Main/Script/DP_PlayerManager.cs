@@ -79,7 +79,7 @@ namespace DP
                 SpawnAtCheckpoint();
             StartCoroutine(TransitionFadeOut());
             itemTextObject.SetActive(false);
-            tutorial.SetActive(true);
+            tutorial.SetActive(false);
             textUI = FindObjectOfType<DP_AlertTextUI>();
 
 
@@ -297,9 +297,7 @@ namespace DP
         public void SpawnAtCheckpoint()
         {
             //move player to this position 
-            print("called spawncheck");
             transform.position = new Vector3(spawnManager.spawnPosition.x - 2, spawnManager.spawnPosition.y, spawnManager.spawnPosition.z);
-            print(transform.position);
         }
     }
 }

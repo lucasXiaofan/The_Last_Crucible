@@ -23,7 +23,7 @@ namespace DP
                 // return this;
 
                 int move = Random.Range(0, 10);
-                if (move < 2)
+                if (move < 1)
                 {
                     enemyAnimator.ApplyTargetAnimation(RecoverMoves[move], true, false);
                 }

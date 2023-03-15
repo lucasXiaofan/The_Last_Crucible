@@ -82,7 +82,7 @@ namespace DP
             if (DoPlay)
             {
                 battleMusicSource.Play();
-                battleMusicSource.volume = 0.8f;
+                battleMusicSource.volume = 0.5f;
                 Transition.SetBool("Play", true);
             }
             else // turn off the music

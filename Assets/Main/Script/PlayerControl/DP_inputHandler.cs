@@ -246,7 +246,7 @@ namespace DP
                 menuFlag = !menuFlag;
                 uIManager.TurnOnorOffUI(menuFlag);
                 playerManager.ShowCursor();
-                uIManager.hudWindows.SetActive(!menuFlag);
+                // uIManager.hudWindows.SetActive(!menuFlag);
                 if (menuFlag)
                 {
                     
