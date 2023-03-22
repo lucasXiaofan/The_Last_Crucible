@@ -506,6 +506,17 @@
                 },
                 {
                     "name": "",
+                    "id": "57ce6493-4cc1-4c35-9f2d-523c3f34743a",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "0004fa4c-4728-4c32-9c15-0dd39c4188c1",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
