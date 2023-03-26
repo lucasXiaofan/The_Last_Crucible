@@ -249,7 +249,7 @@ namespace DP
                 // uIManager.hudWindows.SetActive(!menuFlag);
                 if (menuFlag)
                 {
-                    
+
                     //uIManager.UpdateUI();
                 }
                 else if (!menuFlag)
@@ -342,15 +342,17 @@ namespace DP
         {
             if (tab_input)
             {
-                if (!isUIOpen)
-                {
-                    playerManager.tutorial.SetActive(true);
-                }
-                else
-                {
-                    playerManager.tutorial.SetActive(false);
-                }
-                isUIOpen = !isUIOpen;
+                playerManager.tutorial.SetActive(true);
+                playerManager.ShowCursor();
+                // if (!isUIOpen)
+                // {
+                //     playerManager.tutorial.SetActive(true);
+                // }
+                // else
+                // {
+                //     playerManager.tutorial.SetActive(false);
+                // }
+                // isUIOpen = !isUIOpen;
 
             }
         }
