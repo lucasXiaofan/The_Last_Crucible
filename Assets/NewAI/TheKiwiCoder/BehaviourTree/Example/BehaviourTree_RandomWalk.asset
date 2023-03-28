@@ -26,8 +26,8 @@ MonoBehaviour:
   treeState: 0
   blackboard:
     moveToPosition: {x: 100, y: 0, z: 0}
-  viewPosition: {x: -299, y: 110, z: 0}
-  viewScale: {x: 0.57175326, y: 0.57175326, z: 1}
+  viewPosition: {x: -330, y: 337, z: 0}
+  viewScale: {x: 0.7561437, y: 0.7561437, z: 1}
   references:
     version: 2
     RefIds:
@@ -82,7 +82,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 9a1467763237cb145b9cf65e90ce3193
-        position: {x: 723, y: 169.00005}
+        position: {x: 702.68787, y: 180.99998}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: Randomly generates a position into the blackboard
@@ -95,7 +95,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 6d43e0274b9a6b647a32a83ae71f5c62
-        position: {x: 872.99994, y: 169}
+        position: {x: 853.00006, y: 181.00005}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: Move to the random position in the blackboard
@@ -123,7 +123,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: f6a03349f1038984689fbbb07faf5597
-        position: {x: 1023, y: 169}
+        position: {x: 1003.0001, y: 181.00005}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: 
@@ -135,7 +135,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: aff8e33aa7eea3044a30ccbd0196d826
-        position: {x: 572.9999, y: 169}
+        position: {x: 539, y: 181}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: 
