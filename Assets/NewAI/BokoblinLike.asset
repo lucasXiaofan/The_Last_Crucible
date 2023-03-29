@@ -16,10 +16,11 @@ MonoBehaviour:
     rid: 7629819681590214656
   nodes:
   - rid: 7629819681590214656
+  - rid: 7629819699325829120
   treeState: 0
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
-  viewPosition: {x: 166, y: 175, z: 0}
+  viewPosition: {x: 137, y: 228, z: 0}
   viewScale: {x: 1, y: 1, z: 1}
   references:
     version: 2
@@ -32,10 +33,25 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 6cf99ecd-9f16-4122-99ef-61d31fd5496b
-        position: {x: 0, y: 0}
+        position: {x: 10, y: -56}
+        blackboard:
+          moveToPosition: {x: 0, y: 0, z: 0}
+        description: 
+        drawGizmos: 0
+        child:
+          rid: 7629819699325829120
+    - rid: 7629819699325829120
+      type: {class: Repeat, ns: TheKiwiCoder, asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: 39b3818908b07514582f8b168492fbb4
+        position: {x: 10, y: 81}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: 
         drawGizmos: 0
         child:
           rid: -2
+        restartOnSuccess: 1
+        restartOnFailure: 0

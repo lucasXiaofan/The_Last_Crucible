@@ -27,6 +27,11 @@ namespace DP
         }
         private void Start()
         {
+            if (quickSlotUI == null)
+            {
+                print("no quickslotUI implemented");
+                return;
+            }
             quickSlotUI.FlaskIconHandler(FlaskAmount);
         }
         // public void playBloodVFX(Vector3 location)

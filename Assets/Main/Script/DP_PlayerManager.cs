@@ -77,6 +77,11 @@ namespace DP
             // UI 
             if (spawnManager != null)
                 SpawnAtCheckpoint();
+            if (TransitionScene == null || textUI == null)
+            {
+                print("No UI set up, no transitionScene or no textUI or more");
+                return;
+            }
             StartCoroutine(TransitionFadeOut());
             itemTextObject.SetActive(false);
             tutorial.SetActive(false);

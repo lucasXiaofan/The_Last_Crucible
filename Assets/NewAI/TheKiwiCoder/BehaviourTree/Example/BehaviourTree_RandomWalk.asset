@@ -21,13 +21,16 @@ MonoBehaviour:
   - rid: 4200190926137589872
   - rid: 4200190926137589873
   - rid: 4200190926137589874
-  - rid: 7629819681590214659
-  - rid: 7629819681590214660
+  - rid: 7629819699325829122
+  - rid: 7629819699325829123
+  - rid: 7629819699325829124
+  - rid: 7629819699325829125
+  - rid: 7629819699325829126
   treeState: 0
   blackboard:
     moveToPosition: {x: 100, y: 0, z: 0}
-  viewPosition: {x: -330, y: 337, z: 0}
-  viewScale: {x: 0.7561437, y: 0.7561437, z: 1}
+  viewPosition: {x: -212, y: 229, z: 0}
+  viewScale: {x: 0.57175326, y: 0.57175326, z: 1}
   references:
     version: 2
     RefIds:
@@ -50,13 +53,13 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: dcafe99d707d250419e5d8ff0ada012e
-        position: {x: 723, y: -230.00012}
+        position: {x: 723, y: -277.61}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: Repeat forever
         drawGizmos: 0
         child:
-          rid: 4200190926137589871
+          rid: 7629819699325829123
         restartOnSuccess: 1
         restartOnFailure: 0
     - rid: 4200190926137589871
@@ -65,24 +68,24 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 5e06deafef5af5b49aa50aaed9884138
-        position: {x: 722.99994, y: -81.93839}
+        position: {x: 867.91003, y: 55.291702}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-        description: Select random position, move to it, then wait
+        description: 'Movement
+
+'
         drawGizmos: 0
         children:
         - rid: 4200190926137589874
-        - rid: 7629819681590214660
         - rid: 4200190926137589872
         - rid: 4200190926137589873
-        - rid: 7629819681590214659
     - rid: 4200190926137589872
       type: {class: RandomPosition, ns: , asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
         guid: 9a1467763237cb145b9cf65e90ce3193
-        position: {x: 702.68787, y: 180.99998}
+        position: {x: 845.91, y: 224.29169}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: Randomly generates a position into the blackboard
@@ -95,7 +98,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 6d43e0274b9a6b647a32a83ae71f5c62
-        position: {x: 853.00006, y: 181.00005}
+        position: {x: 995.9099, y: 224.29169}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: Move to the random position in the blackboard
@@ -111,33 +114,76 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: a6398ba3eee6567469a804864807353b
-        position: {x: 389.2501, y: 181.00005}
+        position: {x: 695.91003, y: 224.29169}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: Wait
         drawGizmos: 0
         duration: 1
-    - rid: 7629819681590214659
+    - rid: 7629819699325829122
+      type: {class: Sequencer, ns: TheKiwiCoder, asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: 77e5068f62ff92e4e8557c9c39d99060
+        position: {x: 1396.91, y: 55.291702}
+        blackboard:
+          moveToPosition: {x: 0, y: 0, z: 0}
+        description: Combat
+        drawGizmos: 0
+        children:
+        - rid: 7629819699325829124
+        - rid: 7629819699325829125
+    - rid: 7629819699325829123
+      type: {class: Selector, ns: TheKiwiCoder, asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: 3370b9ae88c91314a8a1c35c42db39b5
+        position: {x: 723, y: -149.35005}
+        blackboard:
+          moveToPosition: {x: 0, y: 0, z: 0}
+        description: Pick from movement, combat, rest
+        drawGizmos: 0
+        children:
+        - rid: 7629819699325829126
+        - rid: 4200190926137589871
+        - rid: 7629819699325829122
+    - rid: 7629819699325829124
       type: {class: Log, ns: TheKiwiCoder, asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
-        guid: f6a03349f1038984689fbbb07faf5597
-        position: {x: 1003.0001, y: 181.00005}
+        guid: 3a78310bca9e3f3438a98ecc75443428
+        position: {x: 1308.9099, y: 212.29172}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
         description: 
         drawGizmos: 0
-        message: 'selecting '
-    - rid: 7629819681590214660
-      type: {class: Log, ns: TheKiwiCoder, asm: Assembly-CSharp}
+        message: 
+    - rid: 7629819699325829125
+      type: {class: RandomSelector, ns: TheKiwiCoder, asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
-        guid: aff8e33aa7eea3044a30ccbd0196d826
-        position: {x: 539, y: 181}
+        guid: 953c4b0ab7e8e504cb73b7940d3a49f3
+        position: {x: 1471.91, y: 212.29172}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-        description: 
+        description: 'random select a combat
+
+'
         drawGizmos: 0
-        message: done
+        children: []
+    - rid: 7629819699325829126
+      type: {class: Sequencer, ns: TheKiwiCoder, asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: fdc4d082e6748214095b090154d44c3a
+        position: {x: 428.45425, y: 55.00001}
+        blackboard:
+          moveToPosition: {x: 0, y: 0, z: 0}
+        description: Rest
+        drawGizmos: 0
+        children: []

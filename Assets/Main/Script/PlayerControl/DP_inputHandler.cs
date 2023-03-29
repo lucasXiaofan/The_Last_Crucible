@@ -243,6 +243,11 @@ namespace DP
             //print(menu_input);
             if (menu_input)
             {
+                if (uIManager == null)
+                {
+                    print("No uIManager");
+                    return;
+                }
                 menuFlag = !menuFlag;
                 uIManager.TurnOnorOffUI(menuFlag);
                 playerManager.ShowCursor();

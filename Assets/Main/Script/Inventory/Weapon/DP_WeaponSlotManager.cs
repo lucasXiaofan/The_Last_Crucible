@@ -39,7 +39,7 @@ namespace DP
 
 
 
-            quickSlotUI.IconHandler(false, weaponItem);
+
             RightWeaponSlot.UploadWeapon(weaponItem);
             LoadRightWeaponCollider();
             if (weaponItem != null)
@@ -50,6 +50,12 @@ namespace DP
             {
                 animator.CrossFade("Right_arm_empty", 0.2f);
             }
+            if (quickSlotUI == null)
+            {
+                print("No quickslotUI");
+                return;
+            }
+            quickSlotUI.IconHandler(false, weaponItem);
 
         }
 

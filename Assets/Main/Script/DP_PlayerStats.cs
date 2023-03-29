@@ -20,36 +20,44 @@ namespace DP
         public int currentStamina;
         [Header(" Damaged BloodEffect")]
         public Image BloodEffectImg;
-        public float duration =1f;
+        public float duration = 1f;
         public float durationTimer;
-        public float fadeSpeed= 10f;
+        public float fadeSpeed = 10f;
         void Start()
         {
             animationHandler = GetComponentInChildren<DP_animationHandler>();
             playerManager = GetComponentInParent<DP_PlayerManager>();
             maximumHealth = SetMaximumHealthLevel();
             currentHealth = maximumHealth;
+            if (playerHealthBar == null || BloodEffectImg == null)
+            {
+                print("No playerHealthbar or bloodeffectimg");
+                return;
+            }
             playerHealthBar.SetMaximumHeath(maximumHealth);
-            BloodEffectImg.color = new Color(BloodEffectImg.color.r,BloodEffectImg.color.g,
-                BloodEffectImg.color.b,0);
-            maxStamina = SetMaximumStaminaLevel();
-            currentStamina = maxStamina;
+            BloodEffectImg.color = new Color(BloodEffectImg.color.r, BloodEffectImg.color.g,
+                BloodEffectImg.color.b, 0);
             //StaminaBar.SetMaximumHeath(maxStamina);
         }
-        
+
         public void BloodEffect(float delta)
         {
-            if(BloodEffectImg.color.a>0)
+            if (BloodEffectImg == null)
             {
-                durationTimer+=delta;
-                if (durationTimer<duration)
+                print("No get damaged effect image for player.");
+                return;
+            }
+            if (BloodEffectImg.color.a > 0)
+            {
+                durationTimer += delta;
+                if (durationTimer < duration)
                 {
                     float TemPa = BloodEffectImg.color.a;
                     TemPa -= delta * fadeSpeed;
-                    BloodEffectImg.color = new Color(BloodEffectImg.color.r,BloodEffectImg.color.g,
-                    BloodEffectImg.color.b,TemPa);
+                    BloodEffectImg.color = new Color(BloodEffectImg.color.r, BloodEffectImg.color.g,
+                    BloodEffectImg.color.b, TemPa);
                 }
-                
+
             }
         }
         private int SetMaximumHealthLevel()
@@ -83,8 +91,8 @@ namespace DP
             }
             currentHealth = currentHealth - damage;
             durationTimer = 0;
-            BloodEffectImg.color = new Color(BloodEffectImg.color.r,BloodEffectImg.color.g,
-                BloodEffectImg.color.b,1);
+            BloodEffectImg.color = new Color(BloodEffectImg.color.r, BloodEffectImg.color.g,
+                BloodEffectImg.color.b, 1);
             playerHealthBar.SetHeathBarValue(currentHealth);
             if (!playerManager.isInteracting && !normal)
             {
@@ -113,6 +121,6 @@ namespace DP
             }
             playerHealthBar.SetHeathBarValue(currentHealth);
         }
-        
+
     }
 }
