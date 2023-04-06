@@ -42,5 +42,11 @@ namespace TheKiwiCoder
 
             return context;
         }
+        public void playAnimation(string animationName, bool isInteracting)
+        {
+            animator.applyRootMotion = isInteracting;
+            animator.SetBool("isInteracting", isInteracting);
+            animator.Play(animationName);
+        }
     }
 }
