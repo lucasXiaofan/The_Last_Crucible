@@ -21,23 +21,25 @@ MonoBehaviour:
   - rid: 3851174811283226624
   - rid: 3851174811283226625
   - rid: 3851174854896648199
-  - rid: 3851174854896648200
   - rid: 3851174854896648201
   - rid: 3851174854896648202
   - rid: 3851174854896648203
   - rid: 3851174854896648204
-  - rid: 3851174854896648206
-  - rid: 3851174854896648207
-  - rid: 3851174854896648208
-  - rid: 3851174854896648209
+  - rid: 3851174878669438976
+  - rid: 3851174878669438977
+  - rid: 3851174878669438978
+  - rid: 3851174878669438979
   treeState: 0
   blackboard:
     moveToPosition: {x: 100, y: 0, z: 0}
-    attacking: 0
+    isFired: 1
+    isPanic: 0
+    isSleep: 0
+    isDead: 0
     disFromPlayer: 0
     player: {fileID: 0}
-  viewPosition: {x: -540.8, y: -203.2, z: 0}
-  viewScale: {x: 0.7561437, y: 0.7561437, z: 1}
+  viewPosition: {x: -426.4, y: 160.8, z: 0}
+  viewScale: {x: 0.65751624, y: 0.65751624, z: 1}
   references:
     version: 2
     RefIds:
@@ -47,15 +49,18 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: b43f3e930bec5b8478b702f315d9310e
-        position: {x: 648.8001, y: 324.03513}
+        position: {x: 575.9999, y: 196.79999}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: 
         drawGizmos: 0
-        detectionRadius: 20
+        detectionRadius: 10
         minDetectionAngle: -60
         maxDetectionAngle: 60
         stoppingDistance: 0.1
@@ -69,10 +74,13 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 40175d7d4dd32de48b324d39a1224327
-        position: {x: 799.9999, y: 670.30206}
+        position: {x: 724.7998, y: 517.5999}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: 
@@ -93,47 +101,36 @@ MonoBehaviour:
         position: {x: 723.6001, y: -258.22293}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: 
         drawGizmos: 0
         child:
           rid: 7629819699325829123
-    - rid: 3851174854896648200
-      type: {class: Selector, ns: TheKiwiCoder, asm: Assembly-CSharp}
-      data:
-        state: 0
-        started: 0
-        guid: 89143a15f0354524689c9bad0a123446
-        position: {x: 798.4001, y: 185.6351}
-        blackboard:
-          moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
-          disFromPlayer: 0
-          player: {fileID: 0}
-        description: 
-        drawGizmos: 0
-        children:
-        - rid: 3851174811283226624
-        - rid: 3851174854896648201
     - rid: 3851174854896648201
       type: {class: Sequencer, ns: TheKiwiCoder, asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
         guid: d33b9180dc2a65f4a9e20430461d508c
-        position: {x: 930.4001, y: 320.03506}
+        position: {x: 857.59985, y: 192.79996}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: 
         drawGizmos: 0
         children:
+        - rid: 3851174878669438978
         - rid: 3851174854896648203
-        - rid: 3851174854896648208
     - rid: 3851174854896648202
       type: {class: Idle, ns: , asm: Assembly-CSharp}
       data:
@@ -143,7 +140,10 @@ MonoBehaviour:
         position: {x: 1156.8, y: 34.39135}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: 
@@ -154,10 +154,13 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 432d82b2d221bfa4c82375493f54c2eb
-        position: {x: 1169.2902, y: 463.20004}
+        position: {x: 1007.9998, y: 355.19995}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: 
@@ -168,79 +171,93 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 2ca6b470d85e2ac4e8311d527ed2a630
-        position: {x: 974.9875, y: 576.7999}
+        position: {x: 899.9999, y: 622.39984}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: Make sure only play this after chase failed
         drawGizmos: 0
-    - rid: 3851174854896648206
+    - rid: 3851174878669438976
       type: {class: Sequencer, ns: TheKiwiCoder, asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
-        guid: 30b3f390a23e0f4448a66f4d6eccb52a
-        position: {x: 676.59186, y: 34.4}
+        guid: f30e0ccbb0929fb45ba1edbb73e9d240
+        position: {x: 725.59985, y: 34.39997}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: 
         drawGizmos: 0
         children:
-        - rid: 3851174854896648207
-        - rid: 3851174854896648200
-    - rid: 3851174854896648207
-      type: {class: Log, ns: TheKiwiCoder, asm: Assembly-CSharp}
+        - rid: 3851174811283226624
+        - rid: 3851174854896648201
+    - rid: 3851174878669438977
+      type: {class: Failure, ns: TheKiwiCoder, asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
-        guid: 7ffdf667d3a376541acaae1f9ada4539
-        position: {x: 526.4, y: 185.60002}
+        guid: cf413318b55348b41b465e9e3ebd2833
+        position: {x: 899.9999, y: 517.5999}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
-        description: check if player in range
-        drawGizmos: 0
-        message: 
-    - rid: 3851174854896648208
-      type: {class: Sequencer, ns: TheKiwiCoder, asm: Assembly-CSharp}
-      data:
-        state: 0
-        started: 0
-        guid: 7983c9f2cf3b0204481f5ccef01169c6
-        position: {x: 875.60004, y: 439.20004}
-        blackboard:
-          moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
-          disFromPlayer: 0
-          player: {fileID: 0}
-        description: 
-        drawGizmos: 0
-        children:
-        - rid: 3851174854896648209
-        - rid: 3851174854896648204
-    - rid: 3851174854896648209
-      type: {class: Inverter, ns: TheKiwiCoder, asm: Assembly-CSharp}
-      data:
-        state: 0
-        started: 0
-        guid: 2a279d5cfef9f564e96986da33a002e3
-        position: {x: 800.80005, y: 565.0102}
-        blackboard:
-          moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
-          disFromPlayer: 0
-          player: {fileID: 0}
-        description: 
+        description: 'when the enemy is angry meanings no attack '
         drawGizmos: 0
         child:
-          rid: 3851174811283226625
+          rid: 3851174854896648204
+    - rid: 3851174878669438978
+      type: {class: Selector, ns: TheKiwiCoder, asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: 353286c1a540959489e6cb50baa61b91
+        position: {x: 800, y: 355.19995}
+        blackboard:
+          moveToPosition: {x: 0, y: 0, z: 0}
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
+          disFromPlayer: 0
+          player: {fileID: 0}
+        description: 
+        drawGizmos: 0
+        children:
+        - rid: 3851174811283226625
+        - rid: 3851174878669438977
+    - rid: 3851174878669438979
+      type: {class: Flee, ns: , asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: 5bc5da2d43752354b9244d5933adf943
+        position: {x: 388.2549, y: 34.39998}
+        blackboard:
+          moveToPosition: {x: 0, y: 0, z: 0}
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
+          disFromPlayer: 0
+          player: {fileID: 0}
+        description: 
+        drawGizmos: 0
     - rid: 4200190926137589867
       type: {class: RootNode, ns: TheKiwiCoder, asm: Assembly-CSharp}
       data:
@@ -250,7 +267,10 @@ MonoBehaviour:
         position: {x: 723.20026, y: -509.89212}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: Where it all begins!
@@ -266,7 +286,10 @@ MonoBehaviour:
         position: {x: 723.20026, y: -395.4921}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: Repeat forever
@@ -281,14 +304,18 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 3370b9ae88c91314a8a1c35c42db39b5
-        position: {x: 723.2, y: -127.91563}
+        position: {x: 725.6001, y: -138.57997}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
-          attacking: 0
+          isFired: 0
+          isPanic: 0
+          isSleep: 0
+          isDead: 0
           disFromPlayer: 0
           player: {fileID: 0}
         description: Pick from movement, combat, rest
         drawGizmos: 0
         children:
-        - rid: 3851174854896648206
+        - rid: 3851174878669438979
+        - rid: 3851174878669438976
         - rid: 3851174854896648202

@@ -25,10 +25,7 @@ public class FindPlayer : ActionNode
 
     protected override State OnUpdate()
     {
-        if (blackboard.player != null)
-        {
-            return State.Failure;
-        }
+
         Collider[] colliders = Physics.OverlapSphere(context.transform.position, detectionRadius, playerMask);
         for (int i = 0; i < colliders.Length; i++)
         {

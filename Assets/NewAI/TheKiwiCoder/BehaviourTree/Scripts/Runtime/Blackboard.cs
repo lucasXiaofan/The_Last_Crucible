@@ -13,12 +13,18 @@ namespace TheKiwiCoder
     {
 
         public Vector3 moveToPosition;
-        [Header("Combat")]
-        public bool attacking;
+        [Header("Status")]
+
+        public bool isFired;
+        public bool isPanic;
+        public bool isSleep;
+        public bool isDead;
 
         [Header("Enemy & Player")]
         public float disFromPlayer;
         public Transform player;
+
+
 
     }
 }

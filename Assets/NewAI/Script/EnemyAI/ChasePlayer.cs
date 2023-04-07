@@ -28,7 +28,7 @@ public class ChasePlayer : ActionNode
 
     protected override void OnStop()
     {
-        context.animator.SetFloat("Vertical", 1.5f);
+
     }
 
     protected override State OnUpdate()
