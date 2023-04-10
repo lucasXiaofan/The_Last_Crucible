@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    [Header("Important locations")]
     public Transform waterSource;
+    public Vector3 restSpot;
+    [Header("Effects")]
+    public ParticleSystem fireVFX;
+    [Header("Status")]
     public bool isFired;
     public bool isPanic;
     public bool isSleep;
@@ -12,10 +17,12 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         waterSource = FindObjectOfType<Water>().position;
+        restSpot = this.transform.position;
+        
     }
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -23,4 +30,14 @@ public class EnemyManager : MonoBehaviour
     {
 
     }
+    #region Animation functions
+    public void TurnOnFire() 
+    {
+        fireVFX.Play();
+    }
+    public void TurnOffFire() 
+    {
+        fireVFX.Stop();
+    }
+    #endregion
 }

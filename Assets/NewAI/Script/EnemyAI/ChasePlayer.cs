@@ -17,7 +17,7 @@ public class ChasePlayer : ActionNode
     {
         if (blackboard.player == null)
             return;
-        context.animator.SetFloat("Vertical", 1f);
+        
         context.agent.enabled = true;
         context.agent.stoppingDistance = stoppingDistance;
         context.agent.speed = speed;
@@ -49,14 +49,18 @@ public class ChasePlayer : ActionNode
         {
             return State.Success;
         }
-
+        ChasingPlayer();
+        return State.Running;
+    }
+    private void ChasingPlayer()
+    {
+        context.animator.SetFloat("Vertical", 1f);
         Vector3 direction = blackboard.player.position - context.transform.position;
         direction.y = 0;
         direction.Normalize();
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         context.transform.rotation = Quaternion.Slerp(context.transform.rotation, targetRotation, rotationSpeed / Time.deltaTime);
-        Debug.Log("distance from player: " + distanceFromPlayer);
-        return State.Running;
+        
     }
 
 }

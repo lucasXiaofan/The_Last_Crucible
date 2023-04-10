@@ -13,10 +13,10 @@ public class FindPlayer : ActionNode
     public float stoppingDistance = 1.5f;
     public float RotationSpeed = 15f;
     public LayerMask playerMask;
-
+    private bool isPlayerInSight;
     protected override void OnStart()
     {
-
+        isPlayerInSight = false;
     }
 
     protected override void OnStop()
@@ -39,12 +39,26 @@ public class FindPlayer : ActionNode
 
                 if (viewAbleAngle < maxDetectionAngle && viewAbleAngle > minDetectionAngle)
                 {
-                    blackboard.player = player;
-                    context.agent.enabled = true;
-                    return State.Success;
+                    
+                    if (blackboard.player == null)
+                    {
+                        Activated();
+                        blackboard.player = player;
+                    }
+                    isPlayerInSight = true;
+                    
                 }
             }
         }
-        return State.Failure;
+
+        if (context.animator.GetBool("isInteracting") == true)
+        {
+            return State.Running;
+        }
+        return (isPlayerInSight)? State.Success: State.Failure;
+    }
+    private void Activated()
+    {
+        context.playAnimation("noticedPlayer",true);
     }
 }

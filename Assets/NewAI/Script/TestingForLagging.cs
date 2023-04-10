@@ -21,4 +21,8 @@ public class TestingForLagging : MonoBehaviour
         nav.SetDestination(target.position);
 
     }
+    public void testforanimation()
+    {
+        
+    }
 }
