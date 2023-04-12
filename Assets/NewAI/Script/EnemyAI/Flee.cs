@@ -7,6 +7,8 @@ using TheKiwiCoder;
 public class Flee : ActionNode
 {
     public float fleeSpeed = 7f;
+    private bool isFiredPlayed = false;
+    private bool isReachedDestination = false;
     protected override void OnStart()
     {
 
@@ -31,16 +33,19 @@ public class Flee : ActionNode
         float distanceFromWater = Vector3.Distance(context.manager.waterSource.position, context.transform.position);
         if (distanceFromWater < 0.1f)
         {
-            context.manager.isFired = false;
-            return State.Success;
+            FireExtinguished();
         }
-        
-        return State.Running;
+
+        return (isReachedDestination) ? State.Success : State.Running;
     }
     private void SetOnFire()
     {
-        context.playAnimation("catchFire",true);
-        
+        if (!isFiredPlayed)
+        {
+            context.playAnimation("catchFire", true);
+            context.manager.TurnOnFire();
+            isFiredPlayed = true;
+        }
     }
     private void Fleeing()
     {
@@ -48,5 +53,13 @@ public class Flee : ActionNode
         context.agent.speed = fleeSpeed;
         context.agent.SetDestination(context.manager.waterSource.position);
         context.animator.SetFloat("Vertical", 1.5f);
+    }
+    private void FireExtinguished()
+    {
+        context.playAnimation("shakeOffFire", true);
+        context.manager.TurnOffFire();
+        context.manager.isFired = false;
+        isReachedDestination = true;
+        isFiredPlayed = false;
     }
 }

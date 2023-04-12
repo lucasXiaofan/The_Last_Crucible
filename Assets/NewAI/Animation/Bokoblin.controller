@@ -658,14 +658,14 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -5191588898174285619}
-    second: []
   - first: {fileID: -1420901741892823174}
     second:
     - {fileID: -1105313744005712743}
   - first: {fileID: 6547176644302383099}
     second:
     - {fileID: 481844386396627661}
+  - first: {fileID: -5191588898174285619}
+    second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_EntryPosition: {x: 50, y: 140, z: 0}

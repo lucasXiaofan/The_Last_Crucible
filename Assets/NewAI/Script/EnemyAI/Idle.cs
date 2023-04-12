@@ -20,7 +20,7 @@ public class Idle : ActionNode
     protected override State OnUpdate()
     {
         float distanceFromInitial = Vector3.Distance(context.transform.position, context.manager.restSpot);
-        if ( distanceFromInitial < toleranceFromInitalPoint)
+        if (distanceFromInitial < toleranceFromInitalPoint)
         {
             Resting();
         }
@@ -39,12 +39,12 @@ public class Idle : ActionNode
         context.agent.enabled = true;
         context.agent.SetDestination(context.manager.restSpot);
         context.agent.speed = walkSpeed;
-        context.animator.SetFloat("Vertical",0.5f);
+        context.animator.SetFloat("Vertical", 0.5f);
     }
     private void Resting()
     {
         context.agent.enabled = false;
-        context.playAnimation("Happy", true);
+        context.playAnimation("Happy", false);
         context.animator.SetFloat("Vertical", 0f);
     }
 }

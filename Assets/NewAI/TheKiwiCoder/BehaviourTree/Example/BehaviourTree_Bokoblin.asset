@@ -38,8 +38,8 @@ MonoBehaviour:
     isDead: 0
     disFromPlayer: 0
     player: {fileID: 0}
-  viewPosition: {x: -171, y: -81, z: 0}
-  viewScale: {x: 0.7561437, y: 0.7561437, z: 1}
+  viewPosition: {x: 45, y: 46, z: 0}
+  viewScale: {x: 0.25, y: 0.25, z: 1}
   references:
     version: 2
     RefIds:
