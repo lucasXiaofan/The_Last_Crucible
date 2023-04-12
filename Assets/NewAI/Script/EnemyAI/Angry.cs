@@ -8,8 +8,11 @@ public class Angry : ActionNode
 {
     protected override void OnStart()
     {
-        context.agent.enabled = false;
-        context.playAnimation("Angry", true);
+        if (blackboard.player == null)
+        {
+            context.agent.enabled = false;
+            context.playAnimation("Angry", true);
+        }
     }
 
     protected override void OnStop()
@@ -18,6 +21,7 @@ public class Angry : ActionNode
 
     protected override State OnUpdate()
     {
+
         if (context.animator.GetBool("isInteracting") == true)
         {
             return State.Running;

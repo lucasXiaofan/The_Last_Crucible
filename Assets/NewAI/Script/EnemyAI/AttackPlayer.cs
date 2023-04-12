@@ -19,6 +19,11 @@ public class AttackPlayer : ActionNode
 
     protected override State OnUpdate()
     {
+        #region HandleSpecialEffects
+        context.CheckIsFired();
+        if (context.manager.isFired)
+            return State.Failure;
+        #endregion
 
         if (context.animator.GetBool("isInteracting") == true)
         {

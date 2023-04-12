@@ -38,8 +38,8 @@ MonoBehaviour:
     isDead: 0
     disFromPlayer: 0
     player: {fileID: 0}
-  viewPosition: {x: 45, y: 46, z: 0}
-  viewScale: {x: 0.25, y: 0.25, z: 1}
+  viewPosition: {x: -390, y: 83, z: 0}
+  viewScale: {x: 0.65751624, y: 0.65751624, z: 1}
   references:
     version: 2
     RefIds:
@@ -150,6 +150,8 @@ MonoBehaviour:
         drawGizmos: 0
         walkSpeed: 3
         toleranceFromInitalPoint: 0.5
+        RotationSpeed: 6
+        isRotating: 0
     - rid: 3851174854896648203
       type: {class: AttackPlayer, ns: , asm: Assembly-CSharp}
       data:
@@ -260,7 +262,7 @@ MonoBehaviour:
           player: {fileID: 0}
         description: 
         drawGizmos: 0
-        fleeSpeed: 10
+        fleeSpeed: 5
     - rid: 4200190926137589867
       type: {class: RootNode, ns: TheKiwiCoder, asm: Assembly-CSharp}
       data:

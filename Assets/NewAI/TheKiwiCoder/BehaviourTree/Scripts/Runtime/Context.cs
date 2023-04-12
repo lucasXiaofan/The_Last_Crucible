@@ -50,5 +50,24 @@ namespace TheKiwiCoder
             animator.SetBool("isInteracting", isInteracting);
             animator.Play(animationName);
         }
+        #region Special effects
+        public void CheckIsFired()
+        {
+            if (manager.isFired)
+            {
+                SetOnFire();
+            }
+        }
+        public void SetOnFire()
+        {
+            if (!manager.isFiredPlayed)
+            {
+                playAnimation("catchFire", true);
+                manager.TurnOnFire();
+                manager.isFiredPlayed = true;
+            }
+        }
+        #endregion
+
     }
 }

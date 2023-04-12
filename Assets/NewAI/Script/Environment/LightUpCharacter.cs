@@ -15,7 +15,13 @@ public class LightUpCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        LightUp();
+    }
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, FireRadius);
     }
 
     private void LightUp()

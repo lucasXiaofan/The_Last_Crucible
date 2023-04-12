@@ -6,8 +6,15 @@ using TheKiwiCoder;
 [System.Serializable]
 public class Idle : ActionNode
 {
+    [Header("Locomotion")]
     public float walkSpeed = 5f;
     public float toleranceFromInitalPoint = 0.5f;
+
+    [Header("Rotation settings")]
+    public float RotationSpeed = 6f;
+    public bool isRotating;
+
+
     protected override void OnStart()
     {
 
@@ -19,15 +26,24 @@ public class Idle : ActionNode
 
     protected override State OnUpdate()
     {
+        #region HandleSpecialEffects
+        context.CheckIsFired();
+        if (context.manager.isFired)
+            return State.Failure;
+        #endregion
+
+
         float distanceFromInitial = Vector3.Distance(context.transform.position, context.manager.restSpot);
         if (distanceFromInitial < toleranceFromInitalPoint)
         {
+            Rotating();
+            if (isRotating)
+            {
+                return State.Running;
+            }
             Resting();
         }
-        // if (context.animator.GetBool("isInteracting") == true)
-        // {
-        //     return State.Running;
-        // }
+
         else
         {
             WalkBack();
@@ -38,7 +54,7 @@ public class Idle : ActionNode
     {
         context.agent.enabled = true;
         context.agent.SetDestination(context.manager.restSpot);
-        context.agent.speed = walkSpeed;
+        context.agent.speed = 5;
         context.animator.SetFloat("Vertical", 0.5f);
     }
     private void Resting()
@@ -46,5 +62,14 @@ public class Idle : ActionNode
         context.agent.enabled = false;
         context.playAnimation("Happy", false);
         context.animator.SetFloat("Vertical", 0f);
+    }
+    private void Rotating()
+    {
+        context.agent.enabled = false;
+
+        context.transform.rotation = Quaternion.Slerp(context.transform.rotation, context.manager.initialRotation, RotationSpeed / Time.deltaTime);
+
+        isRotating = (Quaternion.Angle(context.transform.rotation, context.manager.initialRotation) > 2);
+
     }
 }

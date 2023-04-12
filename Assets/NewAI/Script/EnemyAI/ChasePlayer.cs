@@ -17,7 +17,7 @@ public class ChasePlayer : ActionNode
     {
         if (blackboard.player == null)
             return;
-        
+
         context.agent.enabled = true;
         context.agent.stoppingDistance = stoppingDistance;
         context.agent.speed = speed;
@@ -34,6 +34,11 @@ public class ChasePlayer : ActionNode
     protected override State OnUpdate()
 
     {
+        #region HandleSpecialEffects
+        context.CheckIsFired();
+        if (context.manager.isFired)
+            return State.Failure;
+        #endregion
 
         if (blackboard.player == null
         || context.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathInvalid)
@@ -42,6 +47,7 @@ public class ChasePlayer : ActionNode
         float distanceFromPlayer = Vector3.Distance(context.transform.position, blackboard.player.position);
         if (distanceFromPlayer >= chaseDistance)
         {
+            HandleLostPlayer();
             return State.Failure;
         }
 
@@ -60,7 +66,11 @@ public class ChasePlayer : ActionNode
         direction.Normalize();
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         context.transform.rotation = Quaternion.Slerp(context.transform.rotation, targetRotation, rotationSpeed / Time.deltaTime);
-        
+
+    }
+    private void HandleLostPlayer()
+    {
+        blackboard.player = null;
     }
 
 }

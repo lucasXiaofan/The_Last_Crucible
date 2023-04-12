@@ -7,6 +7,7 @@ public class EnemyManager : MonoBehaviour
     [Header("Important locations")]
     public Transform waterSource;
     public Vector3 restSpot;
+    public Quaternion initialRotation;
     [Header("Effects")]
     public ParticleSystem fireVFX;
     [Header("Status")]
@@ -14,15 +15,18 @@ public class EnemyManager : MonoBehaviour
     public bool isPanic;
     public bool isSleep;
     public bool isDead;
+    [Header("animation")]
+    public bool isFiredPlayed = false;
     private void Awake()
     {
         waterSource = FindObjectOfType<Water>().position;
         restSpot = this.transform.position;
-        
+        initialRotation = this.transform.rotation;
+
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -30,12 +34,14 @@ public class EnemyManager : MonoBehaviour
     {
 
     }
+
+
     #region Animation functions
-    public void TurnOnFire() 
+    public void TurnOnFire()
     {
         fireVFX.Play();
     }
-    public void TurnOffFire() 
+    public void TurnOffFire()
     {
         fireVFX.Stop();
     }

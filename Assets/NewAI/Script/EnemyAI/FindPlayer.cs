@@ -16,7 +16,7 @@ public class FindPlayer : ActionNode
     private bool isPlayerInSight;
     protected override void OnStart()
     {
-        isPlayerInSight = false;
+        context.agent.enabled = false;
     }
 
     protected override void OnStop()
@@ -25,7 +25,13 @@ public class FindPlayer : ActionNode
 
     protected override State OnUpdate()
     {
+        #region HandleSpecialEffects
+        context.CheckIsFired();
+        if (context.manager.isFired)
+            return State.Failure;
+        #endregion
 
+        isPlayerInSight = false;
         Collider[] colliders = Physics.OverlapSphere(context.transform.position, detectionRadius, playerMask);
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -39,14 +45,14 @@ public class FindPlayer : ActionNode
 
                 if (viewAbleAngle < maxDetectionAngle && viewAbleAngle > minDetectionAngle)
                 {
-                    
+
                     if (blackboard.player == null)
                     {
                         Activated();
                         blackboard.player = player;
                     }
                     isPlayerInSight = true;
-                    
+
                 }
             }
         }
@@ -55,10 +61,10 @@ public class FindPlayer : ActionNode
         {
             return State.Running;
         }
-        return (isPlayerInSight)? State.Success: State.Failure;
+        return (isPlayerInSight) ? State.Success : State.Failure;
     }
     private void Activated()
     {
-        context.playAnimation("noticedPlayer",true);
+        context.playAnimation("noticedPlayer", true);
     }
 }
