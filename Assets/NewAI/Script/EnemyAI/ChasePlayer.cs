@@ -40,8 +40,7 @@ public class ChasePlayer : ActionNode
             return State.Failure;
         #endregion
 
-        if (blackboard.player == null
-        || context.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathInvalid)
+        if (blackboard.player == null)
             return State.Failure;
         context.agent.destination = blackboard.player.position;
         float distanceFromPlayer = Vector3.Distance(context.transform.position, blackboard.player.position);

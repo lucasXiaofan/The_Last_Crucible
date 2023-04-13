@@ -65,8 +65,34 @@ namespace TheKiwiCoder
                 playAnimation("catchFire", true);
                 manager.TurnOnFire();
                 manager.isFiredPlayed = true;
+                agent.enabled = false;
             }
         }
+        public bool PlayerInSight()
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, manager.detectionRadius, manager.playerMask);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+
+                Transform player = colliders[i].transform;
+                // DP_CharacterStats characterStats = colliders[i].transform.GetComponent<DP_CharacterStats>();
+                if (player != null && player.tag == "Player")
+                {
+                    Vector3 targetDirection = player.position - transform.position;
+                    float viewAbleAngle = Vector3.Angle(targetDirection, transform.forward);
+
+                    if (viewAbleAngle < manager.maxDetectionAngle && viewAbleAngle > manager.minDetectionAngle)
+                    {
+                        return true;
+
+                    }
+                }
+            }
+            return false;
+
+        }
+
+
         #endregion
 
     }

@@ -23,6 +23,7 @@ namespace TheKiwiCoder
         [Header("Enemy & Player")]
         public float disFromPlayer;
         public Transform player;
+        
 
 
 

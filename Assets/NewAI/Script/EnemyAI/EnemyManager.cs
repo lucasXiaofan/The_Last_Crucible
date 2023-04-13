@@ -17,6 +17,13 @@ public class EnemyManager : MonoBehaviour
     public bool isDead;
     [Header("animation")]
     public bool isFiredPlayed = false;
+    [Header("detections")]
+    public float detectionRadius = 20f;
+    public float minDetectionAngle = -60f;
+    public float maxDetectionAngle = 60f;
+    public float stoppingDistance = 1.5f;
+    public float RotationSpeed = 15f;
+    public LayerMask playerMask;
     private void Awake()
     {
         waterSource = FindObjectOfType<Water>().position;

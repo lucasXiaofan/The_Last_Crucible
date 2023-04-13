@@ -17,7 +17,7 @@ public class Idle : ActionNode
 
     protected override void OnStart()
     {
-
+        blackboard.player = null;
     }
 
     protected override void OnStop()
@@ -28,8 +28,13 @@ public class Idle : ActionNode
     {
         #region HandleSpecialEffects
         context.CheckIsFired();
-        if (context.manager.isFired)
+        if (context.manager.isFired
+        || context.PlayerInSight())
+        {
+            Debug.Log("find player while idle" + context.PlayerInSight());
             return State.Failure;
+        }
+
         #endregion
 
 
@@ -42,19 +47,21 @@ public class Idle : ActionNode
                 return State.Running;
             }
             Resting();
+            return State.Success;
         }
 
         else
         {
             WalkBack();
         }
-        return State.Success;
+        return State.Running;
     }
     private void WalkBack()
     {
         context.agent.enabled = true;
-        context.agent.SetDestination(context.manager.restSpot);
         context.agent.speed = 5;
+        context.agent.SetDestination(context.manager.restSpot);
+
         context.animator.SetFloat("Vertical", 0.5f);
     }
     private void Resting()
