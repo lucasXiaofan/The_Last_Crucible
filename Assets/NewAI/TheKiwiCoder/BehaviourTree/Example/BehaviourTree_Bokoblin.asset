@@ -38,8 +38,8 @@ MonoBehaviour:
     isDead: 0
     disFromPlayer: 0
     player: {fileID: 0}
-  viewPosition: {x: -69.6, y: -20, z: 0}
-  viewScale: {x: 0.49717674, y: 0.49717674, z: 1}
+  viewPosition: {x: -65.6, y: -64, z: 0}
+  viewScale: {x: 0.57175326, y: 0.57175326, z: 1}
   references:
     version: 2
     RefIds:
@@ -49,7 +49,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: b43f3e930bec5b8478b702f315d9310e
-        position: {x: 575.9999, y: 196.79999}
+        position: {x: 575.1999, y: 216.80002}
         blackboard:
           moveToPosition: {x: 0, y: 0, z: 0}
           isFired: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
         RotationSpeed: 15
         playerMask:
           serializedVersion: 2
-          m_Bits: 16384
+          m_Bits: 1
     - rid: 3851174811283226625
       type: {class: ChasePlayer, ns: , asm: Assembly-CSharp}
       data:
