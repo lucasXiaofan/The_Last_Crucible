@@ -11,6 +11,7 @@ namespace DP
         DP_EnemyAnimator enemyAnimator;
         public Rigidbody enemyRigidbody;
         public LayerMask detectionLayer;
+        public LayerMask allyLayer;
         public DP_CharacterStats currentTarget;
         public NavMeshAgent navMeshAgent;
         [Header("Enemy Movement")]
@@ -62,11 +63,53 @@ namespace DP
                     if (viewAbleAngle < enemyManger.maxDetectionAngle && viewAbleAngle > enemyManger.minDetectionAngle)
                     {
                         currentTarget = characterStats;
-                        if(enemyManger.Boss || enemyManger.KeyHolder)
+                        if (enemyManger.Boss || enemyManger.KeyHolder)
                         {
                             enemyManger.soundManager.PlayBattleM(true);
                         }
 
+                    }
+                }
+            }
+        }
+
+        public void GetAttackedFindPlayer()
+        {
+            /// <summary>
+            ///  when a enemy get attack
+            /// 1. find player without see player in fov
+            /// 2. make nearby enemy find player
+            /// </summary>
+            /// <returns></returns>
+            Collider[] colliders = Physics.OverlapSphere(transform.position, enemyManger.detectionRadius, detectionLayer);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                DP_CharacterStats characterStats = colliders[i].transform.GetComponent<DP_CharacterStats>();
+                if (characterStats != null)
+                {
+                    currentTarget = characterStats;
+                }
+            }
+        }
+        // private void OnDrawGizmosSelected()
+        // {
+        //     // Draw a yellow sphere at the transform's position
+        //     Gizmos.color = Color.yellow;
+        //     Gizmos.DrawSphere(transform.position, enemyManger.detectionRadius);
+        // }
+
+        public void ShareInformation()
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, enemyManger.detectionRadius, allyLayer);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                DP_EnemyLocomotion AllyLocomotion = colliders[i].transform.GetComponent<DP_EnemyLocomotion>();
+                DP_EnemyManger AllyManager = colliders[i].transform.GetComponent<DP_EnemyManger>();
+                if (AllyLocomotion != null)
+                {
+                    if (currentTarget != null && !(AllyManager.Boss || AllyManager.KeyHolder))
+                    {
+                        AllyLocomotion.currentTarget = currentTarget;
                     }
                 }
             }
@@ -90,7 +133,7 @@ namespace DP
             {
                 if (distanceFromtarget > stoppingDistance)
                 {
-                    
+
                     navMeshAgent.enabled = true;
                     navMeshAgent.speed = 5;
                     enemyAnimator.anim.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);

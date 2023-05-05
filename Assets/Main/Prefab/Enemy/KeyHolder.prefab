@@ -675,6 +675,9 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 16384
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   currentTarget: {fileID: 0}
   navMeshAgent: {fileID: 0}
   distanceFromtarget: 0
@@ -824,6 +827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPursueState: {fileID: 98203625374267003}
+  enemyAttackState: {fileID: 98203624161986997}
 --- !u!1 &98203625374267001
 GameObject:
   m_ObjectHideFlags: 0

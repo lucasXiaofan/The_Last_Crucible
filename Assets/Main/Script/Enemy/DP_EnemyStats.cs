@@ -9,6 +9,7 @@ namespace DP
         public DP_PlayerHealthBar playerHealthBar;
         DP_EnemyAnimator enemyAnimator;
         DP_EnemyManger enemyManger;
+        DP_EnemyLocomotion locomotion;
         public GameObject bloodVFX;
 
 
@@ -23,6 +24,7 @@ namespace DP
         {
             enemyAnimator = GetComponentInChildren<DP_EnemyAnimator>();
             enemyManger = GetComponent<DP_EnemyManger>();
+            locomotion = GetComponent<DP_EnemyLocomotion>();
             maximumHealth = SetMaximumHealthLevel();
             currentHealth = maximumHealth;
             currentPosture = 1;
@@ -53,6 +55,12 @@ namespace DP
 
         public void TakeDamage(int damage, bool normal)
         {
+            if (locomotion.currentTarget == null && normal)
+            {
+                print("try to find nearby player when get attacked");
+                locomotion.GetAttackedFindPlayer();
+                locomotion.ShareInformation();
+            }
 
             if (enemyManger.isDead)
             {

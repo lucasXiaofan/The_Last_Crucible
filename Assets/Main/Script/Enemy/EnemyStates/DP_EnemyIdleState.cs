@@ -7,6 +7,7 @@ namespace DP
     public class DP_EnemyIdleState : DP_State
     {
         public DP_EnemyPursueState enemyPursueState;
+        public DP_EnemyAttackState enemyAttackState;
 
         public override DP_State Tick(DP_EnemyManger enemyManger,
                                     DP_EnemyStats enemyStats,
@@ -17,10 +18,19 @@ namespace DP
             {
                 enemyLocomotion.HandleDetection();
             }
-            else if (enemyLocomotion.distanceFromtarget > enemyLocomotion.stoppingDistance)
+            else if (enemyLocomotion.currentTarget != null && enemyLocomotion.distanceFromtarget > enemyLocomotion.stoppingDistance)
             {
                 enemyStats.ShowUI();
+                enemyLocomotion.ShareInformation();
+                if (enemyManger.Boss || enemyManger.KeyHolder)
+                {
+                    enemyManger.soundManager.PlayBattleM(true);
+                }
                 return enemyPursueState;
+            }
+            else if (enemyLocomotion.currentTarget != null && enemyLocomotion.distanceFromtarget <= enemyLocomotion.stoppingDistance)
+            {
+                return enemyAttackState;
             }
             return this;
         }

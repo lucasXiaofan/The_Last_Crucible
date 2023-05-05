@@ -484,6 +484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPursueState: {fileID: 1390273470}
+  enemyAttackState: {fileID: 1047793643}
 --- !u!1 &1390273468
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,7 +857,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 45eb8dae13cd8b9439f8d5fe64f70a58, type: 2}
   - {fileID: 11400000, guid: 27ab79d730b6ce2478e2666fad2379c6, type: 2}
   currentAttack: {fileID: 0}
-  detectionRadius: 10
+  detectionRadius: 15
   minDetectionAngle: -60
   maxDetectionAngle: 60
   currentRecoveryTime: 0
@@ -889,12 +890,15 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 16384
+  allyLayer:
+    serializedVersion: 2
+    m_Bits: 1
   currentTarget: {fileID: 0}
   navMeshAgent: {fileID: 6646359404981029689}
   distanceFromtarget: 0
   stoppingDistance: 2
   RotationSpeed: 30
-  detectionDistance: 10
+  detectionDistance: 30
 --- !u!195 &6646359404981029689
 NavMeshAgent:
   m_ObjectHideFlags: 0
