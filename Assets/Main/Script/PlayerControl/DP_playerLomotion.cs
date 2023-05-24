@@ -358,7 +358,7 @@ namespace DP
                     playerTransform.rotation = rotation;
                 }
 
-                playerRigidBody.AddForce(Vector3.up * 40 * 1, ForceMode.VelocityChange);
+                playerRigidBody.AddForce(Vector3.up * 40 * 1.5f, ForceMode.VelocityChange);
                 jumpTimer = jumpTime;
             }
 

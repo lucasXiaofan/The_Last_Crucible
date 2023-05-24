@@ -150,7 +150,7 @@ namespace DP
         {
             if (moveAmount > 0)
             {
-                roll_b_input = UnityEngine.InputSystem.Keyboard.current.leftShiftKey.isPressed || UnityEngine.InputSystem.Gamepad.current.buttonEast.isPressed;
+                roll_b_input = UnityEngine.InputSystem.Keyboard.current.leftShiftKey.isPressed;//|| (UnityEngine.InputSystem.Gamepad.current == null) ? false : UnityEngine.InputSystem.Gamepad.current.buttonEast.isPressed;
 
             }
             else
